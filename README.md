@@ -2,9 +2,19 @@
 
 Clortex is an implementation in Clojure of Jeff Hawkins' Hierarchical Temporal Memory & Cortical Learning Algorithm
 
-## Usage
+## Example Usage
 
-FIXME
+(require '[clortex.core])
+
+(make-cortex test-cortex)
+
+(add-encoder test-cortex (file-encoder "data.csv"))
+
+(run-cortex test-cortex :all-records)
+
+## Developer Information
+
+* [GitHub project](https://github.com/fergalbyrne/clortex)
 
 ## License
 
