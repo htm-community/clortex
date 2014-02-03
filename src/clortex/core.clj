@@ -1,5 +1,5 @@
 (ns clortex.core)
-(use 'incanter.core
+(comment (use 'incanter.core
      'incanter.io)
 
 (defn foo
@@ -7,5 +7,6 @@
   [x]
   (println x "Hello, World!"))
 
-(read-dataset "resources/small-sample.csv")
+(read-dataset "resources/small-sample.csv") 
+)
 

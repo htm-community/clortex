@@ -1,6 +1,6 @@
 # clortex
 
-Clortex is an implementation in Clojure of Jeff Hawkins' Hierarchical Temporal Memory & Cortical Learning Algorithm
+Clortex is an implementation in Clojure of Jeff Hawkins' Hierarchical Temporal Memory & Cortical Learning Algorithm. See the [docs](https://github.com/fergalbyrne/clortex/doc/index.html) for full details.
 
 ## Example Usage
 
@@ -14,6 +14,7 @@ Clortex is an implementation in Clojure of Jeff Hawkins' Hierarchical Temporal M
 
 ## Developer Information
 
+* [Documentation](https://github.com/fergalbyrne/clortex/doc/index.html)
 * [GitHub project](https://github.com/fergalbyrne/clortex)
 
 ## License
