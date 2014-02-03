@@ -73,18 +73,28 @@ Quite a list, but each failure in the list reduces the potential mindshare of th
 (fact 
  (str "Hello World") => "Hello World")
 
-[[:section {:title ""}]]
-""
-
 [[:chapter {:title "System Architecture"}]]
 
 "
 In order to mirror the HTM/CLA theory, `clortex` has a system architecture which is based on loosely-coupled components communicating over simple channels (or queues).
 
-The primary dataflow in `clortex` involves 'enervation' data structures passong from *sources*, through a possible hierarchy of *regions* and flowing to a set of *sinks*.
+The primary dataflow in `clortex` involves 'enervation' data structures passing from *sources*, through a possible hierarchy of *regions* and flowing to a set of *sinks*.
 
-Enervation, or inter-region communication, is encoded as a simple **SDR** map, which contains some very basic self-description data (source, bit size, etc) and a list of `on-bits`, `changed-on` and `changed-off` bit indices.
+Enervation, or inter-region communication, is encoded as a simple **SDR** map, which contains some very basic self-description data (`source`, `bit-size`, `description`, `type` etc) and a list of `on-bits`, `changed-on` and `changed-off` bit indices.
+
+An SDR may also contain a channel which can be used to send the source (or an intermediary) data.
 "
+(def an-sdr {:source "a-uuid",
+             :description "an example SDR",
+             :type :scalar-encoding,
+             :bit-size 512,
+             :topology [512],
+             :on-bits #{3, 22, 31, 55, 138},
+             :changed-on #{22, 31, 138},
+             :changed-off #{6, 111, 220},             
+             })
+
+
 
 [[:chapter {:title "Data Structures and Functions"}]]
 
@@ -101,10 +111,43 @@ The design of `clortex` is based on large, homogenous, passive data structures (
                :feedforward-potential 0,
                :predictive 0,
                :predictive-potential 0,
-               :proximal [#_[synapse ...]],
-               :distals [#_[dendrite...]]
+               :proximal-dendrite [#_[synapse ...]],
+               :distal-dendrites [#_[dendrite...]],
+               :axon nil
                })
 
 "Neurons with `:active` are designated as **active** neurons. Active neurons represent the layer's SDR, and also will send their signals to downstream neurons for prediction."
 
+"Simple functions act on neurons, such as `predictive?`, defined as follows:"
 
+(defn predictive?
+  "checks if a neuron is in the predictive state"
+  [neuron]
+  (pos? (:predictive neuron)))
+
+(defn set-predictive
+  "sets a neuron's predictive state"
+  [neuron p]
+  (assoc-in neuron [:predictive] p))
+
+"and used like this:"
+
+(facts "neurons have simple predictive states"
+ (predictive? a-neuron) => false
+ (predictive? (set-predictive a-neuron 1)) => true
+ )
+
+[[:section {:title "Synapse"}]]
+
+"Synapses represent connections between neurons."
+
+[[:section {:title "Dendrite"}]]
+
+"A dendrite is a set of synapses. Dendrites can either be *proximal* (meaning *near*) or *distal* (meaning *far*). Each neuron usually has one proximal dendrite, which gathers signals from feedforward sources, and many distal dendrites, which gather predictive signal, usually from nearby active neurons.
+"
+
+[[:section {:title "Patch"}]]
+
+"
+A Patch is a container for neurons and their connections (synapses). A patch is the system component which links to others and manages incoming and outgoing data, as well as the transformation of the memory in the synapses.
+"
