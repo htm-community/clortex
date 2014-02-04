@@ -1,6 +1,6 @@
 (ns clortex.core-test
   (:use midje.sweet)
-  (:require [clortex.core :refer :all]))
+  (:require [clortex.core :as cla :refer :all]))
 
 [[:chapter {:title "Introduction"}]]
 
@@ -14,7 +14,7 @@
 
 [[:section {:title "Directly Analogous to HTM/CLA Theory"}]]
 "
-*In order to be a platform for demonstration, exploration and experimentation of Jeff Hawkins’ theories, the system must at all levels of relevant detail match the theory directly (ie 1:1). Any optimisations introduced may only occur following an effectively mathematical proof that this correspondence is maintained under the change.*
+*In order to be a platform for demonstration, exploration and experimentation of Jeff Hawkins' theories, the system must at all levels of relevant detail match the theory directly (ie 1:1). Any optimisations introduced may only occur following an effectively mathematical proof that this correspondence is maintained under the change.*
 
 There are several benefits to this requirement. Firstly, during development, this requirement provides a rigid and testable constraint on the options for implementation. With a good model of the theory in his mind, we may proceed with confidence to use transparently analogous data structures and algorithms, leaving the question of computational performance for a later day.
 
@@ -70,8 +70,6 @@ At present, NuPIC has some metrics but they are either difficult to understand a
 
 Quite a list, but each failure in the list reduces the potential mindshare of the software and raises fears for new adopters. Success in every item, along with the other requirements, ensures maximal usefulness and easy uptake by the rising ramp of the adoption curve.
 "
-(fact 
- (str "Hello World") => "Hello World")
 
 [[:chapter {:title "System Architecture"}]]
 
@@ -99,7 +97,7 @@ An SDR may also contain a channel which can be used to send the source (or an in
 [[:chapter {:title "Data Structures and Functions"}]]
 
 "
-The design of `clortex` is based on large, homogenous, passive data structures (e.g. Layers) which are collections of simple structures (e.g. Neurons, Dendrites and Synapses), along with a set of simple functions which act on these data structures (e.g. `(cla/predictive a-neuron)`).
+The design of `clortex` is based on large, homogenous, passive data structures (e.g. Layers) which are collections of simple structures (e.g. Neurons, Dendrites and Synapses), along with a set of simple functions which act on these data structures (e.g. `(cla/predictive? a-neuron)`).
 "
 
 [[:section {:title "Neuron"}]]
@@ -141,13 +139,30 @@ The design of `clortex` is based on large, homogenous, passive data structures (
 
 "Synapses represent connections between neurons."
 
+[[:section {:title "Axon"}]]
+
+"
+Axons represent the terminal points of interneural connections. Patches (see below) maintain a set of axon endpoints to provide feedforward inputs from sensors or lower patches, as well as for in-patch predictive connections. Axons have a `source` and an `activity` value. Incoming SDR's are translated into values on the axon collection of a patch.
+
+
+"
+
 [[:section {:title "Dendrite"}]]
 
 "A dendrite is a set of synapses. Dendrites can either be *proximal* (meaning *near*) or *distal* (meaning *far*). Each neuron usually has one proximal dendrite, which gathers signals from feedforward sources, and many distal dendrites, which gather predictive signal, usually from nearby active neurons.
+
+"
+
+[[:section {:title "Column"}]]
+
+"A column is a vector of neurons, representing the vertical organisation of neurns in the neocortex. Columns share the same set of potential feedforward inputs, and also identify the spatial location of the neurons in a layer or region.
 "
 
 [[:section {:title "Patch"}]]
-
 "
 A Patch is a container for neurons and their connections (synapses). A patch is the system component which links to others and manages incoming and outgoing data, as well as the transformation of the memory in the synapses.
+
+Patches are responsible for translating a pattern of activity on a set of inputs into the appropriate changes in the neurons.
 "
+
+
