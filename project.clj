@@ -18,6 +18,13 @@
                            :author "Fergal Byrne"
                            :email  "fergalbyrnedublin@gmail.com"
                            :tracking "UA-31320512-2"}
+						  "doc/encoders"
+                          {:input "test/clortex/domain/encoders/core_test.clj"
+                           :title "clortex encoders"
+                           :sub-title "Encoding Values into CLA SDRs"
+                           :author "Fergal Byrne"
+                           :email  "fergalbyrnedublin@gmail.com"
+                           :tracking "UA-31320512-2"}
                           }}
   :eval-in-leiningen true)
 

@@ -17,7 +17,7 @@
    :prediction 0,
    :patch nil})
 
-(defn neuron-patch
+(defn patch
   "returns a patch of n empty neurons"
   [n]
   (reduce
@@ -52,10 +52,10 @@
   (patch pos))
 
 (comment
-  (def patch (neuron-patch 20))
-  (count patch)
-  (def from (get-neuron patch 3))
-  (def to (get-neuron patch 5))
+  (def p (neuron-patch 20))
+  (count p)
+  (def from (get-neuron p 3))
+  (def to (get-neuron p 5))
   (connect-feedforward to from)
   (connect-axon from to)
 (use 'clortex.neuron)
