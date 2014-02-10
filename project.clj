@@ -25,6 +25,13 @@
                            :author "Fergal Byrne"
                            :email  "fergalbyrnedublin@gmail.com"
                            :tracking "UA-31320512-2"}
+						"doc/sensors"
+                          {:input "test/clortex/domain/sensors/core_test.clj"
+                           :title "clortex sensors"
+                           :sub-title "Bringing Data into the CLA"
+                           :author "Fergal Byrne"
+                           :email  "fergalbyrnedublin@gmail.com"
+                           :tracking "UA-31320512-2"}
                           }}
   :eval-in-leiningen true)
 

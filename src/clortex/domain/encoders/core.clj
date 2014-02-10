@@ -27,7 +27,7 @@
             #(within+- % centre (/ w 1.0))))))
 
 (defn scalar-encoder 
-	"constructs functions to encode scalars using a clamped liner window"
+	"constructs functions to encode scalars using a clamped linear sliding window"
 	[& {:keys [min' max' bits on] :or {min' 0.0 max' 100.0 bits 127 on 21}}]
 	(let [
       gap (/ (- max' min') (- bits on))
