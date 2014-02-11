@@ -2,21 +2,30 @@
   (:use midje.sweet)
   (:use clortex.domain.sensors.core))
 
-[[:chapter {:title "Encoders"}]]
+[[:chapter {:title "Sensors"}]]
 
-"Encoders are very important in `clortex`. Encoders turn real-world data into a form which `clortex` 
-can understand - **Sparse Distrubuted Representations** (or *SDRs*). Encoders for the human brain include
-retinal cells (or groups of them), as well as cells in the ear, skin, tongue and nose.
+"Sensors gather infortmation from the world and deliver it in encoded form to the CLA.
 
 "
 
-[[:section {:title "Simple Scalar Encoder"}]]
+[[:section {:title "Numenta OPF Sensor (CSV data)"}]]
 
-"Encoders convert input data values into bit-array representations (compatible with Sparse Distributed Representations).
-The simplest encoder converts a scalar value into a bit-array as seen below. We'll set up a very small scalar encoder
-with 4 bits on out of 12, so we can see how it works."
+"The first sensor in `clortex` reads CSV data which is compatible with Numenta's OPF 
+(Online Prediction Framework) software."
 
-[[{:title "a very simple scalar encoder" :tag "simple-scalar-encoder"}]]
-(comment 
-(def enc (scalar-encoder :bits 12 :on 4)) ; uses default params min 0.0, max 100.0
-)
+[[:code "gym,address,timestamp,consumption
+string,string,datetime,float
+S,,T,
+Balgowlah Platinum,Shop 67 197-215 Condamine Street Balgowlah 2093,2010-07-02 00:00:00.0,5.3
+Balgowlah Platinum,Shop 67 197-215 Condamine Street Balgowlah 2093,2010-07-02 00:15:00.0,5.5
+Balgowlah Platinum,Shop 67 197-215 Condamine Street Balgowlah 2093,2010-07-02 00:30:00.0,5.1
+Balgowlah Platinum,Shop 67 197-215 Condamine Street Balgowlah 2093,2010-07-02 00:45:00.0,5.3
+" {:title "a very simple scalar encoder" :tag "simple-scalar-encoder"}]]
+
+"The first line lists the field names for the data in the file. These field names are referenced elsewhere
+when specifying the field(s) which need to be predicted, or the encoders to use for that field. The second
+line describes the type fo each field (in Python terms). The third line is OPF-specific. `S` (referring to 
+the `gym` field) indicates that this field, when it changes, indicates a new **sequence** of data records.
+The `T` (for the `timestamp` field) indicates that this field is to be treated as time-series data. These two
+concepts are important in powering the CLA's sequence learning.
+"

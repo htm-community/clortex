@@ -92,6 +92,9 @@ An SDR may also contain a channel which can be used to send the source (or an in
              :changed-off #{6, 111, 220},             
              })
 
+[[:file {:src "test/clortex/domain/sensors/core_test.clj"}]]
+
+[[:file {:src "test/clortex/domain/encoders/core_test.clj"}]]
 
 
 [[:chapter {:title "Data Structures and Functions"}]]
@@ -165,4 +168,10 @@ A Patch is a container for neurons and their connections (synapses). A patch is 
 Patches are responsible for translating a pattern of activity on a set of inputs into the appropriate changes in the neurons.
 "
 
+[[:chapter {:title "License"}]]
 
+"Copyright © 2014 Fergal Byrne, Brenter IT
+
+Distributed under the Apache Public License either version 2.0 or (at
+your option) any later version.
+"

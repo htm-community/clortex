@@ -10,8 +10,16 @@
                  [org.clojure/data.csv "0.1.2"]
                  [org.clojure/data.json "0.2.1"]
                  [enlive "1.1.5"]
-                 [clojure-opennlp "0.3.2"]]
+                 [clojure-opennlp "0.3.2"]
+                 [clojurewerkz/buffy "1.0.0-beta1"]]
   :documentation {:files {"doc/index"
+                          {:input "test/clortex/core_test.clj"
+                           :title "clortex"
+                           :sub-title "Clojure Library for Jeff Hawkins' Hierarchical Temporal Memory"
+                           :author "Fergal Byrne"
+                           :email  "fergalbyrnedublin@gmail.com"
+                           :tracking "UA-31320512-2"}
+						"README.md"
                           {:input "test/clortex/core_test.clj"
                            :title "clortex"
                            :sub-title "Clojure Library for Jeff Hawkins' Hierarchical Temporal Memory"

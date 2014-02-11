@@ -1,5 +1,6 @@
 (ns clortex.domain.encoders.core
-  #_(:require [clortex.domain.sensor.encoders.core :as enc :refer :all]))
+  (:require [clortex.domain.encoders.protocols]
+	[clortex.utils.hash :refer [sha1 mod-2]]))
 
 (defn within+-
 	"returns true if x is within plus or minus window of centre"
@@ -10,16 +11,12 @@
 (defn low-bit? [bit on] (< bit on))
 (defn high-bit? [bit bits on] (<= bits (+ bit on)))
 
-(defn on?-fn
+(defn scalar-on?-fn
   "creates a bit encoder for the scalar encoder" 
   [i min' max' bits on gap half-on w] 
   (let [low-bit-off? (+ min' (* i gap))
         high-bit-off? (- max' (* (- bits i) gap))
         centre (+ min' (* (- i half-on) gap))]
-    #_(do
-	(println (str "bit " i " low? " (low-bit? i on) " high? " (high-bit? i bits on)))
-    (println (str "bit " i " low: " low-bit-off? " high: " high-bit-off?))
-    (println (str "bit " i " centre: " centre " w: " w)))
     (if (low-bit? i on) 
         #(<= % low-bit-off?) 
         (if (high-bit? i bits on)
@@ -33,11 +30,36 @@
       gap (/ (- max' min') (- bits on))
       half-on (/ on 2)
       w (* gap half-on)
-	  encoders (vec (map #(on?-fn % min' max' bits on gap half-on w) (range bits)))
+	  encoders (vec (map #(scalar-on?-fn % min' max' bits on gap half-on w) (range bits)))
 	  encode-all (fn [x] (vec (map #(vec (list % ((encoders %) x))) (range bits))))
       encode (fn [x] (set (vec (map first (filter second (encode-all x))))))]
-    (println (str "gap " gap " half-on: " half-on))
+	{:encoders encoders
+	 :encode-all encode-all
+	 :encode encode}))
+
+(defn hash-bits
+	"makes a list of on-bits using the SHA1 hash of a string"
+	[s len on]
+	(loop [coll (sorted-set) bits (cycle (sha1 s)) bit 0] 
+	  (let [step (first bits) bit (mod-2 (+ bit step) len)] 
+	    (if (= on (count coll)) 
+	        coll 
+	        (recur (conj coll bit) (next bits) bit)))))
+
+(defn hash-on?-fn
+	[i bits on]
+	(fn [s] (if ((hash-bits s bits on) i) true false)))	
+	
+(defn hash-encoder
+	"constructs functions to encode scalars using a hash function"
+	[& {:keys [bits on] :or {bits 127 on 21}}]
+	(let [truthy #(if % true false)
+		encoders (vec (map #(hash-on?-fn % bits on) (range bits)))
+		encode-all (fn [s] (let [hs (hash-bits s bits on)] (vec (map #(vec (list % (truthy (hs %)))) 
+		  (range bits)))))
+		encode #(hash-bits % bits on)]
 	{:encoders encoders
 	 :encode-all encode-all
 	 :encode encode}))
 	
+(def opf-timestamp-re #"(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):([0-9.]+)")
