@@ -6,7 +6,10 @@
 
 [[:section {:title "Background"}]]
 
-"**Hierarchical Temporal Memory** (*HTM*) is a theory of the neocortex developed by Jeff Hawkins in the early-mid 2000's. HTM explains the working of the neocortex as a hierarchy of **regions**, each of which performs a similar algorithm. The algorithm performed in each region is known in the theory as the **Cortical Learning Algorithm** (*CLA*).
+"**Hierarchical Temporal Memory** (*HTM*) is a theory of the neocortex developed by Jeff Hawkins 
+in the early-mid 2000's. HTM explains the working of the neocortex as a hierarchy of **regions**, 
+each of which performs a similar algorithm. The algorithm performed in each region is known in the 
+theory as the **Cortical Learning Algorithm** (*CLA*).
 
 `clortex` is a new implementation of HTM/CLA in Clojure."
 
@@ -82,6 +85,7 @@ Enervation, or inter-region communication, is encoded as a simple **SDR** map, w
 
 An SDR may also contain a channel which can be used to send the source (or an intermediary) data.
 "
+[[{:numbered true}]]
 (def an-sdr {:source "a-uuid",
              :description "an example SDR",
              :type :scalar-encoding,

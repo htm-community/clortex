@@ -29,3 +29,4 @@ the `gym` field) indicates that this field, when it changes, indicates a new **s
 The `T` (for the `timestamp` field) indicates that this field is to be treated as time-series data. These two
 concepts are important in powering the CLA's sequence learning.
 "
+[[:file {:src "test/clortex/domain/sensors/date_test.clj"}]]

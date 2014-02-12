@@ -62,4 +62,3 @@
 	 :encode-all encode-all
 	 :encode encode}))
 	
-(def opf-timestamp-re #"(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):([0-9.]+)")

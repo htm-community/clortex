@@ -7,21 +7,20 @@
 "Encoders are very important in `clortex`. Encoders turn real-world data into a form which `clortex` 
 can understand - **Sparse Distrubuted Representations** (or *SDRs*). Encoders for the human brain include
 retinal cells (or groups of them), as well as cells in the ear, skin, tongue and nose.
-
 "
 
 [[:section {:title "Simple Scalar Encoder"}]]
 
 "Encoders convert input data values into bit-array representations (compatible with Sparse Distributed Representations).
 The simplest encoder converts a scalar value into a bit-array as seen below. We'll set up a very small scalar encoder
-with 4 bits on out of 12, so we can see how it works."
+with 4 bits on out of 12, so we can see how it works ([e.{{sse-def}}](#sse-def))."
 
-[[{:title "a very simple scalar encoder" :tag "simple-scalar-encoder"}]]
+[[{:title "a very simple scalar encoder" :tag "sse-def" :numbered true}]]
 (def enc (scalar-encoder :bits 12 :on 4)) ; uses default params min 0.0, max 100.0
 
 "`scalar-encoder` returns a map of functions which can be used in various parts of the encoding
-of data. We'll define those functions by pulling them out of the map:"
-[[{:tag "simple-functions" :title "pulling out the functions"}]]
+of data. We'll define those functions by pulling them out of the map ([e.{{sse-use}}](#sse-use)):"
+[[{:tag "sse-use" :title "pulling out the functions"  :numbered true}]]
 (def sencode (:encode enc))
 (def sencode-all (:encode-all enc))
 
@@ -36,7 +35,7 @@ of data. We'll define those functions by pulling them out of the map:"
 )
 
 "`scalar-encoder` defaults to NuPIC's scalar encoder parameters:"
-
+[[{:tag "sse-default" :title "default 21/127 bit encoder"  :numbered true}]]
 (def enc (scalar-encoder)) ; uses default params 127 bits, 21 on, min 0.0, max 100.0
 (def sencode (:encode enc))
 
@@ -78,6 +77,7 @@ we use to fill the bit array until the required number of bits is set."
    [9 false] [10 false] [11 false]]
 )
 
+[[{:title "within-test" :hide true}]]
 (fact 
 (within+- 10 8 1.5) => false
 (within+- 10 8 3) => true
