@@ -5,7 +5,10 @@
             :url "http://www.apache.org/licenses/LICENSE-2.0"}
   :profiles {:dev {:dependencies [[midje "1.5.1"]
                 [criterium "0.4.3"]]}}
-  :jvm-opts ["-Xmx4g"]
+  :jvm-opts ^:replace ["-Xmx4g" "-XX:+TieredCompilation" #_"-XX:-TieredStopAtLevel=1" #_"-XX:+PrintCompilation"]
+  :repl-options {
+                 :init (println "Init")
+                 }
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [incanter/incanter-core "1.5.4"]
                  [incanter/incanter-io "1.5.4"]

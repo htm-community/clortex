@@ -5,13 +5,20 @@
 	[clortex.domain.sensors.date :refer [parse-opf-date]]
     #_[clortex.domain.sensor.encoders.core :as enc :refer :all]))
 
-(defn parse-opf-item 
+(defn safe-parse-opf-item 
     [v t] 
     (try (condp = t
 	  "datetime" (parse-opf-date v)
 	  "float" (double (read-string v)) 
 	  v)
 	(catch Exception e (do (println (str "caught exception for value " v)) (throw e)))))
+
+(defn parse-opf-item 
+	    [v t] 
+	    (condp = t
+		  "datetime" (parse-opf-date v)
+		  "float" (double (read-string v)) 
+		  v))
 	
 (defn parse-opf-row
 	[line & {:keys [fields types flags]}]
@@ -34,6 +41,19 @@
 	                  (vec (doall (csv/read-csv in-file))))
         raw-csv (if n (vec (take (first n) fileio))
                   (vec fileio))
+        fields (raw-csv 0)
+        types (raw-csv 1)
+        flags (raw-csv 2)
+        opf-map {:fields fields :types types :flags flags}
+        parsed-data (parse-opf-data raw-csv :fields fields :types types :flags flags)
+        ]
+       {:raw-csv raw-csv :fields fields :types types :flags flags
+	    :parsed-data parsed-data
+	    }))
+	
+(defn load-opf-data [data & n] 
+  (let [raw-csv (if n (vec (take (first n) data))
+                  (vec data))
         fields (raw-csv 0)
         types (raw-csv 1)
         flags (raw-csv 2)

@@ -7,4 +7,9 @@
 (defn parse-opf-date
 	[s]
 	(let [m (re-matches opf-timestamp-re s)]
-	  (if m (apply clj-time.core/date-time (map read-string (map strip-leading-zeros (rest m)))))))
+	  (if m (let [rev (reverse (map strip-leading-zeros (rest m)))
+                  secs (java.lang.Double/parseDouble (first rev))
+                  items (map #(. Integer parseInt %) (rest rev))
+                  ]
+        (apply clj-time.core/date-time (reverse (conj items secs)))))))
+		
