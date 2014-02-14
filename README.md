@@ -1,8 +1,8 @@
-# clortex
+# clortex (pre-alpha)
 
-Clortex is an implementation in Clojure of Jeff Hawkins' Hierarchical Temporal Memory & Cortical Learning Algorithm. See the [docs](https://github.com/fergalbyrne/clortex/doc/index.html) for full details.
+Clortex is an implementation in Clojure of Jeff Hawkins' Hierarchical Temporal Memory & Cortical Learning Algorithm. See the [website](http://fergalbyrne.github.io) for full details.
 
-## Example Usage
+## Example Usage (not yet implemented)
 
 (require '[clortex.core])
 
@@ -14,12 +14,12 @@ Clortex is an implementation in Clojure of Jeff Hawkins' Hierarchical Temporal M
 
 ## Developer Information
 
-* [Documentation](https://github.com/fergalbyrne/clortex/doc/index.html)
+* [Documentation](http://fergalbyrne.github.io)
+* [API and Source Docs](http://fergalbyrne.github.io/uberdoc.html)
 * [GitHub project](https://github.com/fergalbyrne/clortex)
 
 ## License
 
-Copyright © 2014 Fergal Byrne, Brenter IT
+Copyright &copy; 2014 Fergal Byrne, Brenter IT
 
-Distributed under the Apache Public License either version 2.0 or (at
-your option) any later version.
+Distributed under the GNU Public Licence, Version 3 [http://www.gnu.org/licenses/gpl.html](http://www.gnu.org/licenses/gpl.html), same as NuPIC. For commercial use, please contact [Grok Solutions](http://groksolutions.com).

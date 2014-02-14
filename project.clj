@@ -5,8 +5,8 @@
 	This project has just begun as is under daily development. Anything and everything is likely to change drastically without a moment's notice.
 	"
   :url "https://github.com/fergalbyrne/clortex"
-  :license {:name "Apache Public License"
-            :url "http://www.apache.org/licenses/LICENSE-2.0"}
+  :license {:name "GPLv3"
+            :url "http://www.gnu.org/licenses/gpl.html"}
   :profiles {:dev {:dependencies [[midje "1.5.1"]
                 [criterium "0.4.3"]]}}
   :jvm-opts ^:replace ["-Xmx4g" "-XX:+TieredCompilation" #_"-XX:-TieredStopAtLevel=1" #_"-XX:+PrintCompilation"]
