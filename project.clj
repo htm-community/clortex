@@ -1,5 +1,9 @@
 (defproject clortex "0.1.1-SNAPSHOT"
-  :description "Clortex: Implementation in Clojure of Jeff Hawkins' Hierarchical Temporal Memory & Cortical Learning Algorithm"
+  :description "** Clortex: Implementation in Clojure of Jeff Hawkins' Hierarchical Temporal Memory 
+      & Cortical Learning Algorithm.
+      **Warning: Pre-alpha code.**
+	This project has just begun as is under daily development. Anything and everything is likely to change drastically without a moment's notice.
+	"
   :url "https://github.com/fergalbyrne/clortex"
   :license {:name "Apache Public License"
             :url "http://www.apache.org/licenses/LICENSE-2.0"}
@@ -18,6 +22,7 @@
                  [clojure-opennlp "0.3.2"]
                  [clojurewerkz/buffy "1.0.0-beta1"]
                  [clj-time "0.6.0"]]
+  :plugins [[lein-marginalia "0.7.1"]]
   :documentation {:files {"doc/index"
                           {:input "test/clortex/core_test.clj"
                            :title "clortex"

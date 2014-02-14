@@ -1,25 +1,31 @@
 (ns clortex.domain.sensors.core
+"
+## [Pre-alpha] OPF-Style Sensors
+
+Currently reads an OPF-style CSV file and converts it into Clojure data structures.
+
+**TODO**: ?
+"
   #_(:refer-clojure :exclude [second extend])
   (:require [clojure.data.csv :as csv]
 	[clojure.java.io :as io] 
 	[clortex.domain.sensors.date :refer [parse-opf-date]]
     #_[clortex.domain.sensor.encoders.core :as enc :refer :all]))
 
-(defn safe-parse-opf-item 
+(defn parse-opf-item 
+	"converts a CSV item (a string) into a Clojure value"
     [v t] 
-    (try (condp = t
+    (condp = t
 	  "datetime" (parse-opf-date v)
 	  "float" (double (read-string v)) 
-	  v)
+	  v))
+	
+(defn safe-parse-opf-item 
+	"converts a CSV item (a string) into a Clojure value. catches and throws exceptions"
+    [v t] 
+    (try (parse-opf-item v t)
 	(catch Exception e (do (println (str "caught exception for value " v)) (throw e)))))
 
-(defn parse-opf-item 
-	    [v t] 
-	    (condp = t
-		  "datetime" (parse-opf-date v)
-		  "float" (double (read-string v)) 
-		  v))
-	
 (defn parse-opf-row
 	[line & {:keys [fields types flags]}]
 	(for [i (range (count line))]
@@ -36,20 +42,6 @@
   [raw-csv & {:keys [fields types flags]}]
   (map #(parse-opf-row % :fields fields :types types :flags flags) (drop 3 raw-csv)))
 
-(defn load-opf-file [f & n] 
-  (let [fileio 	(with-open [in-file (io/reader f)]
-	                  (vec (doall (csv/read-csv in-file))))
-        raw-csv (if n (vec (take (first n) fileio))
-                  (vec fileio))
-        fields (raw-csv 0)
-        types (raw-csv 1)
-        flags (raw-csv 2)
-        opf-map {:fields fields :types types :flags flags}
-        parsed-data (parse-opf-data raw-csv :fields fields :types types :flags flags)
-        ]
-       {:raw-csv raw-csv :fields fields :types types :flags flags
-	    :parsed-data parsed-data
-	    }))
 	
 (defn load-opf-data [data & n] 
   (let [raw-csv (if n (vec (take (first n) data))
@@ -63,6 +55,11 @@
        {:raw-csv raw-csv :fields fields :types types :flags flags
 	    :parsed-data parsed-data
 	    }))
+
+(defn load-opf-file [f & n] 
+  (let [fileio 	(with-open [in-file (io/reader f)]
+	                  (vec (doall (csv/read-csv in-file))))]
+       load-opf-data fileio n))
 
 (comment 
 	(def hotgym (load-opf-file "resources/hotgym.csv"))

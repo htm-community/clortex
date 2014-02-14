@@ -1,18 +1,29 @@
 (ns clortex.domain.encoders.core
+"
+## [Pre-alpha] Standard Encoders
+
+The Cortical Learning Algorithm consumes data encoded as **Sparse Distributed Representations** (SDRs), which
+are arrays or matrices of binary digits (bits). The functions which convert values into SDRs are `clortex` 
+**encoders**.
+
+**TODO**: Factor out encoder functions. Use Graph or protocols?
+"
   (:require [clortex.domain.encoders.protocols]
 	[clortex.utils.hash :refer [sha1 mod-2]]))
 
 (defn within+-
-	"returns true if x is within plus or minus window of centre"
+	"`true` if `x` is within plus or minus `window` of `centre`"
 	[x centre window]
 	(and (> x (- centre window))
 	     (<= x (+ centre window))))
 
-(defn low-bit? [bit on] (< bit on))
-(defn high-bit? [bit bits on] (<= bits (+ bit on)))
+(defn low-bit? "`true` if `bit` is in the first `on` bits" [bit on] (< bit on))
+(defn high-bit? "`true` if `bit` is in the last `on` bits (of `bits`)" [bit bits on] (<= bits (+ bit on)))
 
 (defn scalar-on?-fn
-  "creates a bit encoder for the scalar encoder" 
+  "creates a bit encoder fn for the scalar encoder. the first `on` bits and the last `on` bits
+   respond to inputs at the bottom and top of the encoder's range. other bits respond to values
+   within a window of their centres." 
   [i min' max' bits on gap half-on w] 
   (let [low-bit-off? (+ min' (* i gap))
         high-bit-off? (- max' (* (- bits i) gap))
@@ -41,17 +52,19 @@
 	"makes a list of on-bits using the SHA1 hash of a string"
 	[s len on]
 	(loop [coll (sorted-set) bits (cycle (sha1 s)) bit 0] 
-	  (let [step (first bits) bit (mod-2 (+ bit step) len)] 
-	    (if (= on (count coll)) 
+	  (let [step (first bits)              ; skip step bits in the set
+            bit (mod-2 (+ bit step) len)]  ; wrap around the set
+	    (if (= on (count coll))            ; enough bits?
 	        coll 
 	        (recur (conj coll bit) (next bits) bit)))))
 
 (defn hash-on?-fn
+	"converts non-nil/nil to true/false"
 	[i bits on]
 	(fn [s] (if ((hash-bits s bits on) i) true false)))	
 	
 (defn hash-encoder
-	"constructs functions to encode scalars using a hash function"
+	"constructs functions to encode values using a hash function"
 	[& {:keys [bits on] :or {bits 127 on 21}}]
 	(let [truthy #(if % true false)
 		encoders (vec (map #(hash-on?-fn % bits on) (range bits)))

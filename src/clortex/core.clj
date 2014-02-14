@@ -1,12 +1,6 @@
-(ns clortex.core)
-(comment (use 'incanter.core
-     'incanter.io)
+(ns clortex.core 
+"
+**Pre-alpha** Entry points for Clortex as a library. Nothing to see here right now.
+")
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
-
-(read-dataset "resources/small-sample.csv") 
-)
 
