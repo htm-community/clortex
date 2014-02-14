@@ -11,7 +11,22 @@ in the early-mid 2000's. HTM explains the working of the neocortex as a hierarch
 each of which performs a similar algorithm. The algorithm performed in each region is known in the 
 theory as the **Cortical Learning Algorithm** (*CLA*).
 
-`clortex` is a new implementation of HTM/CLA in Clojure."
+Clortex is a reimagining and reimplementation of Numenta Platfrom for Intelligent Computing (NuPIC), which
+is also an Open Source project released by Grok Solutions (formerly Numenta), the company founded by Jeff to
+make his theories a practical and commercial reality. NuPIC is a mature, excellent and useful software 
+platform, with a vibrant community, so please join us at [Numenta.org](http://numenta.org).
+
+**Warning: pre-alpha software**. This project is only beginning, and everything you see here will 
+eventually be thrown away as we develop better ways to do things. The design and the APIs are subject 
+to drastic change without a moment's notice.
+
+Clortex is Open Source software, released under the GPL Version 3 (see the end of the README). 
+You are free to use, copy, modify, and redistribute this software according to the terms of that license. 
+For commercial use of the algorithms used in Clortex, please contact 
+[Grok Solutions](http://groksolutions.com), where they'll be happy to discuss commercial 
+licensing.
+
+"
 
 [[:chapter {:title "Requirements"}]]
 
