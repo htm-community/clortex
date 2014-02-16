@@ -86,9 +86,18 @@ Let's implement an RDSE. We'll need a utility function so we always get the same
 (randomer 10) => 3
 (randomer 10) => 7
 )
+
+[[:subsection {:title "Basic Random Distributed Scalar Encoder - Implementation"}]]
 "
-First, 
+The following is a basic RDSE implemented in Clojure. It starts off empty, and adds buckets lazily as new
+values are encoded. **Please let me know if there is anything unclear in this code!**.
 "
+[[:file {:src "src/clortex/domain/encoders/rdse.clj"}]]
+
+[[:subsection {:title "Testing the RDSE on 4-of-12-bit encoding"}]]
+"Let's re-run the tests for the simple 12 bit encoder, where we had very quickly saturated the
+basic `scalar-encoder`."
+
 (fact
 (def encoder (random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4))
 (def buckets (:buckets encoder))
@@ -124,22 +133,39 @@ First,
       "110110000000" 
       "110100100000" 
       "111000100000"]
-(count (set (map to-bitstring (range -50 50)))) => 78
-
+(count (set (map to-bitstring (range -150 150)))) => 182
+)
+"
+As we can see, this encoder is capable of storing 182 out of 495 passible encodings (note that each 
+pair of encoded buckets differs only in one bit, so this is pretty good).
+"
+[[:subsection {:title "A larger encoding: 21-of-128 bits"}]]
+"
+Let's see how much capacity we can get with a more typical 128 bit encoding (standard 21 bits on).
+"
+(fact
 (def encoder (random-sdr-encoder-1 :diameter 1.0 :bits 128 :on 21))
 (def buckets (:buckets encoder))
 (def to-bitstring (:encode-to-bitstring! encoder))
 (str (binomial 512 21)) => "10133758886507113849867996785041062400"
 (to-bitstring 0) => "11111111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
 (to-bitstring 1) => "11110111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000"
-
+)
+"
+We'll put 10000 values into the encoder.
+"
+(comment
 (def n 10000) 
 (to-bitstring n) => "10000000001010001100000000000100000000000010000011000000101010000000000000011100000001000110010000000000000000010000000000010000"
 (println (time (count (set (map to-bitstring (range n))))))
 ; "Elapsed time: 34176.316 msecs"
 (count (set (map to-bitstring (range n)))) => n
-;(count (set (map to-bitstring (range 20000)))) => 20000
-
+)
+"
+OK, everything's looking good. We could try using a smaller encoding and see if it still 
+works.
+"
+(comment
 (def encoder (random-sdr-encoder-1 :diameter 1.0 :bits 64 :on 21))
 (def buckets (:buckets encoder))
 (def to-bitstring (:encode-to-bitstring! encoder))
@@ -153,10 +179,28 @@ First,
 (println (time (count (set (map to-bitstring (range n))))))
 ; "Elapsed time: 644.477 msecs"
 (count (set (map to-bitstring (range n)))) => n
-;(count (set (map to-bitstring (range 20000)))) => 20000
-
-
+(count (set (map to-bitstring (range 10000)))) => 10000
 )
+
+[[:section {:title "Conclusions and Further Improvements"}]]
+"
+It appears from the above tests that indeed the RDSE may be a significant improvement on 
+the current scalar encoder. It comes a lot closer to exploiting the capacity of SDRs
+in the CLA. 
+
+We should investigate how we should measure the effectiveness and efficiency of our
+choice of encoders and encodings. While the RDSE looks promising, how can we be sure? Perhaps the swarming
+algorithms would be able to help us here.
+
+This implementation, as a first draft, seems to be reasonably performant. There may be come tweaks which
+will speed it up a good bit (such as removing all the searching code in `new-sdr` and keeping a running cache
+of nearby SDRs).
+
+Anyone interested in implementing this in C++ and Python, please do so and let us know how you get on.
+
+Finally, there is a bug here. The first bit always seems to be a 1. Not sure where that's happening, but 
+if you can help with that I'd be grateful. 
+"
 #_(fact
 "
 user=> (bench (sort-by :bottom bins))

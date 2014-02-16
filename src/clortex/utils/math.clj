@@ -9,4 +9,8 @@
 (defn random-fn-with-seed [n]
 	(let [r (java.util.Random. n)]
 	  (fn [m] (.nextInt r m))))
+	
+(defn abs-diff [x y] (. Math abs (- x y)))
+
+
 
