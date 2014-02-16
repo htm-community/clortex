@@ -89,10 +89,160 @@ Let's implement an RDSE. We'll need a utility function so we always get the same
 "
 First, 
 "
+(fact
 (def encoder (random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4))
 (def buckets (:buckets encoder))
 (def to-bitstring (:encode-to-bitstring! encoder))
-(fact
+
+(to-bitstring 1) => "111100000000"
+
+(vec (map to-bitstring (range -5 22))) 
+=> ["100011000001" 
+      "100001001001" 
+      "100001100001" 
+      "100001010001" 
+      "100100010001" 
+      "110100000001" 
+      "111100000000" 
+      "101100000010" 
+      "100100000110" 
+      "100100100010" 
+      "100100010010" 
+      "100000010011" 
+      "100000001011" 
+      "100000000111" 
+      "100000100101" 
+      "100010100100" 
+      "100001100100" 
+      "110001100000" 
+      "100001110000" 
+      "100001011000" 
+      "100100011000" 
+      "100100010010" 
+      "110100000010" 
+      "110100000100" 
+      "110110000000" 
+      "110100100000" 
+      "111000100000"]
+(count (set (map to-bitstring (range -50 50)))) => 78
+
+(def encoder (random-sdr-encoder-1 :diameter 1.0 :bits 128 :on 21))
+(def buckets (:buckets encoder))
+(def to-bitstring (:encode-to-bitstring! encoder))
+(str (binomial 512 21)) => "10133758886507113849867996785041062400"
+(to-bitstring 0) => "11111111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+(to-bitstring 1) => "11110111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000"
+
+(def n 10000) 
+(to-bitstring n) => "10000000001010001100000000000100000000000010000011000000101010000000000000011100000001000110010000000000000000010000000000010000"
+(println (time (count (set (map to-bitstring (range n))))))
+; "Elapsed time: 34176.316 msecs"
+(count (set (map to-bitstring (range n)))) => n
+;(count (set (map to-bitstring (range 20000)))) => 20000
+
+(def encoder (random-sdr-encoder-1 :diameter 1.0 :bits 64 :on 21))
+(def buckets (:buckets encoder))
+(def to-bitstring (:encode-to-bitstring! encoder))
+(str (binomial 64 21)) => "41107996877935680"
+(to-bitstring 0) => "1111111111111111111110000000000000000000000000000000000000000000"
+(to-bitstring 1) => "1111011111111111111110000000000000000010000000000000000000000000"
+
+(def n 1000) 
+(to-bitstring (dec n)) => "1010100100000010010000100001000000001000000110000011110001111101"
+(to-bitstring n) => "1000100100000010010000100001000000001000001110000011110001111101"
+(println (time (count (set (map to-bitstring (range n))))))
+; "Elapsed time: 644.477 msecs"
+(count (set (map to-bitstring (range n)))) => n
+;(count (set (map to-bitstring (range 20000)))) => 20000
+
+
+)
+#_(fact
+"
+user=> (bench (sort-by :bottom bins))
+WARNING: Final GC required 2.157308813480153 % of runtime
+Evaluation count : 521760 in 60 samples of 8696 calls.
+             Execution time mean : 116.827998 µs
+    Execution time std-deviation : 953.353449 ns
+   Execution time lower quantile : 114.676491 µs ( 2.5%)
+   Execution time upper quantile : 118.637151 µs (97.5%)
+                   Overhead used : 2.211817 ns
+
+user=> (bench (vec (take 21 sorted-bins)))
+Evaluation count : 32109840 in 60 samples of 535164 calls.
+             Execution time mean : 1.900169 µs
+    Execution time std-deviation : 21.873260 ns
+   Execution time lower quantile : 1.868097 µs ( 2.5%)
+   Execution time upper quantile : 1.946967 µs (97.5%)
+                   Overhead used : 2.211817 ns
+
+Found 2 outliers in 60 samples (3.3333 %)
+	low-severe	 2 (3.3333 %)
+ Variance from outliers : 1.6389 % Variance is slightly inflated by outliers
+
+user=> (bench (vec (take 21 (reverse sorted-bins))))
+Evaluation count : 414600 in 60 samples of 6910 calls.
+             Execution time mean : 147.253999 µs
+    Execution time std-deviation : 1.433901 µs
+   Execution time lower quantile : 145.060885 µs ( 2.5%)
+   Execution time upper quantile : 150.177477 µs (97.5%)
+                   Overhead used : 2.211817 ns
+
+Found 2 outliers in 60 samples (3.3333 %)
+	low-severe	 2 (3.3333 %)
+ Variance from outliers : 1.6389 % Variance is slightly inflated by outliers
+
+user=> (bench (vec (reverse (drop (- (count sorted-bins) 21) sorted-bins))))
+Evaluation count : 1311780 in 60 samples of 21863 calls.
+             Execution time mean : 47.140705 µs
+    Execution time std-deviation : 1.096611 µs
+   Execution time lower quantile : 45.709767 µs ( 2.5%)
+   Execution time upper quantile : 49.838158 µs (97.5%)
+                   Overhead used : 2.211817 ns
+
+Found 3 outliers in 60 samples (5.0000 %)
+	low-severe	 2 (3.3333 %)
+	low-mild	 1 (1.6667 %)
+ Variance from outliers : 11.0117 % Variance is moderately inflated by outliers
+
+user=> (bench (vec (reduce conj #{} (flatten (map :sdr nearest-buckets)))))
+Evaluation count : 184080 in 60 samples of 3068 calls.
+             Execution time mean : 325.097234 µs
+    Execution time std-deviation : 3.519885 µs
+   Execution time lower quantile : 319.770605 µs ( 2.5%)
+   Execution time upper quantile : 332.488336 µs (97.5%)
+                   Overhead used : 2.211817 ns
+
+Found 1 outliers in 60 samples (1.6667 %)
+	low-severe	 1 (1.6667 %)
+ Variance from outliers : 1.6389 % Variance is slightly inflated by outliers
+
+user=> (bench (vec (sort (reduce #(clojure.set/union %1 (set (:sdr %2))) #{} nearest-buckets))))
+Evaluation count : 442680 in 60 samples of 7378 calls.
+             Execution time mean : 138.537716 µs
+    Execution time std-deviation : 2.199742 µs
+   Execution time lower quantile : 135.486945 µs ( 2.5%)
+   Execution time upper quantile : 141.462538 µs (97.5%)
+                   Overhead used : 2.211817 ns
+
+Found 1 outliers in 60 samples (1.6667 %)
+	low-severe	 1 (1.6667 %)
+ Variance from outliers : 1.6389 % Variance is slightly inflated by outliers
+
+user=> (bench (apply str (vec (map #(if (contains? (set sdr) %) 1 0) (range bits)))))
+Evaluation count : 129060 in 60 samples of 2151 calls.
+             Execution time mean : 469.761371 µs
+    Execution time std-deviation : 6.048208 µs
+   Execution time lower quantile : 460.879704 µs ( 2.5%)
+   Execution time upper quantile : 480.632377 µs (97.5%)
+                   Overhead used : 2.211817 ns
+
+Found 1 outliers in 60 samples (1.6667 %)
+	low-severe	 1 (1.6667 %)
+ Variance from outliers : 1.6389 % Variance is slightly inflated by outliers
+
+"	
+
 (find-bucket! 10 buckets) => nil
 (add-bucket! 10 buckets) 
 (find-bucket! 10 buckets) => {:bottom 9.5, :counter 1, :index 0, :read 0, :sdr [0 1 2 3], :top 10.5}
@@ -126,8 +276,7 @@ First,
 (def buckets (:buckets encoder))
 (def to-bitstring (:encode-to-bitstring! encoder))
 (str (binomial 512 21)) => "10133758886507113849867996785041062400"
-(count (set (map to-bitstring (range -1000 1000)))) => 1544
+;(count (set (map to-bitstring (range -1000 1000)))) => 1544
 )
-#_(fact 
-)
+
 

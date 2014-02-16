@@ -381,50 +381,71 @@ header div.heading {
 <span class="p">(</span><span class="nf">randomer</span> <span class="mi">10</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="mi">7</span>
 </pre></div>
 </div><div><p>First, </p></div><div><div class="highlight"><pre><span class="p">(</span><span class="k">def </span><span class="nv">encoder</span> <span class="p">(</span><span class="nf">random-sdr-encoder-1</span> <span class="ss">:diameter</span> <span class="mf">1.0</span> <span class="ss">:bits</span> <span class="mi">12</span> <span class="ss">:on</span> <span class="mi">4</span><span class="p">))</span>
-
 <span class="p">(</span><span class="k">def </span><span class="nv">buckets</span> <span class="p">(</span><span class="ss">:buckets</span> <span class="nv">encoder</span><span class="p">))</span>
-
 <span class="p">(</span><span class="k">def </span><span class="nv">to-bitstring</span> <span class="p">(</span><span class="ss">:encode-to-bitstring!</span> <span class="nv">encoder</span><span class="p">))</span>
-</pre></div>
-</div><div><div class="highlight"><pre><span class="p">(</span><span class="nf">find-bucket!</span> <span class="mi">10</span> <span class="nv">buckets</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="nv">nil</span>
-<span class="p">(</span><span class="nf">add-bucket!</span> <span class="mi">10</span> <span class="nv">buckets</span><span class="p">)</span> 
-<span class="p">(</span><span class="nf">find-bucket!</span> <span class="mi">10</span> <span class="nv">buckets</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="p">{</span><span class="ss">:bottom</span> <span class="mf">9.5</span>, <span class="ss">:counter</span> <span class="mi">1</span>, <span class="ss">:index</span> <span class="mi">0</span>, <span class="ss">:read</span> <span class="mi">0</span>, <span class="ss">:sdr</span> <span class="p">[</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]</span>, <span class="ss">:top</span> <span class="mf">10.5</span><span class="p">}</span>
 
-<span class="p">(</span><span class="nf">find-bucket!</span> <span class="mi">20</span> <span class="nv">buckets</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="nv">nil</span>
-<span class="p">(</span><span class="nf">add-bucket!</span> <span class="mi">20</span> <span class="nv">buckets</span><span class="p">)</span>
-<span class="p">(</span><span class="nf">find-bucket!</span> <span class="mi">20</span> <span class="nv">buckets</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="p">{</span><span class="ss">:bottom</span> <span class="mf">19.5</span>, <span class="ss">:counter</span> <span class="mi">1</span>, <span class="ss">:index</span> <span class="mi">10</span>, <span class="ss">:read</span> <span class="mi">0</span>, <span class="ss">:sdr</span> <span class="p">[</span><span class="mi">7</span> <span class="mi">9</span> <span class="mi">10</span> <span class="mi">11</span><span class="p">]</span>, <span class="ss">:top</span> <span class="mf">20.5</span><span class="p">}</span>
-
-<span class="p">(</span><span class="nf">find-bucket!</span> <span class="mi">0</span> <span class="nv">buckets</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="nv">nil</span>
-<span class="p">(</span><span class="nf">add-bucket!</span> <span class="mi">0</span> <span class="nv">buckets</span><span class="p">)</span>
-<span class="p">(</span><span class="nf">find-bucket!</span> <span class="mi">0</span> <span class="nv">buckets</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="p">{</span><span class="ss">:bottom</span> <span class="mf">-0.5</span>, <span class="ss">:counter</span> <span class="mi">1</span>, <span class="ss">:index</span> <span class="mi">20</span>, <span class="ss">:read</span> <span class="mi">0</span>, <span class="ss">:sdr</span> <span class="p">[</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">10</span><span class="p">]</span>, <span class="ss">:top</span> <span class="mf">0.5</span><span class="p">}</span>
-
-<span class="p">(</span><span class="nf">to-bitstring</span> <span class="mi">1</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="s">&quot;111000000100&quot;</span>
+<span class="p">(</span><span class="nf">to-bitstring</span> <span class="mi">1</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="s">&quot;111100000000&quot;</span>
 
 <span class="p">(</span><span class="nf">vec</span> <span class="p">(</span><span class="nb">map </span><span class="nv">to-bitstring</span> <span class="p">(</span><span class="nb">range </span><span class="mi">-5</span> <span class="mi">22</span><span class="p">)))</span> 
-<span class="nv">=&gt;</span> <span class="p">[</span><span class="s">&quot;111010000000&quot;</span> 
-    <span class="s">&quot;111000100000&quot;</span> 
+<span class="nv">=&gt;</span> <span class="p">[</span><span class="s">&quot;100011000001&quot;</span> 
+    <span class="s">&quot;100001001001&quot;</span> 
+    <span class="s">&quot;100001100001&quot;</span> 
+    <span class="s">&quot;100001010001&quot;</span> 
+    <span class="s">&quot;100100010001&quot;</span> 
+    <span class="s">&quot;110100000001&quot;</span> 
     <span class="s">&quot;111100000000&quot;</span> 
-    <span class="s">&quot;111000000001&quot;</span> 
-    <span class="s">&quot;111000100000&quot;</span> 
-    <span class="s">&quot;111000000010&quot;</span> 
-    <span class="s">&quot;111000000100&quot;</span> 
-    <span class="s">&quot;111100000000&quot;</span> 
-    <span class="s">&quot;111000000001&quot;</span> <span class="s">&quot;111001000000&quot;</span> <span class="s">&quot;111000001000&quot;</span> <span class="s">&quot;111010000000&quot;</span> <span class="s">&quot;111000010000&quot;</span> 
-<span class="s">&quot;111010000000&quot;</span> <span class="s">&quot;111000001000&quot;</span> <span class="s">&quot;111100000000&quot;</span> <span class="s">&quot;011100010000&quot;</span> <span class="s">&quot;001100010001&quot;</span> 
-<span class="s">&quot;000100010011&quot;</span> <span class="s">&quot;000010010011&quot;</span> <span class="s">&quot;001000010011&quot;</span> <span class="s">&quot;100000010011&quot;</span> <span class="s">&quot;000000110011&quot;</span> 
-<span class="s">&quot;001000010011&quot;</span> <span class="s">&quot;100000010011&quot;</span> <span class="s">&quot;000000010111&quot;</span> <span class="s">&quot;000000001111&quot;</span><span class="p">]</span>
+    <span class="s">&quot;101100000010&quot;</span> 
+    <span class="s">&quot;100100000110&quot;</span> 
+    <span class="s">&quot;100100100010&quot;</span> 
+    <span class="s">&quot;100100010010&quot;</span> 
+    <span class="s">&quot;100000010011&quot;</span> 
+    <span class="s">&quot;100000001011&quot;</span> 
+    <span class="s">&quot;100000000111&quot;</span> 
+    <span class="s">&quot;100000100101&quot;</span> 
+    <span class="s">&quot;100010100100&quot;</span> 
+    <span class="s">&quot;100001100100&quot;</span> 
+    <span class="s">&quot;110001100000&quot;</span> 
+    <span class="s">&quot;100001110000&quot;</span> 
+    <span class="s">&quot;100001011000&quot;</span> 
+    <span class="s">&quot;100100011000&quot;</span> 
+    <span class="s">&quot;100100010010&quot;</span> 
+    <span class="s">&quot;110100000010&quot;</span> 
+    <span class="s">&quot;110100000100&quot;</span> 
+    <span class="s">&quot;110110000000&quot;</span> 
+    <span class="s">&quot;110100100000&quot;</span> 
+    <span class="s">&quot;111000100000&quot;</span><span class="p">]</span>
+<span class="p">(</span><span class="nb">count </span><span class="p">(</span><span class="nb">set </span><span class="p">(</span><span class="nb">map </span><span class="nv">to-bitstring</span> <span class="p">(</span><span class="nb">range </span><span class="mi">-50</span> <span class="mi">50</span><span class="p">))))</span> <span class="nv">=&gt;</span> <span class="mi">78</span>
 
-
-<span class="p">(</span><span class="k">def </span><span class="nv">encoder</span> <span class="p">(</span><span class="nf">random-sdr-encoder-1</span> <span class="ss">:diameter</span> <span class="mf">1.0</span> <span class="ss">:bits</span> <span class="mi">512</span> <span class="ss">:on</span> <span class="mi">21</span><span class="p">))</span>
+<span class="p">(</span><span class="k">def </span><span class="nv">encoder</span> <span class="p">(</span><span class="nf">random-sdr-encoder-1</span> <span class="ss">:diameter</span> <span class="mf">1.0</span> <span class="ss">:bits</span> <span class="mi">128</span> <span class="ss">:on</span> <span class="mi">21</span><span class="p">))</span>
 <span class="p">(</span><span class="k">def </span><span class="nv">buckets</span> <span class="p">(</span><span class="ss">:buckets</span> <span class="nv">encoder</span><span class="p">))</span>
 <span class="p">(</span><span class="k">def </span><span class="nv">to-bitstring</span> <span class="p">(</span><span class="ss">:encode-to-bitstring!</span> <span class="nv">encoder</span><span class="p">))</span>
 <span class="p">(</span><span class="nb">str </span><span class="p">(</span><span class="nf">binomial</span> <span class="mi">512</span> <span class="mi">21</span><span class="p">))</span> <span class="nv">=&gt;</span> <span class="s">&quot;10133758886507113849867996785041062400&quot;</span>
-<span class="p">(</span><span class="nb">count </span><span class="p">(</span><span class="nb">set </span><span class="p">(</span><span class="nb">map </span><span class="nv">to-bitstring</span> <span class="p">(</span><span class="nb">range </span><span class="mi">-1000</span> <span class="mi">1000</span><span class="p">))))</span> <span class="nv">=&gt;</span> <span class="mi">1544</span>
+<span class="p">(</span><span class="nf">to-bitstring</span> <span class="mi">0</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="s">&quot;11111111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000&quot;</span>
+<span class="p">(</span><span class="nf">to-bitstring</span> <span class="mi">1</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="s">&quot;11110111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000&quot;</span>
+
+<span class="p">(</span><span class="k">def </span><span class="nv">n</span> <span class="mi">10000</span><span class="p">)</span> 
+<span class="p">(</span><span class="nf">to-bitstring</span> <span class="nv">n</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="s">&quot;10000000001010001100000000000100000000000010000011000000101010000000000000011100000001000110010000000000000000010000000000010000&quot;</span>
+<span class="p">(</span><span class="nb">println </span><span class="p">(</span><span class="nb">time </span><span class="p">(</span><span class="nb">count </span><span class="p">(</span><span class="nb">set </span><span class="p">(</span><span class="nb">map </span><span class="nv">to-bitstring</span> <span class="p">(</span><span class="nb">range </span><span class="nv">n</span><span class="p">))))))</span>
+<span class="c1">; &quot;Elapsed time: 34176.316 msecs&quot;</span>
+<span class="p">(</span><span class="nb">count </span><span class="p">(</span><span class="nb">set </span><span class="p">(</span><span class="nb">map </span><span class="nv">to-bitstring</span> <span class="p">(</span><span class="nb">range </span><span class="nv">n</span><span class="p">))))</span> <span class="nv">=&gt;</span> <span class="nv">n</span>
+<span class="c1">;(count (set (map to-bitstring (range 20000)))) =&gt; 20000</span>
+
+<span class="p">(</span><span class="k">def </span><span class="nv">encoder</span> <span class="p">(</span><span class="nf">random-sdr-encoder-1</span> <span class="ss">:diameter</span> <span class="mf">1.0</span> <span class="ss">:bits</span> <span class="mi">64</span> <span class="ss">:on</span> <span class="mi">21</span><span class="p">))</span>
+<span class="p">(</span><span class="k">def </span><span class="nv">buckets</span> <span class="p">(</span><span class="ss">:buckets</span> <span class="nv">encoder</span><span class="p">))</span>
+<span class="p">(</span><span class="k">def </span><span class="nv">to-bitstring</span> <span class="p">(</span><span class="ss">:encode-to-bitstring!</span> <span class="nv">encoder</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">str </span><span class="p">(</span><span class="nf">binomial</span> <span class="mi">64</span> <span class="mi">21</span><span class="p">))</span> <span class="nv">=&gt;</span> <span class="s">&quot;41107996877935680&quot;</span>
+<span class="p">(</span><span class="nf">to-bitstring</span> <span class="mi">0</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="s">&quot;1111111111111111111110000000000000000000000000000000000000000000&quot;</span>
+<span class="p">(</span><span class="nf">to-bitstring</span> <span class="mi">1</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="s">&quot;1111011111111111111110000000000000000010000000000000000000000000&quot;</span>
+
+<span class="p">(</span><span class="k">def </span><span class="nv">n</span> <span class="mi">1000</span><span class="p">)</span> 
+<span class="p">(</span><span class="nf">to-bitstring</span> <span class="p">(</span><span class="nb">dec </span><span class="nv">n</span><span class="p">))</span> <span class="nv">=&gt;</span> <span class="s">&quot;1010100100000010010000100001000000001000000110000011110001111101&quot;</span>
+<span class="p">(</span><span class="nf">to-bitstring</span> <span class="nv">n</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="s">&quot;1000100100000010010000100001000000001000001110000011110001111101&quot;</span>
+<span class="p">(</span><span class="nb">println </span><span class="p">(</span><span class="nb">time </span><span class="p">(</span><span class="nb">count </span><span class="p">(</span><span class="nb">set </span><span class="p">(</span><span class="nb">map </span><span class="nv">to-bitstring</span> <span class="p">(</span><span class="nb">range </span><span class="nv">n</span><span class="p">))))))</span>
+<span class="c1">; &quot;Elapsed time: 644.477 msecs&quot;</span>
+<span class="p">(</span><span class="nb">count </span><span class="p">(</span><span class="nb">set </span><span class="p">(</span><span class="nb">map </span><span class="nv">to-bitstring</span> <span class="p">(</span><span class="nb">range </span><span class="nv">n</span><span class="p">))))</span> <span class="nv">=&gt;</span> <span class="nv">n</span>
+<span class="c1">;(count (set (map to-bitstring (range 20000)))) =&gt; 20000</span>
 </pre></div>
-</div><div><div class="highlight"><pre><span class="o">#</span><span class="nv">_</span><span class="p">(</span><span class="nf">fact</span> 
-<span class="p">)</span>
-</pre></div>
-</div></section></body><script type="text/javascript">var metas = document.getElementsByTagName('meta');
+</div><div></div></section></body><script type="text/javascript">var metas = document.getElementsByTagName('meta');
 var i;
 if (navigator.userAgent.match(/iPhone/i)) {
   for (i=0; i<metas.length; i++) {

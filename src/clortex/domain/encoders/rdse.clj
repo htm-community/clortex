@@ -9,7 +9,7 @@
 			c
 			(compare x y))))
 
-(defn ordered-bins [bins] (sort-by bottom-sorter bins))
+(defn ordered-bins [bins] (sort-by :bottom bins))
 
 (defn find-bucket! 
 	[value buckets] 
@@ -38,40 +38,47 @@
 (defn n-bins [buckets] (count (:bins buckets)))
 
 (defn search-starter [bucket] {:index nil :best Integer/MAX_VALUE  :mine (:bottom bucket)})
+(defn sdr->bitstring [sdr bits] (apply str (vec (map #(if (contains? (set sdr) %) 1 0) (range bits)))))
 
 (defn new-sdr 
 	[bucket buckets]
 	(let [bins (:bins buckets)
-	      on (:on buckets)
-	      bits (:bits buckets)
+	      ^int on (:on buckets)
+	      ^int bits (:bits buckets)
 	      randomer (:randomer buckets)]
 	  (if (empty? bins) 
 	    (vec (range on))
-	    (let [nearest-find (reduce min-distance (search-starter bucket) bins)
-;	          sorted-bins (ordered-bins bins)
-;dbg (println (str "nearest-find\n" nearest-find))
-;dbg (println (str "sorted\n" (map :bottom sorted-bins)))
-	          nearest (bins (:index nearest-find))
-			  nearest-sdr (:sdr nearest)
-			  change-bit (if (> (:bottom bucket) (:bottom nearest)) 
-			                 (first nearest-sdr) 
-			                 (last nearest-sdr))
-			   free-bits (difference (set (range bits)) (set nearest-sdr))
-			   new-bit-pos (randomer (count free-bits))
-;dbg (println (str "new-bit-pos\t" new-bit-pos "\nfree-bits\t" free-bits))
-			
-			   new-bit ((vec free-bits) new-bit-pos)
-;dbg (println (str "nearest\t" nearest "\nbucket\t" bucket "\nnearest-sdr\t" nearest-sdr))
-			   new-sdr (vec (conj (disj (set nearest-sdr) change-bit) new-bit))
+	    (let [sorted-bins (sort-by :bottom bins)
+              above? (> (:bottom bucket) (:bottom (first sorted-bins)))
+              ;nearest-buckets (vec (take on (if above? (reverse sorted-bins) sorted-bins)))
+              nearest-buckets (if above? 
+	             (vec (reverse (drop (- (count sorted-bins) on) sorted-bins)))
+	             (vec (take on sorted-bins)))
+              nearest-bits (vec (sort (reduce #(clojure.set/union %1 (set (:sdr %2))) #{} nearest-buckets)))
+	          previous-sdr (:sdr (first nearest-buckets))
+	          previous-sdr (if above? previous-sdr (vec (reverse previous-sdr)))
+	          remove-bit (previous-sdr (inc (randomer (dec on))))
+              same-bits (vec (disj (set previous-sdr) remove-bit))
+              free-bits (vec (difference (set (range bits)) (set nearest-bits)))
+              new-bit-pos (randomer (count free-bits))
+              new-bit (free-bits new-bit-pos)
+              new-sdr (vec (sort (conj (set same-bits) new-bit)))              
+;		dbg (println (str (:bottom bucket) "\t" previous-sdr "\t" above? "\t" #_(vec (map :bottom nearest-buckets)) "\tbits:" nearest-bits))
+;		dbg (println (str (/ new-bit-pos (count free-bits)) "\tkeep" same-bits " + " new-bit "\t=> " new-sdr "\t free: " free-bits))
               ]
 		  new-sdr))))
 
 (defn add-to-buckets! 
 	[buckets bucket]
-	(let [sdr (new-sdr bucket @buckets)
-          sdr-bucket (conj bucket {:sdr sdr})]
+	(let [bits (:bits @buckets)
+	      sdr (new-sdr bucket @buckets)
+	      sdr-bucket (conj bucket {:sdr sdr})
+	      ;bitstring (sdr->bitstring sdr bits)
+          ;sdr-bucket (conj bucket {:sdr sdr :bitstring bitstring})
+          ]
 ;(println (str "adding bucket\t" sdr-bucket))
-	(swap! buckets update-in [:bins] conj sdr-bucket)))	
+	(swap! buckets update-in [:bins] conj sdr-bucket)
+	sdr-bucket))	
 
 (defn add-bucket! 
 	[value buckets]
@@ -91,14 +98,14 @@
 		))))
 
 (defn random-sdr-encoder-1
-	[& {:keys [diameter bits on] :or {diameter 1.0 bits 127 on 21}}]
+	[& {:keys [^Double diameter ^int bits ^int on] :or {diameter 1.0 bits 127 on 21}}]
 	(let [randomer (random-fn-with-seed 123456)
 		  buckets (atom {:diameter diameter :bits bits :on on :randomer randomer :bins []})		
 		  encode-to-bitstring! 
-		    (fn [x] 
+		    (fn [^Double x] 
 			  (if-not (find-bucket! x buckets) (add-bucket! x buckets))
-			  (let [sdr (set (:sdr (find-bucket! x buckets)))]
-			     (apply str (vec (map #(if (contains? sdr %) 1 0) (range bits))))))]
+			  (sdr->bitstring (:sdr (find-bucket! x buckets)) bits)
+			  )]
 		{:buckets buckets
 		 :encode-to-bitstring! encode-to-bitstring!}))
 		
