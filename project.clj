@@ -30,10 +30,10 @@
                            :author "Fergal Byrne"
                            :email  "fergalbyrnedublin@gmail.com"
                            :tracking "UA-31320512-2"}
-						"README.md"
-                          {:input "test/clortex/core_test.clj"
-                           :title "clortex"
-                           :sub-title "Clojure Library for Jeff Hawkins' Hierarchical Temporal Memory"
+						"doc/rdse"
+                          {:input "test/clortex/rdse_test.clj"
+                           :title "Random Distributed Scalar Encoder"
+                           :sub-title "Experiments on improving the Scalar Encoder"
                            :author "Fergal Byrne"
                            :email  "fergalbyrnedublin@gmail.com"
                            :tracking "UA-31320512-2"}

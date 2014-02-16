@@ -28,6 +28,7 @@ are arrays or matrices of binary digits (bits). The functions which convert valu
   (let [low-bit-off? (+ min' (* i gap))
         high-bit-off? (- max' (* (- bits i) gap))
         centre (+ min' (* (- i half-on) gap))]
+	#_(println (str "i " i "\tlow-bit? " (low-bit? i on) "\thigh-bit? " (high-bit? i bits on) "\tcentre " centre))
     (if (low-bit? i on) 
         #(<= % low-bit-off?) 
         (if (high-bit? i bits on)
@@ -43,10 +44,13 @@ are arrays or matrices of binary digits (bits). The functions which convert valu
       w (* gap half-on)
 	  encoders (vec (map #(scalar-on?-fn % min' max' bits on gap half-on w) (range bits)))
 	  encode-all (fn [x] (vec (map #(vec (list % ((encoders %) x))) (range bits))))
-      encode (fn [x] (set (vec (map first (filter second (encode-all x))))))]
+      encode (fn [x] (set (vec (map first (filter second (encode-all x))))))
+      encode-to-bitstring (fn [x] (apply str (vec (map #(if ((encoders %) x) 1 0) (range bits)))))
+ #_(fn [x] (str (doall (map #(if (second %) 1 0) (encode-all x)))))]
 	{:encoders encoders
 	 :encode-all encode-all
-	 :encode encode}))
+	 :encode encode
+	 :encode-to-bitstring encode-to-bitstring}))
 
 (defn hash-bits
 	"makes a list of on-bits using the SHA1 hash of a string"
