@@ -29,28 +29,28 @@
                            :sub-title "Clojure Library for Jeff Hawkins' Hierarchical Temporal Memory"
                            :author "Fergal Byrne"
                            :email  "fergalbyrnedublin@gmail.com"
-                           :tracking "UA-31320512-2"}
+                           :tracking "UA-44409012-2"}
 						"doc/rdse"
                           {:input "test/clortex/rdse_test.clj"
                            :title "Random Distributed Scalar Encoder"
                            :sub-title "Experiments on improving the Scalar Encoder"
                            :author "Fergal Byrne"
                            :email  "fergalbyrnedublin@gmail.com"
-                           :tracking "UA-31320512-2"}
+                           :tracking "UA-44409012-2"}
 						  "doc/encoders"
                           {:input "test/clortex/domain/encoders/core_test.clj"
                            :title "clortex encoders"
                            :sub-title "Encoding Values into CLA SDRs"
                            :author "Fergal Byrne"
                            :email  "fergalbyrnedublin@gmail.com"
-                           :tracking "UA-31320512-2"}
+                           :tracking "UA-44409012-2"}
 						"doc/sensors"
                           {:input "test/clortex/domain/sensors/core_test.clj"
                            :title "clortex sensors"
                            :sub-title "Bringing Data into the CLA"
                            :author "Fergal Byrne"
                            :email  "fergalbyrnedublin@gmail.com"
-                           :tracking "UA-31320512-2"}
+                           :tracking "UA-44409012-2"}
                           }}
   :eval-in-leiningen true)
 
