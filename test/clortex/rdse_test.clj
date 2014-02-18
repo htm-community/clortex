@@ -165,7 +165,6 @@ We'll put 10000 values into the encoder.
 OK, everything's looking good. We could try using a smaller encoding and see if it still 
 works.
 "
-(comment
 (def encoder (random-sdr-encoder-1 :diameter 1.0 :bits 64 :on 21))
 (def buckets (:buckets encoder))
 (def to-bitstring (:encode-to-bitstring! encoder))
@@ -180,6 +179,7 @@ works.
 ; "Elapsed time: 644.477 msecs"
 (count (set (map to-bitstring (range n)))) => n
 (count (set (map to-bitstring (range 10000)))) => 10000
+(comment
 )
 
 [[:subsection {:title "Encoding is dependent on order of data"}]]

@@ -7,22 +7,24 @@
     "sorts buckets by their bottom value"
     [x y]
     (let [c (compare (x :bottom) (y :bottom))]
-         (if (not= c 0)
-             c
-             (compare x y))))
+         (if (zero? c)
+             (compare x y)
+             c)))
 
 (defn ordered-bins [bins] (sort-by :bottom bins))
 
-(defn find-bucket! 
+(defn find-bucket
     "returns the bucket which covers value. updates the 'read' slot of the bucket"
-    [^Double value buckets] 
-    (when-let [bucket (first (filter #(<= (:bottom %) value (:top %)) (:bins @buckets)))]
-        (swap! buckets update-in [:bins (:index bucket) :read] inc)
+    [^double value buckets] 
+    (when-let [bucket (first (filter #(<= (:bottom %) value (:top %)) (:bins buckets)))]
         bucket))
+
+; removed from find-bucket to make it pure
+; (swap! buckets update-in [:bins (:index bucket) :read] inc)
 
 (defn new-bucket 
     "returns a bucket map given centre, radius and index"
-    [^Double value ^Double radius ^long index]
+    [^double value ^double radius ^long index]
     {:bottom (- value radius) :top (+ value radius) :index index :counter 1 :read 0})
 
 (defn min-distance 
@@ -93,17 +95,17 @@
 	           (add-to-buckets! buckets (new-bucket (- (mn) radius) radius (n-bins @buckets))))))))
 
 (defn random-sdr-encoder-1
-    [& {:keys [^Double diameter ^int bits ^int on] :or {diameter 1.0 bits 127 on 21}}]
+    [& {:keys [^double diameter ^int bits ^int on] :or {diameter 1.0 bits 127 on 21}}]
     (let [randomer 
             (random-fn-with-seed 123456)
           buckets 
             (atom {:diameter diameter :bits bits :on on :randomer randomer :bins []})		
           encode! 
-            (fn [^Double x] 
-                (if-not (find-bucket! x buckets) (add-bucket! x buckets))
-                (sort (:sdr (find-bucket! x buckets))))
+            (fn [^double x] 
+                (if-not (find-bucket x @buckets) (add-bucket! x buckets))
+                (sort (:sdr (find-bucket x @buckets))))
           encode-to-bitstring! 
-            (fn [^Double x] 
+            (fn [^double x] 
                 (sdr->bitstring (encode! x) bits))]
         {:buckets buckets
          :encode encode!
