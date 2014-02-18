@@ -205,25 +205,28 @@ is presented:"
 (fact
 
 (defn precalculate [x f] 
-    (let [step 10 
-          outer-limit (inc (int (/ x step)))] 
-       (f (- 0 outer-limit)) 
-       (f outer-limit)) 
+    (let [step 10.0 
+          bands (inc (int (/ x step)))] 
+       (dorun (for [band (map inc (range bands))]
+           (do (f (- 0 (* step band))) 
+               (f (* step band))
+;(println (str "precalculating [" (- 0 (* step band)) "," (* step band) "]"))
+           ))))
     (f x))
 
 (def to-bitstring (:encode-to-bitstring! (random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4)))
 (defn to-bitstring-pre [x] (precalculate x to-bitstring))
 
-(to-bitstring-pre 0) => "101100000001" ;; causes (-10,10) to be encoded in advance
-(to-bitstring-pre 1) => "101000010001"
-(to-bitstring-pre 2) => "101001000001" ;; first encoding of 2
+(to-bitstring-pre 0) => "100101000001" ;; causes (-10,10) to be encoded in advance
+(to-bitstring-pre 1) => "100001010001"
+(to-bitstring-pre 2) => "100000011001" ;; first encoding of 2
 ;; reset
 (def to-bitstring (:encode-to-bitstring! (random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4)))
 (defn to-bitstring-pre [x] (precalculate x to-bitstring))
-(to-bitstring-pre 0) =>  "101100000001"
-(to-bitstring-pre 1) =>  "101000010001"
-(to-bitstring-pre -1) => "111100000000"
-(to-bitstring-pre 2) =>  "101001000001" ;; the same encoding of 2
+(to-bitstring-pre 0) =>  "100101000001"
+(to-bitstring-pre 1) =>  "100001010001"
+(to-bitstring-pre -1) => "100100000101"
+(to-bitstring-pre 2) =>  "100000011001" ;; the same encoding of 2
 
 )
 [[:section {:title "Conclusions and Further Improvements"}]]
