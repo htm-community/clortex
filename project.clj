@@ -44,6 +44,13 @@
                            :author "Fergal Byrne"
                            :email  "fergalbyrnedublin@gmail.com"
                            :tracking "UA-44409012-2"}
+						  "doc/patch"
+                          {:input "test/clortex/domain/patch/patch_test.clj"
+                           :title "clortex patch"
+                           :sub-title "Primary Implementation of CLA"
+                           :author "Fergal Byrne"
+                           :email  "fergalbyrnedublin@gmail.com"
+                           :tracking "UA-44409012-2"}
 						"doc/sensors"
                           {:input "test/clortex/domain/sensors/core_test.clj"
                            :title "clortex sensors"
