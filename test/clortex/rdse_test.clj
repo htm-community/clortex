@@ -7,11 +7,11 @@
 
 [[:chapter {:title "Background"}]]
 "
-Chetan Surpur gave a great talk on a new version of the Scalar Encoder for NuPIC 
-([video](http://www.youtube.com/watch?v=_q5W2Ov6C9E)). This document explores the 
+Chetan Surpur gave a great talk on a new version of the Scalar Encoder for NuPIC
+([video](http://www.youtube.com/watch?v=_q5W2Ov6C9E)). This document explores the
 implications of the new design and makes some recommendations about further improvements.
 
-A **Scalar Encoder** is a function which converts a scalar value `v` into a bit map `sdr` 
+A **Scalar Encoder** is a function which converts a scalar value `v` into a bit map `sdr`
 with a given number `bits` of possible bits, of which `width` bits are 1 and the rest are 0.
 One important property of the SDRs is that values close together share many more bits than
 values further apart.
@@ -23,17 +23,17 @@ Here's a simple example:
 (def to-bitstring (:encode-to-bitstring enc))
 
 (vec (map to-bitstring (range 1 13)))
-=> ["111100000000" 
-      "011110000000" 
-      "001111000000" 
-      "000111100000" 
-      "000111100000" 
-      "000011110000" 
-      "000001111000" 
-      "000000111100" 
-      "000000111100" 
-      "000000011110" 
-      "000000001111" 
+=> ["111100000000"
+      "011110000000"
+      "001111000000"
+      "000111100000"
+      "000111100000"
+      "000011110000"
+      "000001111000"
+      "000000111100"
+      "000000111100"
+      "000000011110"
+      "000000001111"
       "000000001111"]
 )
 
@@ -41,14 +41,14 @@ Here's a simple example:
 
 "
 The current scalar encoder (see example above) represents each scalar using a sliding window of `on`
-1's. The current scalar encoder has the benefit of being instantly understandable (once you see an 
-example like the one in the first section) and visually decodable by the user. It does, however, have 
+1's. The current scalar encoder has the benefit of being instantly understandable (once you see an
+example like the one in the first section) and visually decodable by the user. It does, however, have
 a number of limitations.
 
 The encoder is given a `min` and `max` when defined and it clamps its output when given values outside
-its initial range.  
+its initial range.
 "
-(fact 
+(fact
 (to-bitstring -20) => "111100000000"
 (to-bitstring 20) => "000000001111"
 )
@@ -56,7 +56,7 @@ its initial range.
 This means that the above two values come to represent many values, and the region receiving the encoding
 will not be able to discriminate between these values.
 
-The second limitation is that the encoding is very inefficient in its use of available bits. 
+The second limitation is that the encoding is very inefficient in its use of available bits.
 The number of possible `on`-bits out of `bits` bits is given by the `binomial` coefficient:
 "
 (fact (binomial 12 4) => 495)
@@ -64,7 +64,7 @@ The number of possible `on`-bits out of `bits` bits is given by the `binomial` c
 (fact (count (set (map to-bitstring (range -100 100)))) => 9)
 "This encoder is only using 1.8% of the SDRs available. Perhaps this is an extreme example because of
 the very small number of bits. Let's check the numbers for a more typical encoder:"
-(fact 
+(fact
 (def enc (scalar-encoder :bits 512 :on 21 :min' 1 :max' 512))
 (def to-bitstring (:encode-to-bitstring enc))
 (str (binomial 512 21)) => "10133758886507113849867996785041062400"
@@ -76,7 +76,7 @@ the very small number of bits. Let's check the numbers for a more typical encode
 
 "Chetan's talk explains a new approach. The idea is to use a set of 'buckets' to represent a set of
 intervals in the encoders range, and to encode each one using a randomly chosen set of `on` bits.
-The property of semantic closeness is achieved by only changing one bit at a time when choosing the 
+The property of semantic closeness is achieved by only changing one bit at a time when choosing the
 bits for the next bucket along.
 
 Let's implement an RDSE. We'll need a utility function so we always get the same SDRs.
@@ -105,38 +105,38 @@ basic `scalar-encoder`."
 
 (to-bitstring 1) => "111100000000"
 
-(vec (map to-bitstring (range -5 22))) 
-=> ["100011000001" 
-      "100001001001" 
-      "100001100001" 
-      "100001010001" 
-      "100100010001" 
-      "110100000001" 
-      "111100000000" 
-      "101100000010" 
-      "100100000110" 
-      "100100100010" 
-      "100100010010" 
-      "100000010011" 
-      "100000001011" 
-      "100000000111" 
-      "100000100101" 
-      "100010100100" 
-      "100001100100" 
-      "110001100000" 
-      "100001110000" 
-      "100001011000" 
-      "100100011000" 
-      "100100010010" 
-      "110100000010" 
-      "110100000100" 
-      "110110000000" 
-      "110100100000" 
-      "111000100000"]
-(count (set (map to-bitstring (range -150 150)))) => 182
+(vec (map to-bitstring (range -5 22)))
+=> ["000000111001"
+       "010000111000"
+       "010000011100"
+       "011000011000"
+       "011010001000"
+       "011100001000"
+       "111100000000"
+       "111000000100"
+       "011000000110"
+       "011000100100"
+       "010001100100"
+       "000001110100"
+       "000101110000"
+       "000101010010"
+       "000101000011"
+       "010001000011"
+       "000011000011"
+       "001001000011"
+       "000001000111"
+       "100001000110"
+       "000101000110"
+       "000101010100"
+       "010001010100"
+       "010000011100"
+       "110000010100"
+       "100000010110"
+       "100000010011"]
+(count (set (map to-bitstring (range -500 500)))) => 432
 )
 "
-As we can see, this encoder is capable of storing 182 out of 495 passible encodings (note that each 
+As we can see, this encoder is capable of storing 432 out of 495 passible encodings (note that each
 pair of encoded buckets differs only in one bit, so this is pretty good).
 "
 [[:subsection {:title "A larger encoding: 21-of-128 bits"}]]
@@ -149,20 +149,20 @@ Let's see how much capacity we can get with a more typical 128 bit encoding (sta
 (def to-bitstring (:encode-to-bitstring! encoder))
 (str (binomial 512 21)) => "10133758886507113849867996785041062400"
 (to-bitstring 0) => "11111111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
-(to-bitstring 1) => "11110111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000"
+(to-bitstring 1) => "11111111111111111111000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000"
 )
 "
 We'll put 10000 values into the encoder.
 "
 (comment
-(def n 10000) 
+(def n 10000)
 (to-bitstring n) => "10000000001010001100000000000100000000000010000011000000101010000000000000011100000001000110010000000000000000010000000000010000"
 (println (time (count (set (map to-bitstring (range n))))))
 ; "Elapsed time: 34176.316 msecs"
 (count (set (map to-bitstring (range n)))) => n
 )
 "
-OK, everything's looking good. We could try using a smaller encoding and see if it still 
+OK, everything's looking good. We could try using a smaller encoding and see if it still
 works.
 "
 (def encoder (random-sdr-encoder-1 :diameter 1.0 :bits 64 :on 21))
@@ -172,14 +172,14 @@ works.
 (to-bitstring 0) => "1111111111111111111110000000000000000000000000000000000000000000"
 (to-bitstring 1) => "1111011111111111111110000000000000000010000000000000000000000000"
 
-(def n 1000) 
+(comment
+(def n 1000)
 (to-bitstring (dec n)) => "1010100100000010010000100001000000001000000110000011110001111101"
 (to-bitstring n) => "1000100100000010010000100001000000001000001110000011110001111101"
-(println (time (count (set (map to-bitstring (range n))))))
-; "Elapsed time: 644.477 msecs"
+(time (count (set (map to-bitstring (range n)))))
+; "Elapsed time: 406.187 msecs"
 (count (set (map to-bitstring (range n)))) => n
-(count (set (map to-bitstring (range 10000)))) => 10000
-(comment
+(count (set (map to-bitstring (range 20000)))) => 20000
 )
 
 [[:subsection {:title "Encoding is dependent on order of data"}]]
@@ -188,14 +188,14 @@ works.
 (fact
 (def to-bitstring (:encode-to-bitstring! (random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4)))
 (to-bitstring 0) => "111100000000"
-(to-bitstring 1) => "101100000001"
-(to-bitstring 2) => "101000010001" ;; first encoding of 2
+(to-bitstring 1) => "111000001000"
+(to-bitstring 2) => "101010001000" ;; first encoding of 2
 ;; reset
 (def to-bitstring (:encode-to-bitstring! (random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4)))
 (to-bitstring 0) =>  "111100000000"
-(to-bitstring 1) =>  "101100000001"
-(to-bitstring -1) => "101100010000"
-(to-bitstring 2) =>  "101001000001" ;; a different encoding of 2
+(to-bitstring 1) =>  "111000001000"
+(to-bitstring -1) => "110110000000"
+(to-bitstring 2) =>  "101000011000" ;; a different encoding of 2
 
 )
 "The encoding of `2` thus depends on the sequence of buckets already set up when `2` is presented.
@@ -204,11 +204,11 @@ is presented:"
 
 (fact
 
-(defn precalculate [x f] 
-    (let [step 10.0 
-          bands (inc (int (/ x step)))] 
+(defn precalculate [x f]
+    (let [step 10.0
+          bands (inc (int (/ x step)))]
        (dorun (for [band (map inc (range bands))]
-           (do (f (- 0 (* step band))) 
+           (do (f (- 0 (* step band)))
                (f (* step band))
 ;(println (str "precalculating [" (- 0 (* step band)) "," (* step band) "]"))
            ))))
@@ -217,23 +217,23 @@ is presented:"
 (def to-bitstring (:encode-to-bitstring! (random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4)))
 (defn to-bitstring-pre [x] (precalculate x to-bitstring))
 
-(to-bitstring-pre 0) => "100101000001" ;; causes (-10,10) to be encoded in advance
-(to-bitstring-pre 1) => "100001010001"
-(to-bitstring-pre 2) => "100000011001" ;; first encoding of 2
+(to-bitstring-pre 0) => "010010001100" ;; causes (-10,10) to be encoded in advance
+(to-bitstring-pre 1) => "100010001100"
+(to-bitstring-pre 2) => "101010001000" ;; first encoding of 2
 ;; reset
 (def to-bitstring (:encode-to-bitstring! (random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4)))
 (defn to-bitstring-pre [x] (precalculate x to-bitstring))
-(to-bitstring-pre 0) =>  "100101000001"
-(to-bitstring-pre 1) =>  "100001010001"
-(to-bitstring-pre -1) => "100100000101"
-(to-bitstring-pre 2) =>  "100000011001" ;; the same encoding of 2
+(to-bitstring-pre 0) =>  "010010001100"
+(to-bitstring-pre 1) =>  "100010001100"
+(to-bitstring-pre -1) => "010110001000"
+(to-bitstring-pre 2) =>  "101010001000" ;; the same encoding of 2
 
 )
 [[:section {:title "Conclusions and Further Improvements"}]]
 "
-It appears from the above tests that indeed the RDSE may be a significant improvement on 
+It appears from the above tests that indeed the RDSE may be a significant improvement on
 the current scalar encoder. It comes a lot closer to exploiting the capacity of SDRs
-in the CLA. 
+in the CLA.
 
 We should investigate how we should measure the effectiveness and efficiency of our
 choice of encoders and encodings. While the RDSE looks promising, how can we be sure? Perhaps the swarming
@@ -245,8 +245,8 @@ of nearby SDRs).
 
 Anyone interested in implementing this in C++ and Python, please do so and let us know how you get on.
 
-Finally, there is a bug here. The first bit always seems to be a 1. Not sure where that's happening, but 
-if you can help with that I'd be grateful. 
+Finally, there is a bug here. The first bit always seems to be a 1. Not sure where that's happening, but
+if you can help with that I'd be grateful.
 "
 #_(fact
 "
@@ -332,10 +332,10 @@ Found 1 outliers in 60 samples (1.6667 %)
 	low-severe	 1 (1.6667 %)
  Variance from outliers : 1.6389 % Variance is slightly inflated by outliers
 
-"	
+"
 
 (find-bucket! 10 buckets) => nil
-(add-bucket! 10 buckets) 
+(add-bucket! 10 buckets)
 (find-bucket! 10 buckets) => {:bottom 9.5, :counter 1, :index 0, :read 0, :sdr [0 1 2 3], :top 10.5}
 
 (find-bucket! 20 buckets) => nil
@@ -348,18 +348,18 @@ Found 1 outliers in 60 samples (1.6667 %)
 
 (to-bitstring 1) => "111000000100"
 
-(vec (map to-bitstring (range -5 22))) 
-=> ["111010000000" 
-      "111000100000" 
-      "111100000000" 
-      "111000000001" 
-      "111000100000" 
-      "111000000010" 
-      "111000000100" 
-      "111100000000" 
-      "111000000001" "111001000000" "111000001000" "111010000000" "111000010000" 
-"111010000000" "111000001000" "111100000000" "011100010000" "001100010001" 
-"000100010011" "000010010011" "001000010011" "100000010011" "000000110011" 
+(vec (map to-bitstring (range -5 22)))
+=> ["111010000000"
+      "111000100000"
+      "111100000000"
+      "111000000001"
+      "111000100000"
+      "111000000010"
+      "111000000100"
+      "111100000000"
+      "111000000001" "111001000000" "111000001000" "111010000000" "111000010000"
+"111010000000" "111000001000" "111100000000" "011100010000" "001100010001"
+"000100010011" "000010010011" "001000010011" "100000010011" "000000110011"
 "001000010011" "100000010011" "000000010111" "000000001111"]
 
 

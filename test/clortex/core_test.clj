@@ -6,24 +6,24 @@
 
 [[:section {:title "Background"}]]
 
-"**Hierarchical Temporal Memory** (*HTM*) is a theory of the neocortex developed by Jeff Hawkins 
-in the early-mid 2000's. HTM explains the working of the neocortex as a hierarchy of **regions**, 
-each of which performs a similar algorithm. The algorithm performed in each region is known in the 
+"**Hierarchical Temporal Memory** (*HTM*) is a theory of the neocortex developed by Jeff Hawkins
+in the early-mid 2000's. HTM explains the working of the neocortex as a hierarchy of **regions**,
+each of which performs a similar algorithm. The algorithm performed in each region is known in the
 theory as the **Cortical Learning Algorithm** (*CLA*).
 
 Clortex is a reimagining and reimplementation of Numenta Platfrom for Intelligent Computing (NuPIC), which
 is also an Open Source project released by Grok Solutions (formerly Numenta), the company founded by Jeff to
-make his theories a practical and commercial reality. NuPIC is a mature, excellent and useful software 
+make his theories a practical and commercial reality. NuPIC is a mature, excellent and useful software
 platform, with a vibrant community, so please join us at [Numenta.org](http://numenta.org).
 
-**Warning: pre-alpha software**. This project is only beginning, and everything you see here will 
-eventually be thrown away as we develop better ways to do things. The design and the APIs are subject 
+**Warning: pre-alpha software**. This project is only beginning, and everything you see here will
+eventually be thrown away as we develop better ways to do things. The design and the APIs are subject
 to drastic change without a moment's notice.
 
-Clortex is Open Source software, released under the GPL Version 3 (see the end of the README). 
-You are free to use, copy, modify, and redistribute this software according to the terms of that license. 
-For commercial use of the algorithms used in Clortex, please contact 
-[Grok Solutions](http://groksolutions.com), where they'll be happy to discuss commercial 
+Clortex is Open Source software, released under the GPL Version 3 (see the end of the README).
+You are free to use, copy, modify, and redistribute this software according to the terms of that license.
+For commercial use of the algorithms used in Clortex, please contact
+[Grok Solutions](http://groksolutions.com), where they'll be happy to discuss commercial
 licensing.
 
 "
@@ -38,7 +38,7 @@ There are several benefits to this requirement. Firstly, during development, thi
 
 Secondly, this requirement will ensure that the system at its heart remains a working implementation of the theory as it develops. In addition, because of this property, it will be directly usable by Jeff and any co-workers (including us) in extending and experimenting with new ideas in the theoretical space. This will enhance support for the new project, and encourage the HTM community to consider the new project as a parallel or alternative way to realise their own goals.
 
-Thirdly, the software will provide a runnable explanation of the theory, real working code (see next requirement) replacing the pseudocode and providing live imagery instead of diagrams (see later requirement). 
+Thirdly, the software will provide a runnable explanation of the theory, real working code (see next requirement) replacing the pseudocode and providing live imagery instead of diagrams (see later requirement).
 
 Lastly, we feel that the theory deserves software of similar quality, and that this has slowed the realisation of the goals of all concerned. The development of a true analogue in software will pave the way for a rapid expansion in interest in the entire project. In particular, this will benefit anyone seeking to exploit the commercial advantages which the CLA offers.
 "
@@ -69,7 +69,7 @@ The benefits of this requirement should be reasonably obvious. Two in particular
 
 [[:section {:title "Sufficiently Performant"}]]
 
-"*The system must have performance sufficient to provide for rapid development of configurations suitable to a user task. In addition, the performance on large or complex data sets must be sufficient to establish that the system is succeeding in its task in principle, and that simply by scaling or optimising it can perform at “production” levels.* 
+"*The system must have performance sufficient to provide for rapid development of configurations suitable to a user task. In addition, the performance on large or complex data sets must be sufficient to establish that the system is succeeding in its task in principle, and that simply by scaling or optimising it can perform at “production” levels.*
 
 What this says is that the system must be a working prototype for how a more finely tuned or higher-performance equivalent will perform. Compute power and memory are cheap, and software can always be made faster relatively easily. The question a user has when using the system is primarily whether or not (and how well) the system can solve her problem, not whether it takes a few seconds or a few hours.
 
@@ -77,7 +77,7 @@ This constraint requires that the software infrastructure be designed so as to a
 "
 
 [[:section {:title "Useful Metrics"}]]
-"*The system must include functionality which allows the user to assess the effectiveness of configuration choices on the system at all relevant levels.* 
+"*The system must include functionality which allows the user to assess the effectiveness of configuration choices on the system at all relevant levels.*
 
 At present, NuPIC has some metrics but they are either difficult to understand and interpret, inappropriate, or both. The above requirement must be answered using metrics which have yet to be devised, so we have no further detail at this stage.
 "
@@ -108,7 +108,7 @@ An SDR may also contain a channel which can be used to send the source (or an in
              :topology [512],
              :on-bits #{3, 22, 31, 55, 138},
              :changed-on #{22, 31, 138},
-             :changed-off #{6, 111, 220},             
+             :changed-off #{6, 111, 220},
              })
 
 [[:file {:src "test/clortex/domain/sensors/core_test.clj"}]]
