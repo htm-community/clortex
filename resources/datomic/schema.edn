@@ -1,0 +1,147 @@
+[
+ ;; patch schema
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :patch/uuid
+  :db/valueType :db.type/uuid
+  :db/cardinality :db.cardinality/one
+  :db/doc "A patch's name"
+  :db.install/_attribute :db.part/db}
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :patch/columns
+  :db/valueType :db.type/ref
+  :db/cardinality :db.cardinality/many
+  :db/doc "A patch's columns"
+  :db.install/_attribute :db.part/db}
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :patch/inputs
+  :db/valueType :db.type/ref
+  :db/cardinality :db.cardinality/many
+  :db/doc "A patch's inputs"
+  :db.install/_attribute :db.part/db}
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :patch/neurons
+  :db/valueType :db.type/ref
+  :db/cardinality :db.cardinality/many
+  :db/doc "A patch's neurons"
+  :db.install/_attribute :db.part/db}
+
+ ;; neuron schema
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :neuron/index
+  :db/valueType :db.type/long
+  :db/cardinality :db.cardinality/one
+  :db/doc "A neuron's index in the patch"
+  :db.install/_attribute :db.part/db}
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :neuron/feedforward-potential
+  :db/valueType :db.type/long
+  :db/cardinality :db.cardinality/one
+  :db/doc "A neuron's activation potential due to feedforward"
+  :db.install/_attribute :db.part/db}
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :neuron/predictive-potential
+  :db/valueType :db.type/long
+  :db/cardinality :db.cardinality/one
+  :db/doc "A neuron's activation potential due to distal enervation"
+  :db.install/_attribute :db.part/db}
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :neuron/active?
+  :db/valueType :db.type/boolean
+  :db/cardinality :db.cardinality/one
+  :db/doc "Is this neuron firing?"
+  :db.install/_attribute :db.part/db}
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :neuron/proximal-dendrite
+  :db/valueType :db.type/ref
+  :db/cardinality :db.cardinality/one
+  :db/doc "A neuron's proximal dendrite"
+  :db.install/_attribute :db.part/db}
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :neuron/distal-dendrites
+  :db/valueType :db.type/ref
+  :db/cardinality :db.cardinality/many
+  :db/doc "A neuron's distal dendrites"
+  :db.install/_attribute :db.part/db}
+
+ ;; dendrite schema
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :dendrite/threshold
+  :db/valueType :db.type/long
+  :db/cardinality :db.cardinality/one
+  :db/doc "A dendrite's threshold"
+  :db.install/_attribute :db.part/db}
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :dendrite/capacity
+  :db/valueType :db.type/long
+  :db/cardinality :db.cardinality/one
+  :db/doc "A dendrite's max capacity"
+  :db.install/_attribute :db.part/db}
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :dendrite/synapses
+  :db/valueType :db.type/ref
+  :db/cardinality :db.cardinality/many
+  :db/doc "A dendrite's synapses"
+  :db.install/_attribute :db.part/db}
+
+ ;; synapse schema
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :synapse/permanence-threshold
+  :db/valueType :db.type/double
+  :db/cardinality :db.cardinality/one
+  :db/doc "A synapse's permanence threshold"
+  :db.install/_attribute :db.part/db}
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :synapse/permanence
+  :db/valueType :db.type/double
+  :db/cardinality :db.cardinality/one
+  :db/doc "A synapse's permanence"
+  :db.install/_attribute :db.part/db}
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :synapse/pre-synaptic-neuron
+  :db/valueType :db.type/ref
+  :db/cardinality :db.cardinality/one
+  :db/doc "The neuron enervating the synapse"
+  :db.install/_attribute :db.part/db}
+
+ ;; column schema
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :column/index
+  :db/valueType :db.type/long
+  :db/cardinality :db.cardinality/one
+  :db/doc "A column's index in the patch"
+  :db.install/_attribute :db.part/db}
+
+  {:db/id #db/id[:db.part/db]
+  :db/ident :column/neurons
+  :db/valueType :db.type/ref
+  :db/cardinality :db.cardinality/many
+  :db/doc "A column's neurons"
+  :db.install/_attribute :db.part/db}
+
+ ;; input schema
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :neural-input/index
+  :db/valueType :db.type/long
+  :db/cardinality :db.cardinality/one
+  :db/doc "An input's index in the patch"
+  :db.install/_attribute :db.part/db}
+
+]
