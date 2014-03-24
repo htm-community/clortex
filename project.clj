@@ -26,7 +26,8 @@
                  [com.stuartsierra/flow "0.1.0"]
                  [com.datomic/datomic-free "0.9.4578"]
                  [expectations "2.0.6"]
-                 [quil "1.7.0"]]
+                 [quil "1.7.0"]
+                 [adi "0.1.5"]]
   :plugins [[lein-marginalia "0.7.1"]]
   :documentation {:files {"doc/index"
                           {:input "test/clortex/core_test.clj"

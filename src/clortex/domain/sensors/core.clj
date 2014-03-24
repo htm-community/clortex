@@ -9,6 +9,7 @@ Currently reads an OPF-style CSV file and converts it into Clojure data structur
   #_(:refer-clojure :exclude [second extend])
   (:require [clojure.data.csv :as csv]
             [clojure.java.io :as io]
+            [clojure.pprint :refer [pprint]]
             [clortex.domain.sensors.date :refer [parse-opf-date]]
             [clortex.domain.encoders.core :as enc]
             [clortex.domain.encoders.rdse :as rdse]))
@@ -71,10 +72,10 @@ Currently reads an OPF-style CSV file and converts it into Clojure data structur
         parsed-data (parse-opf-data raw-csv :fields fields :types types :flags flags)
         ]
     (println "loaded" (count raw-csv) "lines")
-       {:raw-csv raw-csv :fields fields :types types :flags flags
-	    :parsed-data parsed-data
-        :encoders encoders
-	    }))
+    {:raw-csv raw-csv :fields fields :types types :flags flags
+     :parsed-data parsed-data
+     :encoders encoders
+     }))
 
 (defn load-opf-file [f & n]
   (let [fileio 	(with-open [in-file (io/reader f)]
@@ -83,12 +84,17 @@ Currently reads an OPF-style CSV file and converts it into Clojure data structur
     (println "loaded" (count fileio) "lines")
        (load-opf-data fileio n)))
 
+(defn write-edn-file [data f]
+  (with-open [out-file (io/writer f)]
+    (.write out-file (pr-str data))))
+
+
+(defn write-edn-file [data f]
+  (with-open [out-file (io/writer f)]
+    (pprint data out-file)))
+
 (comment
 	(def hotgym (load-opf-file "resources/hotgym.csv"))
 )
 
-#_(with-open [out-file (io/writer "out-file.csv")]
-  (csv/write-csv out-file
-                 [["abc" "def"]
-                  ["ghi" "jkl"]]))
 

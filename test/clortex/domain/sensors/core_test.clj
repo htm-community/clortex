@@ -33,3 +33,4 @@ concepts are important in powering the CLA's sequence learning.
 
 (def hotgym (load-opf-file "resources/hotgym.csv"))
 
+#_(write-edn-file hotgym "resources/hotgym.edn")

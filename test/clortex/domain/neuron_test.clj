@@ -3,9 +3,11 @@
   (:require [clortex.domain.neuron :as n]
             [datomic.api :as d]
             [clortex.utils.math :refer :all]
+            [clortex.utils.datomic :refer :all]
             [clortex.domain.patch.pure-patch :as purep]
             [clortex.domain.neuron.pure-neuron :as pure-neuron]
-            [clortex.domain.patch.persistent-patch :as dbp]))
+            [clortex.domain.patch.persistent-patch :as dbp]
+            [adi.core :as adi]))
 
 (fact "create a pure patch"
 (def n 1024)
@@ -37,6 +39,17 @@
 (def patch-3 (d/squuid))
 
 (def patch-4 (d/squuid))
+
+(fact "create an adi-based db, add a patch"
+      (let [uri "datomic:mem://adi-test"
+            ds    (adi/datastore uri patch-schema true true)
+            _add  (adi/insert! ds [{:patch {:uuid patch-1}}])
+            check (->> (adi/select ds {:patch/uuid patch-1})
+                       first :patch :uuid)
+            _tidy (d/delete-database uri)]
+        check) => patch-1
+)
+
 
 (fact "After creating a patch, we can find the patch"
       (let [ctx {:conn (create-in-memory-db)}

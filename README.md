@@ -12,16 +12,16 @@ Clortex is Open Source software, released under the GPL Version 3 (see the end o
 
 ## Example Usage (not yet implemented)
 
-(require '[clortex.core])
+    (require '[clortex.core])
 
-(make-cortex test-cortex)
-(add-encoder test-cortex (file-encoder "data.csv"))
-(run-cortex test-cortex :all-records)
+    (make-cortex test-cortex)
+    (add-encoder test-cortex (file-encoder "data.csv"))
+    (run-cortex test-cortex :all-records)
 
 ## Developer Information
 
 * [Documentation](http://fergalbyrne.github.io)
-* [API and Source Docs](http://fergalbyrne.github.io/uberdoc.html)
+* [Source Docs](http://fergalbyrne.github.io/uberdoc.html)
 * [GitHub project](https://github.com/fergalbyrne/clortex)
 
 ## License
