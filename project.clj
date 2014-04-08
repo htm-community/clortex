@@ -46,7 +46,7 @@
                            :email  "fergalbyrnedublin@gmail.com"
                            :tracking "UA-44409012-2"}
                           "doc/encoders"
-                          {:input "test/clortex/domain/encoders/core_test.clj"
+                          {:input "test/clortex/domain/encoders/encoder_test.clj"
                            :title "clortex encoders"
                            :sub-title "Encoding Values into CLA SDRs"
                            :author "Fergal Byrne"

@@ -113,7 +113,7 @@ An SDR may also contain a channel which can be used to send the source (or an in
 
 [[:file {:src "test/clortex/domain/sensors/sensor_test.clj"}]]
 
-[[:file {:src "test/clortex/domain/encoders/core_test.clj"}]]
+[[:file {:src "test/clortex/domain/encoders/encoder_test.clj"}]]
 
 
 [[:chapter {:title "Data Structures and Functions"}]]
