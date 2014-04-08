@@ -19,7 +19,7 @@ values further apart.
 Here's a simple example:
 "
 (facts
-(def enc (scalar-encoder :bits 12 :on 4 :min' 1 :max' 12))
+(def enc (scalar-encoder :bits 12 :on 4 :minimum 1 :maximum 12))
 (def to-bitstring (:encode-to-bitstring enc))
 
 (vec (map to-bitstring (range 1 13)))
@@ -65,7 +65,7 @@ The number of possible `on`-bits out of `bits` bits is given by the `binomial` c
 "This encoder is only using 1.8% of the SDRs available. Perhaps this is an extreme example because of
 the very small number of bits. Let's check the numbers for a more typical encoder:"
 (fact
-(def enc (scalar-encoder :bits 512 :on 21 :min' 1 :max' 512))
+(def enc (scalar-encoder :bits 512 :on 21 :minimum 1 :maximum 512))
 (def to-bitstring (:encode-to-bitstring enc))
 (str (binomial 512 21)) => "10133758886507113849867996785041062400"
 (count (set (map to-bitstring (range -100 1000)))) => 492

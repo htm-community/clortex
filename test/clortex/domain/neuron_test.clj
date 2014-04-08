@@ -34,6 +34,10 @@
       (d/transact conn schema)
       conn)))
 
+(defn create-adi-in-memory-db []
+  (let [uri "datomic:mem://patch-adi-db"]
+    (adi/datastore uri clortex-schema true true)))
+
 (def patch-1 (d/squuid))
 (def patch-2 (d/squuid))
 (def patch-3 (d/squuid))
@@ -42,7 +46,7 @@
 
 (fact "create an adi-based db, add a patch"
       (let [uri "datomic:mem://adi-test"
-            ds    (adi/datastore uri patch-schema true true)
+            ds (adi/datastore uri clortex-schema true true)
             _add  (adi/insert! ds [{:patch {:uuid patch-1}}])
             check (->> (adi/select ds {:patch/uuid patch-1})
                        first :patch :uuid)
@@ -86,6 +90,7 @@
 
 (fact "Adding many neurons to a patch, we can find the neurons"
       (def n 65536)
+      (def n 1024)
       (let [ctx {:conn (create-in-memory-db)}]
         (dbp/create-patch ctx patch-1)
         (time (dbp/add-neurons-to! ctx patch-1 n))
@@ -101,7 +106,7 @@
         (count (dbp/synapse-between ctx patch-1 0 1))) => 1
       )
 
-(fact "Connecting many neurons to one another, we can find the synapses"
+#_(fact "Connecting many neurons to one another, we can find the synapses"
       (let [ctx {:conn (create-free-db) :randomer (random-fn-with-seed 123456)}
             n 1024
             randomer (random-fn-with-seed 123456)]
@@ -112,6 +117,14 @@
           (dbp/connect-distal ctx patch-1 (randomer n) (+ n (randomer n)))))
         (count (dbp/synapse-between ctx patch-1 0 1))) => 1
       )
+
+(fact "Adding inputs to a patch, we can write and read the SDR"
+      (let [ds (create-adi-in-memory-db)
+            ctx {:ds ds :conn (:conn ds) :randomer (random-fn-with-seed 123456)}]
+        (dbp/create-adi-patch ctx patch-1)
+        (dbp/add-inputs-to! ctx patch-1 12)
+        (dbp/input-sdr ctx patch-1) => [0 0 0 0 0 0 0 0 0 0 0 0]
+      ))
 
 
 

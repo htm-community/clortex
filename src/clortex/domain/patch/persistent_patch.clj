@@ -1,6 +1,8 @@
 (ns clortex.domain.patch.persistent-patch
+  (:use [adi.utils :only [iid ?q]])
   (require [clortex.protocols :refer :all]
-           [datomic.api :as d]))
+           [datomic.api :as d]
+           [adi.core :as adi]))
 
 (extend-type datomic.query.EntityMap PNeuronPatch
   (neurons [this] (:patch/neurons this))
@@ -57,6 +59,21 @@
   (let [conn (:conn ctx)]
     @(d/transact conn [{:db/id (d/tempid :db.part/user)
                         :patch/uuid patch-uuid}])))
+
+
+(defn create-adi-patch
+  [ctx patch-uuid]
+  (adi/insert! (:ds ctx) [{:patch {:uuid patch-uuid}}]))
+
+
+      #_(let [uri "datomic:mem://adi-test"
+            ds ds    (adi/datastore uri clortex-schema true true)
+            _add  (adi/insert! ds [{:patch {:uuid patch-1}}])
+            check (->> (adi/select ds {:patch/uuid patch-1})
+                       first :patch :uuid)
+            _tidy (d/delete-database uri)]
+        check)
+
 
 (defn find-patch-uuids
   [ctx]
@@ -123,9 +140,49 @@
         tx-data (reduce #(conj %1 (%2 0) (%2 1)) [] tx-tuples)]
     tx-data))
 
+(defn add-inputs-to
+  [ctx patch-uuid n]
+  (let [conn (:conn ctx)
+        ds (:ds ctx)
+        patch-id (find-patch-id ctx patch-uuid)
+        inputs (count
+                 (d/q '[:find ?input
+                        :in $ ?patch-id
+                        :where
+                        [?patch-id :patch/inputs ?dendrite]
+                        [?dendrite :dendrite/synapses ?synapse]
+                        [?synapse :synapse/pre-synaptic-neuron ?input]]
+                      (d/db conn)
+                      patch-id)
+                     )
+        dendrite-id (d/tempid :db.part/user)
+        tx-dendrite (if (zero? inputs)
+                      [{:db/id dendrite-id}
+                       {:db/id patch-id :patch/inputs dendrite-id}]
+                      [])
+        tx-tuples (for [i (range n)
+                        :let [input-id (d/tempid :db.part/user)
+                              synapse-id (d/tempid :db.part/user)
+                              input-index (+ i inputs)]]
+                    [{:db/id input-id
+                      :neuron/index input-index
+                      :neuron/active? false}
+                     {:db/id synapse-id
+                      :synapse/pre-synaptic-neuron input-id
+                      :synapse/permanence 1
+                      :synapse/permanence-threshold 0}
+                     {:db/id dendrite-id :dendrite/synapses synapse-id}])
+        tx-data (reduce #(conj %1 (%2 0) (%2 1)) tx-dendrite tx-tuples)]
+    (println tx-data)
+    tx-data))
+
 (defn add-neurons-to!
   [ctx patch-uuid n]
   @(d/transact (:conn ctx) (add-neurons-to ctx patch-uuid n)))
+
+(defn add-inputs-to!
+  [ctx patch-uuid n]
+  @(d/transact (:conn (:ds ctx)) (add-inputs-to ctx patch-uuid n)))
 
 (defn find-dendrites
   [ctx neuron-id]
@@ -145,9 +202,27 @@
     ;(println "Added dendrite" dendrite-id "to neuron" neuron)
     (find-dendrites ctx neuron)))
 
-(defn connect-distal
+
+(defn synapse-between
   [ctx patch-uuid from to]
   (let [conn (:conn ctx)
+        patch-id (find-patch-id ctx patch-uuid)
+        from-id (find-neuron-id ctx patch-id from)
+        to-id (find-neuron-id ctx patch-id to)]
+    ;(println "checking synapse from neuron " from-id "to" to-id)
+    (d/q '[:find ?synapse
+           :in $ ?to ?from
+           :where
+             [?to :neuron/distal-dendrites ?dendrite]
+             [?dendrite :dendrite/synapses ?synapse]
+             [?synapse :synapse/pre-synaptic-neuron ?from]]
+         (d/db conn)
+         to-id from-id)))
+
+(defn connect-distal
+  [ctx patch-uuid from to]
+  (when (zero? (count (synapse-between ctx patch-uuid from to)))
+   (let [conn (:conn ctx)
         randomer (:randomer ctx)
         patch-id (find-patch-id ctx patch-uuid)
         from-id (find-neuron-id ctx patch-id from)
@@ -167,23 +242,7 @@
         dendrite (ffirst dendrites)]
     ;(println "Connecting " from-id "->" to-id "Adding synapse" synapse-id "to dendrite" dendrite)
     @(d/transact conn [{:db/id dendrite :dendrite/synapses synapse-id}
-                       synapse-tx])))
-
-(defn synapse-between
-  [ctx patch-uuid from to]
-  (let [conn (:conn ctx)
-        patch-id (find-patch-id ctx patch-uuid)
-        from-id (find-neuron-id ctx patch-id from)
-        to-id (find-neuron-id ctx patch-id to)]
-    ;(println "checking synapse from neuron " from-id "to" to-id)
-    (d/q '[:find ?synapse
-           :in $ ?to ?from
-           :where
-             [?to :neuron/distal-dendrites ?dendrite]
-             [?dendrite :dendrite/synapses ?synapse]
-             [?synapse :synapse/pre-synaptic-neuron ?from]]
-         (d/db conn)
-         to-id from-id)))
+                       synapse-tx]))))
 
 (defn find-neurons
   [ctx patch-uuid]
@@ -195,6 +254,21 @@
            [?neuron-id :neuron/index ?neuron-index]]
          (d/db conn)
          patch-id)))
+
+(defn input-sdr
+  [ctx patch-uuid]
+  (let [conn (:conn ctx)]
+    (d/q '[:find ?index ?active
+           :in $ ?patch-uuid
+           :where
+           [?patch :patch/uuid ?patch-uuid]
+           [?patch :patch/inputs ?dendrite]
+           [?dendrite :dendrite/synapses ?synapse]
+           [?synapse :synapse/pre-synaptic-neuron ?input]
+           [?input :neuron/active? ?active]
+           [?input :neuron/index ?index]]
+         (d/db conn)
+         patch-uuid)))
 
 (defn find-neuron-ids
   [ctx patch-uuid]

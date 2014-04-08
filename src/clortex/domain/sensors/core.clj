@@ -77,10 +77,12 @@ Currently reads an OPF-style CSV file and converts it into Clojure data structur
      :encoders encoders
      }))
 
-(defn load-opf-file [f & n]
-  (let [fileio 	(with-open [in-file (io/reader f)]
+(defn load-opf-file [config]
+  (let [f (:file config)
+        n (:read-n-records config)
+        fileio 	(with-open [in-file (io/reader f)]
 	                  (vec (doall (csv/read-csv in-file))))
-        n (if n n (count fileio))]
+        n (if (and n (not= n :all)) n (count fileio))]
     (println "loaded" (count fileio) "lines")
        (load-opf-data fileio n)))
 

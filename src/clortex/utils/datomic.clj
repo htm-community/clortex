@@ -2,7 +2,7 @@
   (:require [datomic.api :as d]
             [adi.core :as adi]))
 
-(def patch-schema
+(def clortex-schema
   {:patch   {:type    [{:type :keyword}]
              :name    [{:type :string}]
              :uuid    [{:type :uuid}]
@@ -15,10 +15,10 @@
                         :ref  {:ns   :neuron
                                :rval :patch}
                         :cardinality :many}]
-             :input   [{:type :ref
-                        :ref  {:ns   :dendrite
-                               :rval :patch}
-                        :cardinality :one}]}
+             :inputs   [{:type :ref
+                         :ref  {:ns   :dendrite
+                                :rval :patch}
+                         :cardinality :one}]}
    :column  {:type    [{:type :keyword}]
              :index   [{:type :long}]
              :neurons [{:type :ref
@@ -60,8 +60,7 @@
                                   :values #{:excitatory :inhibitory :io}}}]
              :permanence [{:type :long
                            :default 0}]
-             :permanence-threshold
-                         [{:type :long :default 0}]
+             :permanence-threshold [{:type :long :default 0}]
              :source     [{:type :ref
                            :ref   {:ns   :neuron
                                    :rval :fanout}

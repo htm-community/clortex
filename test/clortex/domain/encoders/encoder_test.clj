@@ -1,10 +1,10 @@
-(ns clortex.domain.encoders.core-test
+(ns clortex.domain.encoders.encoder-test
   (:use midje.sweet)
   (:use clortex.domain.encoders.core))
 
 [[:chapter {:title "Encoders"}]]
 
-"Encoders are very important in `clortex`. Encoders turn real-world data into a form which `clortex` 
+"Encoders are very important in `clortex`. Encoders turn real-world data into a form which `clortex`
 can understand - **Sparse Distrubuted Representations** (or *SDRs*). Encoders for the human brain include
 retinal cells (or groups of them), as well as cells in the ear, skin, tongue and nose.
 "
@@ -22,15 +22,21 @@ with 4 bits on out of 12, so we can see how it works ([e.{{sse-def}}](#sse-def))
 of data. We'll define those functions by pulling them out of the map ([e.{{sse-use}}](#sse-use)):"
 [[{:tag "sse-use" :title "pulling out the functions"  :numbered true}]]
 (def sencode (:encode enc))
+(def sencoders (:encoders enc))
 (def sencode-all (:encode-all enc))
+
+
+(def encoder-record (->ScalarEncoder "field" 12 4 0.0 100.0 sencoders sencode))
+
+(def sencode (.encode encoder-record))
 
 "Let's check that the bottom and top values give the bottom and top SDRs:"
 (fact
 (sencode 0) => #{0 1 2 3}
 (sencode 100) => #{8 9 10 11}
 (sencode-all 0) =>
-  [[0 true]  [1 true]  [ 2 true]  [ 3 true] 
-   [4 false] [5 false] [ 6 false] [ 7 false] 
+  [[0 true]  [1 true]  [ 2 true]  [ 3 true]
+   [4 false] [5 false] [ 6 false] [ 7 false]
    [8 false] [9 false] [10 false] [11 false]]
 )
 
@@ -40,19 +46,19 @@ of data. We'll define those functions by pulling them out of the map ([e.{{sse-u
 (def sencode (:encode enc))
 
 (fact
-(sencode 0) => 
+(sencode 0) =>
 #{ 0  1  2  3  4  5  6
-     7  8  9 10 11 12 13 
+     7  8  9 10 11 12 13
     14 15 16 17 18 19 20}
 (count (sencode 0)) => 21
-(sencode 50) => 
-#{53 54 55 56 57 58 59 
+(sencode 50) =>
+#{53 54 55 56 57 58 59
     60 61 62 63 64 65 66
     67 68 69 70 71 72 73}
 (count (sencode 50)) => 21
-(sencode 100) => 
-#{106 107 108 109 110 111 112 
-    113 114 115 116 117 118 119 
+(sencode 100) =>
+#{106 107 108 109 110 111 112
+    113 114 115 116 117 118 119
     120 121 122 123 124 125 126}
 )
 
@@ -71,14 +77,14 @@ we use to fill the bit array until the required number of bits is set."
 (cencode "test") => #{0 2 3 8}
 (cencode "another test") => #{2 4 6 11}
 (cencode-all "test") =>
-  [[0 true] [1 false] [2 true] 
-   [3 true] [4 false] [5 false] 
-   [6 false] [7 false] [8 true] 
+  [[0 true] [1 false] [2 true]
+   [3 true] [4 false] [5 false]
+   [6 false] [7 false] [8 true]
    [9 false] [10 false] [11 false]]
 )
 
 [[{:title "within-test" :hide true}]]
-(fact 
+(fact
 (within+- 10 8 1.5) => false
 (within+- 10 8 3) => true
 )

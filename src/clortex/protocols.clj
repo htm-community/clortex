@@ -30,3 +30,22 @@
 
 (defprotocol PPersistable
   "Protocol for persistable object")
+
+
+(defprotocol CLAEncoder
+  "Encodes values into bit representations"
+  (bits [this] "returns width in bits of this encoder")
+  (on-bits [this] "returns number of on-bits of this encoder")
+  (field-name [this] "returns the field (using . to indicate hierarchy)")
+  (encoders [this] "returns the bit encoder functions")
+  (encode-all [this value] "returns a verbose data structure for an encoding of value")
+  (encode [this value] "returns a set of on-bits encoding value"))
+
+(extend-type Object
+  CLAEncoder
+  (bits [this] (:bits this))
+  (on-bits [this] (:on-bits this))
+  (field-name [this] (:field-name this))
+  (encoders [this] (:encoders this))
+  (encode-all [this value] (mapv #(vector % ((.encoders this %) value)) (range (.bits this))))
+  (encode [this value] (set (vec (map first (filter second (.encode-all this value)))))))

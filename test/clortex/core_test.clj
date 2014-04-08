@@ -111,7 +111,7 @@ An SDR may also contain a channel which can be used to send the source (or an in
              :changed-off #{6, 111, 220},
              })
 
-[[:file {:src "test/clortex/domain/sensors/core_test.clj"}]]
+[[:file {:src "test/clortex/domain/sensors/sensor_test.clj"}]]
 
 [[:file {:src "test/clortex/domain/encoders/core_test.clj"}]]
 
