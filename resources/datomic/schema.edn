@@ -4,6 +4,7 @@
  {:db/id #db/id[:db.part/db]
   :db/ident :patch/uuid
   :db/valueType :db.type/uuid
+  :db/unique :db.unique/identity
   :db/cardinality :db.cardinality/one
   :db/doc "A patch's name"
   :db.install/_attribute :db.part/db}
@@ -12,6 +13,7 @@
   :db/ident :patch/columns
   :db/valueType :db.type/ref
   :db/cardinality :db.cardinality/many
+  :db/index true
   :db/doc "A patch's columns"
   :db.install/_attribute :db.part/db}
 
@@ -19,6 +21,7 @@
   :db/ident :patch/inputs
   :db/valueType :db.type/ref
   :db/cardinality :db.cardinality/many
+  :db/index true
   :db/doc "A patch's inputs"
   :db.install/_attribute :db.part/db}
 
@@ -26,6 +29,7 @@
   :db/ident :patch/neurons
   :db/valueType :db.type/ref
   :db/cardinality :db.cardinality/many
+  :db/index true
   :db/doc "A patch's neurons"
   :db.install/_attribute :db.part/db}
 
@@ -70,6 +74,7 @@
   :db/ident :neuron/distal-dendrites
   :db/valueType :db.type/ref
   :db/cardinality :db.cardinality/many
+  :db/index true
   :db/doc "A neuron's distal dendrites"
   :db.install/_attribute :db.part/db}
 
@@ -93,6 +98,7 @@
   :db/ident :dendrite/synapses
   :db/valueType :db.type/ref
   :db/cardinality :db.cardinality/many
+  :db/index true
   :db/doc "A dendrite's synapses"
   :db.install/_attribute :db.part/db}
 
@@ -116,6 +122,7 @@
   :db/ident :synapse/pre-synaptic-neuron
   :db/valueType :db.type/ref
   :db/cardinality :db.cardinality/one
+  :db/index true
   :db/doc "The neuron enervating the synapse"
   :db.install/_attribute :db.part/db}
 
@@ -132,6 +139,7 @@
   :db/ident :column/neurons
   :db/valueType :db.type/ref
   :db/cardinality :db.cardinality/many
+  :db/index true
   :db/doc "A column's neurons"
   :db.install/_attribute :db.part/db}
 

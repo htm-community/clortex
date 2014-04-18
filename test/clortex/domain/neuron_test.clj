@@ -102,23 +102,23 @@
         (dbp/create-patch ctx patch-1)
         (dbp/add-neuron ctx patch-1)
         (dbp/add-neuron ctx patch-1)
-        (dbp/connect-distal ctx patch-1 0 1)
+        (dbp/connect-distal ctx patch-1 0 1 false)
         (count (dbp/synapse-between ctx patch-1 0 1))) => 1
       )
 
-#_(fact "Connecting many neurons to one another, we can find the synapses"
+(fact "Connecting many neurons to one another, we can find the synapses"
       (let [ctx {:conn (create-free-db) :randomer (random-fn-with-seed 123456)}
-            n 1024
+            n 4096
             randomer (random-fn-with-seed 123456)]
         (dbp/create-patch ctx patch-1)
         (dbp/add-neurons-to! ctx patch-1 (* n 2))
-        (dbp/connect-distal ctx patch-1 0 1)
+        (dbp/connect-distal ctx patch-1 0 1 false)
         (time (doseq [i (range 100)]
-          (dbp/connect-distal ctx patch-1 (randomer n) (+ n (randomer n)))))
+          (dbp/connect-distal ctx patch-1 (randomer n) (+ n (randomer n)) false)))
         (count (dbp/synapse-between ctx patch-1 0 1))) => 1
       )
 
-(fact "Adding inputs to a patch, we can write and read the SDR"
+#_(fact "Adding inputs to a patch, we can write and read the SDR"
       (let [ds (create-adi-in-memory-db)
             ctx {:ds ds :conn (:conn ds) :randomer (random-fn-with-seed 123456)}]
         (dbp/create-adi-patch ctx patch-1)

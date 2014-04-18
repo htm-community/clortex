@@ -189,8 +189,9 @@ Patches are responsible for translating a pattern of activity on a set of inputs
 
 [[:chapter {:title "License"}]]
 
-"Copyright © 2014 Fergal Byrne, Brenter IT
+"
+Copyright &copy; 2014 Fergal Byrne, Brenter IT
 
-Distributed under the Apache Public License either version 2.0 or (at
+Distributed under the GPLv3 or (at
 your option) any later version.
 "

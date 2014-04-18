@@ -204,23 +204,60 @@
 
 
 (defn synapse-between
-  [ctx patch-uuid from to]
-  (let [conn (:conn ctx)
-        patch-id (find-patch-id ctx patch-uuid)
-        from-id (find-neuron-id ctx patch-id from)
-        to-id (find-neuron-id ctx patch-id to)]
+  ([ctx patch-uuid from to]
+  (let [conn (:conn ctx)]
     ;(println "checking synapse from neuron " from-id "to" to-id)
+    (d/q '[:find ?synapse
+           :in $ ?to-index ?from-index ?patch-uuid
+           :where
+           [?patch :patch/uuid ?patch-uuid]
+           [?patch :patch/neurons ?to]
+           [?to :neuron/index ?to-index]
+           [?patch :patch/neurons ?from]
+           [?from :neuron/index ?from-index]
+           [?to :neuron/distal-dendrites ?dendrite]
+           [?dendrite :dendrite/synapses ?synapse]
+           [?synapse :synapse/pre-synaptic-neuron ?from]]
+         (d/db conn)
+         to from patch-uuid)))
+  ([db from to]
+   ;(println "checking synapse from neuron " (:db/id to) "from" (:db/id from))
     (d/q '[:find ?synapse
            :in $ ?to ?from
            :where
              [?to :neuron/distal-dendrites ?dendrite]
              [?dendrite :dendrite/synapses ?synapse]
              [?synapse :synapse/pre-synaptic-neuron ?from]]
-         (d/db conn)
-         to-id from-id)))
+         db
+         (:db/id to) (:db/id from))))
+
+#_(bench (d/q '[:find ?synapse :in $ ?to ?from :where [?to :neuron/distal-dendrites ?dendrite][?dendrite :dendrite/synapses ?synapse][?synapse :synapse/pre-synaptic-neuron ?from]] (d/db *conn*) (:db/id to) (:db/id from)))
+#_(bench (d/q '[:find ?synapse :in $ ?to ?from :where [?to :neuron/distal-dendrites ?dendrite][?synapse :synapse/pre-synaptic-neuron ?from][?dendrite :dendrite/synapses ?synapse]] (d/db *conn*) (:db/id to) (:db/id from)))
+
+(defn syn? [conn to from]
+  (let [db (d/db conn)
+        to-id (:db/id to)
+        from-id (:db/id from)
+        pre-key :synapse/pre-synaptic-neuron
+        dendrite-key :dendrite/synapses
+        dendrites (set (map :v (d/datoms db :eavt to-id :neuron/distal-dendrites)))
+        to-synapses (set (map :v (mapcat #(d/datoms db :eavt % :dendrite/synapses) dendrites)))
+        synapses (set (map :e (d/datoms db :avet pre-key from-id)))]
+    (some synapses to-synapses)))
+
+(defn enervated-by [db from]
+  (let [from-id (:db/id from)
+        pre-key :synapse/pre-synaptic-neuron
+        synapses (map :e (d/datoms db :avet pre-key from-id))
+        dendrite-key :dendrite/synapses
+        dendrites (map :e (mapcat #(d/datoms db :avet dendrite-key %) synapses))
+        to-neurons (map :e (mapcat #(d/datoms db :avet :neuron/distal-dendrites %) dendrites))
+        ]
+    [from to-neurons synapses]))
+
 
 (defn connect-distal
-  [ctx patch-uuid from to]
+  [ctx patch-uuid from to async?]
   (when (zero? (count (synapse-between ctx patch-uuid from to)))
    (let [conn (:conn ctx)
         randomer (:randomer ctx)
@@ -241,7 +278,74 @@
                     dendrites)
         dendrite (ffirst dendrites)]
     ;(println "Connecting " from-id "->" to-id "Adding synapse" synapse-id "to dendrite" dendrite)
-    @(d/transact conn [{:db/id dendrite :dendrite/synapses synapse-id}
+    (if async?
+      (d/transact-async conn [{:db/id dendrite :dendrite/synapses synapse-id}
+                       synapse-tx])
+      @(d/transact conn [{:db/id dendrite :dendrite/synapses synapse-id}
+                       synapse-tx])))))
+
+(defn new-dendrite-tx
+  [to]
+  (let [dendrite-id (d/tempid :db.part/user)]
+    {:txs [{:db/id dendrite-id}
+           {:db/id (:db/id to)
+            :neuron/distal-dendrites dendrite-id}]
+     :id dendrite-id}))
+
+(defn connect-distal-tx
+  [ctx from to]
+  (let [conn (:conn ctx)
+        db (d/db conn)]
+    (when (nil? (syn? conn to from))
+      (let [randomer (:randomer ctx)
+            synapse-id (d/tempid :db.part/user)
+            to-id (:db/id to)
+            permanence-threshold 0.2
+            permanent? (> (randomer 3) 0)
+            permanence (* permanence-threshold (if permanent? 1.1 0.9))
+            synapse-tx {:db/id synapse-id
+                        :synapse/pre-synaptic-neuron (:db/id from)
+                        :synapse/permanence permanence
+                        :synapse/permanence-threshold permanence-threshold}
+            dendrites (map :v (d/datoms db :eavt to-id :neuron/distal-dendrites))
+            new-dendrite-data (if (empty? dendrites)
+                                (new-dendrite-tx to))
+            dendrite-tx (if (empty? dendrites)
+                          (:txs new-dendrite-data)
+                          [])
+            dendrite (if (empty? dendrites)
+                       (:id new-dendrite-data)
+                       (first dendrites))]
+        ;(println "Connecting " from-id "->" to-id "Adding synapse" synapse-id "to dendrite" dendrite)
+        (concat [{:db/id dendrite :dendrite/synapses synapse-id}
+                     synapse-tx]
+               dendrite-tx)))))
+
+
+#_(defn connect-distal-txs
+  [ctx froms tos chance]
+  ;(when (zero? (count (synapse-between ctx from to)))
+  (let [conn (:conn ctx)
+        randomer (:randomer ctx)
+        synapses (d/q )
+        synapse-id (d/tempid :db.part/user)
+        permanence-threshold 0.2
+        permanent? (> (randomer 3) 0)
+        permanence (* permanence-threshold (if permanent? 1.1 0.9))
+        synapse-tx {:db/id synapse-id
+                    :synapse/pre-synaptic-neuron from-id
+                    :synapse/permanence permanence
+                    :synapse/permanence-threshold permanence-threshold}
+        dendrites (find-dendrites ctx to-id)
+        dendrites (if (empty? dendrites)
+                    (add-dendrite! ctx to-id)
+                    dendrites)
+        dendrite (ffirst dendrites)]
+    ;(println "Connecting " from-id "->" to-id "Adding synapse" synapse-id "to dendrite" dendrite)
+    (if async?
+      (d/transact-async conn [{:db/id dendrite :dendrite/synapses synapse-id}
+                       synapse-tx])
+      @(d/transact conn [{:db/id dendrite :dendrite/synapses synapse-id}
                        synapse-tx]))))
 
 (defn find-neurons

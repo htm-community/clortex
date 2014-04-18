@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html><head><meta charset="utf-8" content="text/html" http-equiv="Content-Type" /><meta content="** Clortex: Implementation in Clojure of Jeff Hawkins' Hierarchical Temporal Memory 
-      &amp; Cortical Learning Algorithm.
-      **Warning: Pre-alpha code.**
-	This project has just begun as is under daily development. Anything and everything is likely to change drastically without a moment's notice.
-	" name="description" /><style type="text/css">/**
+<html><head><meta charset="utf-8" content="text/html" http-equiv="Content-Type" /><meta content="** Clortex: Implementation in Clojure of Jeff Hawkins' Hierarchical Temporal Memory
+  &amp; Cortical Learning Algorithm.
+  **Warning: Pre-alpha code.**
+  This project has just begun as is under daily development. Anything and everything is likely to change drastically without a moment's notice.
+  " name="description" /><style type="text/css">/**
  * SyntaxHighlighter
  * http://alexgorbatchev.com/SyntaxHighlighter
  *
@@ -3032,21 +3032,21 @@ net.brehaut.ClojureTools = (function (SH) {
     build_tree: build_tree
   };
 })(SyntaxHighlighter);
-</script><title>clortex -- Marginalia</title></head><body><table><tr><td class="docs"><div class="header"><h1 class="project-name">clortex</h1><h2 class="project-version">0.1.1-SNAPSHOT</h2><br /><p>** Clortex: Implementation in Clojure of Jeff Hawkins' Hierarchical Temporal Memory 
-      &amp; Cortical Learning Algorithm.
-      <strong>Warning: Pre-alpha code.</strong>
-    This project has just begun as is under daily development. Anything and everything is likely to change drastically without a moment's notice.</p>
-</div><div class="dependencies"><h3>dependencies</h3><table><tr><td class="dep-name">org.clojure/clojure</td><td class="dotted"><hr /></td><td class="dep-version">1.5.1</td></tr><tr><td class="dep-name">incanter/incanter-core</td><td class="dotted"><hr /></td><td class="dep-version">1.5.4</td></tr><tr><td class="dep-name">incanter/incanter-io</td><td class="dotted"><hr /></td><td class="dep-version">1.5.4</td></tr><tr><td class="dep-name">org.clojure/data.csv</td><td class="dotted"><hr /></td><td class="dep-version">0.1.2</td></tr><tr><td class="dep-name">org.clojure/data.json</td><td class="dotted"><hr /></td><td class="dep-version">0.2.1</td></tr><tr><td class="dep-name">enlive</td><td class="dotted"><hr /></td><td class="dep-version">1.1.5</td></tr><tr><td class="dep-name">clojure-opennlp</td><td class="dotted"><hr /></td><td class="dep-version">0.3.2</td></tr><tr><td class="dep-name">clojurewerkz/buffy</td><td class="dotted"><hr /></td><td class="dep-version">1.0.0-beta1</td></tr><tr><td class="dep-name">clj-time</td><td class="dotted"><hr /></td><td class="dep-version">0.6.0</td></tr></table></div></td><td class="codes" style="text-align: center; vertical-align: middle;color: #666;padding-right:20px"><br /><br /><br />(this space intentionally left almost blank)</td></tr><tr><td class="docs"><div class="toc"><a name="toc"><h3>namespaces</h3></a><ul><li><a href="#clortex.core">clortex.core</a></li><li><a href="#clortex.domain.encoders.core">clortex.domain.encoders.core</a></li><li><a href="#clortex.domain.encoders.protocols">clortex.domain.encoders.protocols</a></li><li><a href="#clortex.domain.encoders.rdse">clortex.domain.encoders.rdse</a></li><li><a href="#clortex.domain.patch.core">clortex.domain.patch.core</a></li><li><a href="#clortex.domain.sensors.core">clortex.domain.sensors.core</a></li><li><a href="#clortex.domain.sensors.date">clortex.domain.sensors.date</a></li><li><a href="#clortex.encoders">clortex.encoders</a></li><li><a href="#"></a></li><li><a href="#clortex.neuron">clortex.neuron</a></li><li><a href="#clortex.core">clortex.core</a></li><li><a href="#clortex.utils.hash">clortex.utils.hash</a></li><li><a href="#clortex.utils.math">clortex.utils.math</a></li></ul></div></td><td class="codes">&nbsp;</td></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#clortex.core" name="clortex.core"><h1 class="project-name">clortex.core</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><p><strong>Pre-alpha</strong> Entry points for Clortex as a library. Nothing to see here right now.</p>
+</script><title>clortex -- Marginalia</title></head><body><table><tr><td class="docs"><div class="header"><h1 class="project-name">clortex</h1><h2 class="project-version">0.1.1-SNAPSHOT</h2><br /><p>** Clortex: Implementation in Clojure of Jeff Hawkins' Hierarchical Temporal Memory
+  &amp; Cortical Learning Algorithm.
+  <strong>Warning: Pre-alpha code.</strong>
+  This project has just begun as is under daily development. Anything and everything is likely to change drastically without a moment's notice.</p>
+</div><div class="dependencies"><h3>dependencies</h3><table><tr><td class="dep-name">org.clojure/clojure</td><td class="dotted"><hr /></td><td class="dep-version">1.6.0</td></tr><tr><td class="dep-name">incanter/incanter-core</td><td class="dotted"><hr /></td><td class="dep-version">1.5.4</td></tr><tr><td class="dep-name">incanter/incanter-io</td><td class="dotted"><hr /></td><td class="dep-version">1.5.4</td></tr><tr><td class="dep-name">org.clojure/data.csv</td><td class="dotted"><hr /></td><td class="dep-version">0.1.2</td></tr><tr><td class="dep-name">org.clojure/data.json</td><td class="dotted"><hr /></td><td class="dep-version">0.2.1</td></tr><tr><td class="dep-name">enlive</td><td class="dotted"><hr /></td><td class="dep-version">1.1.5</td></tr><tr><td class="dep-name">clojure-opennlp</td><td class="dotted"><hr /></td><td class="dep-version">0.3.2</td></tr><tr><td class="dep-name">clojurewerkz/buffy</td><td class="dotted"><hr /></td><td class="dep-version">1.0.0-beta1</td></tr><tr><td class="dep-name">clj-time</td><td class="dotted"><hr /></td><td class="dep-version">0.6.0</td></tr><tr><td class="dep-name">com.stuartsierra/component</td><td class="dotted"><hr /></td><td class="dep-version">0.2.1</td></tr><tr><td class="dep-name">com.stuartsierra/flow</td><td class="dotted"><hr /></td><td class="dep-version">0.1.0</td></tr><tr><td class="dep-name">com.datomic/datomic-free</td><td class="dotted"><hr /></td><td class="dep-version">0.9.4578</td></tr><tr><td class="dep-name">expectations</td><td class="dotted"><hr /></td><td class="dep-version">2.0.6</td></tr><tr><td class="dep-name">quil</td><td class="dotted"><hr /></td><td class="dep-version">1.7.0</td></tr><tr><td class="dep-name">adi</td><td class="dotted"><hr /></td><td class="dep-version">0.1.5</td></tr><tr><td class="dep-name">lein-light-nrepl</td><td class="dotted"><hr /></td><td class="dep-version">0.0.17</td></tr></table></div></td><td class="codes" style="text-align: center; vertical-align: middle;color: #666;padding-right:20px"><br /><br /><br />(this space intentionally left almost blank)</td></tr><tr><td class="docs"><div class="toc"><a name="toc"><h3>namespaces</h3></a><ul><li><a href="#clortex.core">clortex.core</a></li><li><a href="#clortex.domain.encoders.core">clortex.domain.encoders.core</a></li><li><a href="#clortex.domain.encoders.rdse">clortex.domain.encoders.rdse</a></li><li><a href="#clortex.domain.neuron">clortex.domain.neuron</a></li><li><a href="#clortex.domain.neuron.persistent-neuron">clortex.domain.neuron.persistent-neuron</a></li><li><a href="#clortex.domain.neuron.pure-neuron">clortex.domain.neuron.pure-neuron</a></li><li><a href="#clortex.domain.patch.core">clortex.domain.patch.core</a></li><li><a href="#clortex.domain.patch.persistent-patch">clortex.domain.patch.persistent-patch</a></li><li><a href="#clortex.domain.patch.pure-patch">clortex.domain.patch.pure-patch</a></li><li><a href="#clortex.domain.sensors.core">clortex.domain.sensors.core</a></li><li><a href="#clortex.domain.sensors.date">clortex.domain.sensors.date</a></li><li><a href="#clortex.encoders">clortex.encoders</a></li><li><a href="#"></a></li><li><a href="#clortex.protocols">clortex.protocols</a></li><li><a href="#clortex.core">clortex.core</a></li><li><a href="#clortex.utils.datomic">clortex.utils.datomic</a></li><li><a href="#clortex.utils.hash">clortex.utils.hash</a></li><li><a href="#clortex.utils.math">clortex.utils.math</a></li><li><a href="#clortex.utils.uuid">clortex.utils.uuid</a></li><li><a href="#clortex.viz.core">clortex.viz.core</a></li></ul></div></td><td class="codes">&nbsp;</td></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#clortex.core" name="clortex.core"><h1 class="project-name">clortex.core</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><p><strong>Pre-alpha</strong> Entry points for Clortex as a library. Nothing to see here right now.</p>
 </td><td class="codes"><pre class="brush: clojure">(ns clortex.core )</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#clortex.domain.encoders.core" name="clortex.domain.encoders.core"><h1 class="project-name">clortex.domain.encoders.core</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>[Pre-alpha] Standard Encoders</h2>
 
 <p>The Cortical Learning Algorithm consumes data encoded as <strong>Sparse Distributed Representations</strong> (SDRs), which
-are arrays or matrices of binary digits (bits). The functions which convert values into SDRs are <code>clortex</code> 
+are arrays or matrices of binary digits (bits). The functions which convert values into SDRs are <code>clortex</code>
 <strong>encoders</strong>.</p>
 
 <p><strong>TODO</strong>: Factor out encoder functions. Use Graph or protocols?</p>
 </td><td class="codes"><pre class="brush: clojure">(ns clortex.domain.encoders.core
-  (:require [clortex.domain.encoders.protocols]
-	[clortex.utils.hash :refer [sha1 mod-2]]))</pre></td></tr><tr><td class="docs"><p><code>true</code> if <code>x</code> is within plus or minus <code>window</code> of <code>centre</code></p>
+  (:require [clortex.protocols :refer :all]
+            [clortex.utils.hash :refer [sha1 mod-2]]))</pre></td></tr><tr><td class="docs"><p><code>true</code> if <code>x</code> is within plus or minus <code>window</code> of <code>centre</code></p>
 </td><td class="codes"><pre class="brush: clojure">(defn within+-
 	[x centre window]
 	(and (&gt; x (- centre window))
@@ -3058,66 +3058,66 @@ are arrays or matrices of binary digits (bits). The functions which convert valu
    respond to inputs at the bottom and top of the encoder's range. other bits respond to values
    within a window of their centres.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn scalar-on?-fn
-  [i min' max' bits on gap half-on w] 
+  [i min' max' bits on gap half-on w]
   (let [low-bit-off? (+ min' (* i gap))
         high-bit-off? (- max' (* (- bits i) gap))
         centre (+ min' (* (- i half-on) gap))]
-	#_(println (str &quot;i &quot; i &quot;\tlow-bit? &quot; (low-bit? i on) &quot;\thigh-bit? &quot; (high-bit? i bits on) &quot;\tcentre &quot; centre))
-    (if (low-bit? i on) 
-        #(&lt;= % low-bit-off?) 
+    (if (low-bit? i on)
+        #(&lt;= % low-bit-off?)
         (if (high-bit? i bits on)
             #(&gt; % high-bit-off?)
-            #(within+- % centre (/ w 1.0))))))</pre></td></tr><tr><td class="docs"><p>constructs functions to encode scalars using a clamped linear sliding window</p>
-</td><td class="codes"><pre class="brush: clojure">(defn scalar-encoder 
-	[&amp; {:keys [min' max' bits on] :or {min' 0.0 max' 100.0 bits 127 on 21}}]
-	(let [
-      gap (/ (- max' min') (- bits on))
-      half-on (/ on 2)
-      w (* gap half-on)
-	  encoders (vec (map #(scalar-on?-fn % min' max' bits on gap half-on w) (range bits)))
-	  encode-all (fn [x] (vec (map #(vec (list % ((encoders %) x))) (range bits))))
-      encode (fn [x] (set (vec (map first (filter second (encode-all x))))))
-      encode-to-bitstring (fn [x] (apply str (vec (map #(if ((encoders %) x) 1 0) (range bits)))))
- #_(fn [x] (str (doall (map #(if (second %) 1 0) (encode-all x)))))]
-	{:encoders encoders
-	 :encode-all encode-all
-	 :encode encode
-	 :encode-to-bitstring encode-to-bitstring}))</pre></td></tr><tr><td class="docs"><p>makes a list of on-bits using the SHA1 hash of a string</p>
+            #(within+- % centre (/ w 1.0))))))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defrecord ScalarEncoder [field-name bits on-bits minimum maximum encoders encode]
+  CLAEncoder)</pre></td></tr><tr><td class="docs"><p>constructs functions to encode scalars using a clamped linear sliding window</p>
+</td><td class="codes"><pre class="brush: clojure">(defn scalar-encoder
+  [&amp; {:keys [minimum maximum bits on] :or {minimum 0.0 maximum 100.0 bits 127 on 21}}]
+  (let [gap (/ (- maximum minimum) (- bits on))
+        half-on (/ on 2)
+        w (* gap half-on)
+        encoders (mapv #(scalar-on?-fn % minimum maximum bits on gap half-on w) (range bits))
+        encode-all (fn [x] (mapv #(vector % ((encoders %) x)) (range bits)))
+        encode (fn [x] (set (mapv first (filter second (encode-all x)))))
+        encode-to-bitstring (fn [x] (apply str (mapv #(if ((encoders %) x) 1 0) (range bits))))]
+    {:encoders encoders
+     :encode-all encode-all
+     :encode encode
+     :encode-to-bitstring encode-to-bitstring}))</pre></td></tr><tr><td class="docs"><p>makes a list of on-bits using the SHA1 hash of a string</p>
 </td><td class="codes"><pre class="brush: clojure">(defn hash-bits
 	[s len on]
-	(loop [coll (sorted-set) bits (cycle (sha1 s)) bit 0] 
+	(loop [coll (sorted-set) bits (cycle (sha1 s)) bit 0]
 	  (let [step (first bits)              ; skip step bits in the set
             bit (mod-2 (+ bit step) len)]  ; wrap around the set
 	    (if (= on (count coll))            ; enough bits?
-	        coll 
+	        coll
 	        (recur (conj coll bit) (next bits) bit)))))</pre></td></tr><tr><td class="docs"><p>converts non-nil/nil to true/false</p>
 </td><td class="codes"><pre class="brush: clojure">(defn hash-on?-fn
 	[i bits on]
-	(fn [s] (if ((hash-bits s bits on) i) true false)))	</pre></td></tr><tr><td class="docs"><p>constructs functions to encode values using a hash function</p>
+	(fn [s] (if ((hash-bits s bits on) i) true false)))</pre></td></tr><tr><td class="docs"><p>constructs functions to encode values using a hash function</p>
 </td><td class="codes"><pre class="brush: clojure">(defn hash-encoder
-	[&amp; {:keys [bits on] :or {bits 127 on 21}}]
-	(let [truthy #(if % true false)
-		encoders (vec (map #(hash-on?-fn % bits on) (range bits)))
-		encode-all (fn [s] (let [hs (hash-bits s bits on)] (vec (map #(vec (list % (truthy (hs %)))) 
-		  (range bits)))))
-		encode #(hash-bits % bits on)]
-	{:encoders encoders
-	 :encode-all encode-all
-	 :encode encode}))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#clortex.domain.encoders.protocols" name="clortex.domain.encoders.protocols"><h1 class="project-name">clortex.domain.encoders.protocols</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>[Pre-alpha] Encoder Protocols</h2>
-
-<p>Not in use.</p>
-
-<p><strong>TODO</strong>: Use Graph or protocols?</p>
-</td><td class="codes"><pre class="brush: clojure">(ns clortex.domain.encoders.protocols)</pre></td></tr><tr><td class="docs"><p>Encodes values into bit representations</p>
-</td><td class="codes"><pre class="brush: clojure">(defprotocol CLAEncoder
-  (encoders [this] &quot;returns the bit encoder functions&quot;)
-  (encode-all [this value] &quot;returns a verbose data structure for an encoding of value&quot;)
-  (encode [this value] &quot;returns a set of on-bits encoding value&quot;))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#clortex.domain.encoders.rdse" name="clortex.domain.encoders.rdse"><h1 class="project-name">clortex.domain.encoders.rdse</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+  [&amp; {:keys [bits on] :or {bits 127 on 21}}]
+  (let [truthy #(if % true false)
+        encoders (vec (map #(hash-on?-fn % bits on) (range bits)))
+        encode-all (fn [s] (let [hs (hash-bits s bits on)] (vec (map #(vec (list % (truthy (hs %))))
+                                                                     (range bits)))))
+        encode #(hash-bits % bits on)]
+    {:encoders encoders
+     :encode-all encode-all
+     :encode encode}))</pre></td></tr><tr><td class="docs"><p>constructs functions to encode values using a hash function</p>
+</td><td class="codes"><pre class="brush: clojure">(defn date-encoder
+  [&amp; {:keys [bits on] :or {bits 127 on 21}}]
+  (let [truthy #(if % true false)
+        encoders (vec (map #(hash-on?-fn % bits on) (range bits)))
+        encode-all (fn [s] (let [hs (hash-bits s bits on)] (vec (map #(vec (list % (truthy (hs %))))
+                                                                     (range bits)))))
+        encode #(hash-bits % bits on)]
+    {:encoders encoders
+     :encode-all encode-all
+     :encode encode}))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#clortex.domain.encoders.rdse" name="clortex.domain.encoders.rdse"><h1 class="project-name">clortex.domain.encoders.rdse</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
 </td><td class="codes"><pre class="brush: clojure">(ns clortex.domain.encoders.rdse
   (:use midje.sweet)
   (:require [clortex.utils.math :refer :all]
 	[clojure.set :refer [difference union]]))</pre></td></tr><tr><td class="docs"><p>sorts buckets by their bottom value</p>
-</td><td class="codes"><pre class="brush: clojure">(defn bottom-sorter 
+</td><td class="codes"><pre class="brush: clojure">(defn bottom-sorter
     [x y]
     (let [c (compare (x :bottom) (y :bottom))]
          (if (zero? c)
@@ -3125,15 +3125,15 @@ are arrays or matrices of binary digits (bits). The functions which convert valu
              c)))</pre></td></tr><tr><td class="docs">
 </td><td class="codes"><pre class="brush: clojure">(defn ordered-bins [bins] (sort-by :bottom bins))</pre></td></tr><tr><td class="docs"><p>returns the bucket which covers value. updates the 'read' slot of the bucket</p>
 </td><td class="codes"><pre class="brush: clojure">(defn find-bucket
-    [^double value buckets] 
+    [^double value buckets]
     (when-let [bucket (first (filter #(&lt;= (:bottom %) value (:top %)) (:bins buckets)))]
         bucket))</pre></td></tr><tr><td class="docs"><p>returns a bucket map given centre, radius and index</p>
-</td><td class="codes"><pre class="brush: clojure">(defn new-bucket 
+</td><td class="codes"><pre class="brush: clojure">(defn new-bucket
     [^double value ^double radius ^long index]
     {:bottom (- value radius) :top (+ value radius) :index index :counter 1 :read 0})</pre></td></tr><tr><td class="docs"><p>used to accumulate the best nearby bucket when searching</p>
-</td><td class="codes"><pre class="brush: clojure">(defn min-distance 
-    [acc a-bucket] 
-    (let [diff (min (abs-diff (:mine acc) (:bottom a-bucket)) 
+</td><td class="codes"><pre class="brush: clojure">(defn min-distance
+    [acc a-bucket]
+    (let [diff (min (abs-diff (:mine acc) (:bottom a-bucket))
                     (:best acc))]
          (if (&lt; diff (:best acc))
              (conj acc {:index (:index a-bucket) :best diff})
@@ -3144,31 +3144,32 @@ are arrays or matrices of binary digits (bits). The functions which convert valu
 (defn n-bins [buckets] (count (:bins buckets)))</pre></td></tr><tr><td class="docs">
 </td><td class="codes"><pre class="brush: clojure">(defn search-starter [bucket] {:index nil :best Integer/MAX_VALUE  :mine (:bottom bucket)})
 (defn sdr-&gt;bitstring [sdr bits] (apply str (vec (map #(if (contains? (set sdr) %) 1 0) (range bits)))))</pre></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defn new-sdr 
+</td><td class="codes"><pre class="brush: clojure">(defn new-sdr
     [bucket buckets]
     (let [bins (:bins buckets)
           ^int on (:on buckets)
           ^int bits (:bits buckets)
           randomer (:randomer buckets)]
-         (if (empty? bins) 
+         (if (empty? bins)
              (vec (range on))
              (let [sorted-bins (sort-by :bottom bins)
                    above? (&gt; (:bottom bucket) (:bottom (first sorted-bins)))
-                   nearest-buckets 
-                       (if above? 
+                   nearest-buckets
+                       (if above?
                            (vec (reverse (drop (- (count sorted-bins) on) sorted-bins)))
                            (vec (take on sorted-bins)))
                    nearest-bits (vec (sort (reduce #(union %1 (set (:sdr %2))) #{} nearest-buckets)))
                    previous-sdr (:sdr (first nearest-buckets))
                    previous-sdr (if above? previous-sdr (vec (reverse previous-sdr)))
                    remove-bit (previous-sdr (inc (randomer (dec on))))
+                   remove-bit (previous-sdr (randomer on))
                    same-bits (vec (disj (set previous-sdr) remove-bit))
                    free-bits (vec (difference (set (range bits)) (set nearest-bits)))
                    new-bit-pos (randomer (count free-bits))
                    new-bit (free-bits new-bit-pos)
                    new-sdr (vec (sort (conj (set same-bits) new-bit)))]
                 new-sdr))))</pre></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defn add-to-buckets! 
+</td><td class="codes"><pre class="brush: clojure">(defn add-to-buckets!
     [buckets bucket]
     (let [bits (:bits @buckets)
          sdr (new-sdr bucket @buckets)
@@ -3177,8 +3178,8 @@ are arrays or matrices of binary digits (bits). The functions which convert valu
          ;sdr-bucket (conj bucket {:sdr sdr :bitstring bitstring})
          ]
        (swap! buckets update-in [:bins] conj sdr-bucket)
-       sdr-bucket))	</pre></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defn add-bucket! 
+       sdr-bucket))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn add-bucket!
     [value buckets]
     (let [diameter (:diameter @buckets)
           radius (/ diameter 2.0)
@@ -3189,125 +3190,49 @@ are arrays or matrices of binary digits (bits). The functions which convert valu
           (add-to-buckets! buckets bucket))
         (do (while (&gt; value (mx))
 	           (add-to-buckets! buckets (new-bucket (+ (mx) radius) radius (n-bins @buckets))))
-	        (while (&lt; value (mn)) 
+	        (while (&lt; value (mn))
 	           (add-to-buckets! buckets (new-bucket (- (mn) radius) radius (n-bins @buckets))))))))</pre></td></tr><tr><td class="docs">
 </td><td class="codes"><pre class="brush: clojure">(defn random-sdr-encoder-1
     [&amp; {:keys [^double diameter ^int bits ^int on] :or {diameter 1.0 bits 127 on 21}}]
-    (let [randomer 
+    (let [randomer
             (random-fn-with-seed 123456)
-          buckets 
-            (atom {:diameter diameter :bits bits :on on :randomer randomer :bins []})		
-          encode! 
-            (fn [^double x] 
+          buckets
+            (atom {:diameter diameter :bits bits :on on :randomer randomer :bins []})
+          encode!
+            (fn [^double x]
                 (if-not (find-bucket x @buckets) (add-bucket! x buckets))
                 (sort (:sdr (find-bucket x @buckets))))
-          encode-to-bitstring! 
-            (fn [^double x] 
+          encode-to-bitstring!
+            (fn [^double x]
                 (sdr-&gt;bitstring (encode! x) bits))]
         {:buckets buckets
          :encode encode!
-         :encode-to-bitstring! encode-to-bitstring!}))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#clortex.domain.patch.core" name="clortex.domain.patch.core"><h1 class="project-name">clortex.domain.patch.core</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(ns clortex.domain.patch.core)</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#clortex.domain.sensors.core" name="clortex.domain.sensors.core"><h1 class="project-name">clortex.domain.sensors.core</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>[Pre-alpha] OPF-Style Sensors</h2>
-
-<p>Currently reads an OPF-style CSV file and converts it into Clojure data structures.</p>
-
-<p><strong>TODO</strong>: ?</p>
-</td><td class="codes"><pre class="brush: clojure">(ns clortex.domain.sensors.core
-  #_(:refer-clojure :exclude [second extend])
-  (:require [clojure.data.csv :as csv]
-	[clojure.java.io :as io] 
-	[clortex.domain.sensors.date :refer [parse-opf-date]]
-    #_[clortex.domain.sensor.encoders.core :as enc :refer :all]))</pre></td></tr><tr><td class="docs"><p>converts a CSV item (a string) into a Clojure value</p>
-</td><td class="codes"><pre class="brush: clojure">(defn parse-opf-item 
-    [v t] 
-    (condp = t
-	  &quot;datetime&quot; (parse-opf-date v)
-	  &quot;float&quot; (double (read-string v)) 
-	  v))</pre></td></tr><tr><td class="docs"><p>converts a CSV item (a string) into a Clojure value. catches and throws exceptions</p>
-</td><td class="codes"><pre class="brush: clojure">(defn safe-parse-opf-item 
-    [v t] 
-    (try (parse-opf-item v t)
-	(catch Exception e (do (println (str &quot;caught exception for value &quot; v)) (throw e)))))</pre></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defn parse-opf-row
-	[line &amp; {:keys [fields types flags]}]
-	(for [i (range (count line))]
-	  (let [^String v (line i) ^String t (types i) ^String field (fields i) ^String flag (flags i)
-	    parsed (parse-opf-item v t)
-	    opf-meta {:raw v :type t :field field :flag flag}]
-	    (with-meta 
-		  [parsed]
-		  {:opf-meta opf-meta}))))</pre></td></tr><tr><td class="docs"><p>parse OPF data from CSV test rows</p>
-</td><td class="codes"><pre class="brush: clojure">(defn parse-opf-data
-  [raw-csv &amp; {:keys [fields types flags]}]
-  (map #(parse-opf-row % :fields fields :types types :flags flags) (drop 3 raw-csv)))</pre></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defn load-opf-data [data &amp; n] 
-  (let [raw-csv (if n (vec (take (first n) data))
-                  (vec data))
-        fields (raw-csv 0)
-        types (raw-csv 1)
-        flags (raw-csv 2)
-        opf-map {:fields fields :types types :flags flags}
-        parsed-data (parse-opf-data raw-csv :fields fields :types types :flags flags)
-        ]
-       {:raw-csv raw-csv :fields fields :types types :flags flags
-	    :parsed-data parsed-data
-	    }))</pre></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defn load-opf-file [f &amp; n] 
-  (let [fileio 	(with-open [in-file (io/reader f)]
-	                  (vec (doall (csv/read-csv in-file))))]
-       load-opf-data fileio n))</pre></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(comment 
-	(def hotgym (load-opf-file &quot;resources/hotgym.csv&quot;)))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#clortex.domain.sensors.date" name="clortex.domain.sensors.date"><h1 class="project-name">clortex.domain.sensors.date</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(ns clortex.domain.sensors.date)
-(require 'clj-time.core)</pre></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(def opf-timestamp-re #&quot;(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):([0-9.]+)&quot;)
-(defn strip-leading-zeros [s] (clojure.string/replace-first s #&quot;^0+([1-9])&quot; &quot;$1&quot;))</pre></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defn parse-opf-date
-	[s]
-	(let [m (re-matches opf-timestamp-re s)]
-	  (if m (let [rev (reverse (map strip-leading-zeros (rest m)))
-                  secs (java.lang.Double/parseDouble (first rev))
-                  items (map #(. Integer parseInt %) (rest rev))
-                  ]
-        (apply clj-time.core/date-time (reverse (conj items secs)))))))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#clortex.encoders" name="clortex.encoders"><h1 class="project-name">clortex.encoders</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(ns clortex.encoders)</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#" name=""><h1 class="project-name"></h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#clortex.neuron" name="clortex.neuron"><h1 class="project-name">clortex.neuron</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(ns clortex.neuron)</pre></td></tr><tr><td class="docs"><p>creates a new dendrite</p>
-</td><td class="codes"><pre class="brush: clojure">(defn new-dendrite
+         :encode-to-bitstring! encode-to-bitstring!}))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#clortex.domain.neuron" name="clortex.domain.neuron"><h1 class="project-name">clortex.domain.neuron</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(ns clortex.domain.neuron
+	(:require [clortex.utils.uuid :as uuid]
+           [clortex.utils.math :refer :all]
+           [clortex.domain.neuron.pure-neuron :as pure-n]
+           [clortex.domain.patch.persistent-patch :as db-patch]
+           [datomic.api :as d]))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn free-db []
+  (let [uri &quot;datomic:free://macbook.local:4334/patches&quot;]
+    (d/delete-database uri)
+    (d/create-database uri)
+    (let [conn (d/connect uri)
+          schema (load-file &quot;resources/datomic/schema.edn&quot;)]
+      (d/transact conn schema)
+      conn)))</pre></td></tr><tr><td class="docs"><p>creates a new dendrite</p>
+</td><td class="codes"><pre class="brush: clojure">(defn dendrite
   []
-  {})</pre></td></tr><tr><td class="docs"><p>returns an empty neuron</p>
-</td><td class="codes"><pre class="brush: clojure">(defn new-neuron
-  ;[id &amp; {:patch patch :or nil}]
-  [id]
-  {:id id,
-   :proximal {0 (new-dendrite)},
-   :distal [(new-dendrite)],
-   :axon #{},
-   :activation 0,
-   :prediction 0,
-   :patch nil})</pre></td></tr><tr><td class="docs"><p>returns a patch of n empty neurons</p>
-</td><td class="codes"><pre class="brush: clojure">(defn patch
-  [n]
-  (reduce
-     (fn [m v] (assoc m v (new-neuron v)))
-     {}
-     (range n)))</pre></td></tr><tr><td class="docs"><p>adds a feedforward synapse on neuron 'to' from neuron 'from'</p>
-</td><td class="codes"><pre class="brush: clojure">(defn connect-feedforward
-  [to from]
-  (let [neuron to
-         from-index (:id from)
-         perm (/ (rand-int 256) 256.0)]
-     (assoc-in neuron
-               [:proximal 0]
-               {:from from-index,
-                :permanence perm})))</pre></td></tr><tr><td class="docs"><p>adds an axon connection on neuron 'from' to neuron 'to'</p>
+  {})</pre></td></tr><tr><td class="docs"><p>adds an axon connection on neuron 'from' to neuron 'to'</p>
 </td><td class="codes"><pre class="brush: clojure">(defn connect-axon
   [from to]
   (let [neuron to
-         to-index (:id to)]
+         to-index (:neuron/index to)]
      (assoc-in neuron
-               [:axon]
-               {:to to-index,
-                :signalled 0})))</pre></td></tr><tr><td class="docs"><p>retrieves the neuron at position pos in patch</p>
+               [:neuron/axon]
+               {:axon/to to-index,
+                :axon/signalled 0})))</pre></td></tr><tr><td class="docs"><p>retrieves the neuron at position pos in patch</p>
 </td><td class="codes"><pre class="brush: clojure">(defn get-neuron
   [patch pos]
   (patch pos))</pre></td></tr><tr><td class="docs">
@@ -3325,8 +3250,531 @@ are arrays or matrices of binary digits (bits). The functions which convert valu
                         y (get-neuron patch (+ c (rand-int c))) ]
                     (connect-feedforward x y)
                     (connect-axon y x)))
-      (println &quot;done&quot;)))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#clortex.core" name="clortex.core"><h1 class="project-name">clortex.core</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(ns clortex.core)</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#clortex.utils.hash" name="clortex.utils.hash"><h1 class="project-name">clortex.utils.hash</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+      (println &quot;done&quot;)))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#clortex.domain.neuron.persistent-neuron" name="clortex.domain.neuron.persistent-neuron"><h1 class="project-name">clortex.domain.neuron.persistent-neuron</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(ns clortex.domain.neuron.persistent-neuron
+  (require [clortex.protocols :refer :all]))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(extend-type datomic.query.EntityMap PNeuron
+  (neuron-index [this] (:neuron/index this))
+  (neuron-id [this] (:neuron/uuid this))
+  (distal-dendrites [this] (:neuron/distal-dendrites this))
+  (proximal-dendrite [this] (:neuron/proximal-dendrite this))
+  )</pre></td></tr><tr><td class="docs"><p>adds a feedforward synapse on neuron 'to' from neuron 'from'</p>
+</td><td class="codes"><pre class="brush: clojure">(defn connect-feedforward
+  [to from]
+  (let [neuron to
+         from-index (.neuron-index from)
+         perm (/ (rand-int 256) 256.0)]
+     (assoc-in neuron
+               [:neuron/proximal-dendrite 0]
+               {:synapse/pre-synaptic-neuron from-index,
+                :synapse/permanence perm})))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#clortex.domain.neuron.pure-neuron" name="clortex.domain.neuron.pure-neuron"><h1 class="project-name">clortex.domain.neuron.pure-neuron</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(ns clortex.domain.neuron.pure-neuron
+  (:require [clortex.protocols :as cp]))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defrecord PureNeuron
+  [uuid index
+   distal-dendrites proximal-dendrite
+   active? predictive-potential activation-potential]
+  cp/PNeuron
+  (neuron-index [this] (:index this))
+  (neuron-id [this] (:uuid this))
+  (distal-dendrites [this] (:distal-dendrites this))
+  (proximal-dendrite [this] (:proximal-dendrite this)))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(def empty-neuron
+  (-&gt;PureNeuron nil -1 [] [] false 0 0))</pre></td></tr><tr><td class="docs"><p>returns a neuron (empty or merged with inps)</p>
+</td><td class="codes"><pre class="brush: clojure">(defn neuron
+  [&amp; inps]
+  (merge empty-neuron (if inps (apply hash-map inps) {})))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#clortex.domain.patch.core" name="clortex.domain.patch.core"><h1 class="project-name">clortex.domain.patch.core</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(ns clortex.domain.patch.core
+	(:require [clortex.utils.math :refer :all]))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn make-columns
+    [&amp; {:keys [^int columns ^int cells-per-column dims] :or {columns 2048 cells-per-column 32 dims [2048]}}]
+[])</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn single-layer-patch
+    [&amp; {:keys [^int columns ^int cells-per-column dims] :as patch-spec :or {columns 2048 cells-per-column 32 dims [2048]}}]
+    (let [randomer 
+            (random-fn-with-seed 123456)
+          patch-columns (make-columns patch-spec)
+          data 
+            (atom {:n-columns columns :cells-per-column cells-per-column :dims dims 
+                   :randomer randomer :patch patch-columns})]
+        {:patch data}))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#clortex.domain.patch.persistent-patch" name="clortex.domain.patch.persistent-patch"><h1 class="project-name">clortex.domain.patch.persistent-patch</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(ns clortex.domain.patch.persistent-patch
+  (:use [adi.utils :only [iid ?q]])
+  (require [clortex.protocols :refer :all]
+           [datomic.api :as d]
+           [adi.core :as adi]))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(extend-type datomic.query.EntityMap PNeuronPatch
+  (neurons [this] (:patch/neurons this))
+  (neuron-with-index [this index]
+   (filter #(= index (neuron-index %)) (neurons this)))
+  (neuron-with-id [this id]
+   (filter #(= id (neuron-id %)) (neurons this)))
+  (columns [this] (:patch/columns this))
+  (timestamp [this] (:patch/timestamp this))
+  (set-input-sdr [this sdr] this)
+  (connect-inputs [this] this)
+  (feedforward-synapses [this] [])
+  )</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defrecord DatomicPatch [patch-id patch conn]
+  PNeuronPatch
+  (neurons [this]
+   (:patch/neurons patch))
+  (neuron-with-index [this index]
+   (filter #(= index (neuron-index %)) (neurons this)))
+  (neuron-with-id [this id]
+   (filter #(= id (neuron-id %)) (neurons this)))
+  (columns [this] (:patch/columns patch))
+  (timestamp [this] (:patch/timestamp patch))
+  (set-input-sdr [this sdr] this)
+  (connect-inputs [this] this)
+  (feedforward-synapses [this] []))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(def empty-patch
+  (-&gt;DatomicPatch nil nil nil))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn find-patch-id
+  [ctx patch-uuid]
+  (ffirst (d/q '[:find ?patch-id
+                 :in $ ?p-uuid
+                        :where [?patch-id :patch/uuid ?p-uuid]]
+               (d/db (:conn ctx))
+               patch-uuid)))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn load-patch [ctx ^DatomicPatch patch patch-id]
+  (let [conn (:conn ctx)]
+    (merge patch {:patch-id patch-id :conn conn :patch (d/entity (d/db conn) patch-id)})))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn load-patch-by-uuid [ctx patch-uuid]
+  (let [conn (:conn ctx)
+        patch-id (find-patch-id ctx patch-uuid)]
+    (load-patch ctx empty-patch patch-id)))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn create-patch
+  [ctx patch-uuid]
+  (let [conn (:conn ctx)]
+    @(d/transact conn [{:db/id (d/tempid :db.part/user)
+                        :patch/uuid patch-uuid}])))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn create-adi-patch
+  [ctx patch-uuid]
+  (adi/insert! (:ds ctx) [{:patch {:uuid patch-uuid}}]))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">      #_(let [uri &quot;datomic:mem://adi-test&quot;
+            ds ds    (adi/datastore uri clortex-schema true true)
+            _add  (adi/insert! ds [{:patch {:uuid patch-1}}])
+            check (-&gt;&gt; (adi/select ds {:patch/uuid patch-1})
+                       first :patch :uuid)
+            _tidy (d/delete-database uri)]
+        check)
+(defn find-patch-uuids
+  [ctx]
+  (let [conn (:conn ctx)]
+    (d/q '[:find ?patch-uuid
+           :where [_ :patch/uuid ?patch-uuid]]
+         (d/db conn))))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn create-patch
+  [ctx patch-uuid]
+  (let [conn (:conn ctx)]
+    @(d/transact conn [{:db/id (d/tempid :db.part/user)
+                        :patch/uuid patch-uuid}])))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn find-neuron-id
+  [ctx patch-id neuron-index]
+  (ffirst (d/q '[:find ?neuron-id
+                 :in $ ?patch ?neuron-index
+                 :where [?patch :patch/neurons ?neuron-id]
+                        [?neuron-id :neuron/index ?neuron-index]]
+               (d/db (:conn ctx))
+               patch-id
+               neuron-index)))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn add-neuron
+  [ctx patch-uuid]
+  (let [conn (:conn ctx)
+        patch-id (find-patch-id ctx patch-uuid)
+        neurons (count
+                 (d/q '[:find ?neuron
+                        :in $ ?p-id
+                        :where [?p-id :patch/neurons ?neuron]]
+                      (d/db conn)
+                      patch-id))
+        neuron-id (d/tempid :db.part/user)]
+    @(d/transact conn [{:db/id neuron-id
+                        :neuron/index neurons
+                        :neuron/feedforward-potential 0
+                        :neuron/predictive-potential 0
+                        :neuron/active? false}
+                       {:db/id patch-id
+                        :patch/neurons neuron-id}])))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn add-neurons-to
+  [ctx patch-uuid n]
+  (let [conn (:conn ctx)
+        patch-id (find-patch-id ctx patch-uuid)
+        neurons (count
+                 (d/q '[:find ?neuron
+                        :in $ ?p-id
+                        :where [?p-id :patch/neurons ?neuron]]
+                      (d/db conn)
+                      patch-id))
+        tx-tuples (for [i (range n)
+                        :let [neuron-id (d/tempid :db.part/user)
+                              neuron-index (+ i neurons)]]
+                    [{:db/id neuron-id
+                      :neuron/index neuron-index
+                      :neuron/active? false}
+                     {:db/id patch-id :patch/neurons neuron-id}])
+        tx-data (reduce #(conj %1 (%2 0) (%2 1)) [] tx-tuples)]
+    tx-data))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn add-inputs-to
+  [ctx patch-uuid n]
+  (let [conn (:conn ctx)
+        ds (:ds ctx)
+        patch-id (find-patch-id ctx patch-uuid)
+        inputs (count
+                 (d/q '[:find ?input
+                        :in $ ?patch-id
+                        :where
+                        [?patch-id :patch/inputs ?dendrite]
+                        [?dendrite :dendrite/synapses ?synapse]
+                        [?synapse :synapse/pre-synaptic-neuron ?input]]
+                      (d/db conn)
+                      patch-id))
+        dendrite-id (d/tempid :db.part/user)
+        tx-dendrite (if (zero? inputs)
+                      [{:db/id dendrite-id}
+                       {:db/id patch-id :patch/inputs dendrite-id}]
+                      [])
+        tx-tuples (for [i (range n)
+                        :let [input-id (d/tempid :db.part/user)
+                              synapse-id (d/tempid :db.part/user)
+                              input-index (+ i inputs)]]
+                    [{:db/id input-id
+                      :neuron/index input-index
+                      :neuron/active? false}
+                     {:db/id synapse-id
+                      :synapse/pre-synaptic-neuron input-id
+                      :synapse/permanence 1
+                      :synapse/permanence-threshold 0}
+                     {:db/id dendrite-id :dendrite/synapses synapse-id}])
+        tx-data (reduce #(conj %1 (%2 0) (%2 1)) tx-dendrite tx-tuples)]
+    (println tx-data)
+    tx-data))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn add-neurons-to!
+  [ctx patch-uuid n]
+  @(d/transact (:conn ctx) (add-neurons-to ctx patch-uuid n)))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn add-inputs-to!
+  [ctx patch-uuid n]
+  @(d/transact (:conn (:ds ctx)) (add-inputs-to ctx patch-uuid n)))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn find-dendrites
+  [ctx neuron-id]
+  (let [conn (:conn ctx)]
+    (d/q '[:find ?dendrite
+           :in $ ?neuron
+           :where [?neuron :neuron/distal-dendrites ?dendrite]]
+         (d/db conn)
+         neuron-id)))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn add-dendrite!
+  [ctx neuron]
+  (let [conn (:conn ctx)
+        dendrite-id (d/tempid :db.part/user)]
+    @(d/transact conn [{:db/id neuron :neuron/distal-dendrites dendrite-id}
+                       {:db/id dendrite-id :dendrite/capacity 32}])
+    ;(println &quot;Added dendrite&quot; dendrite-id &quot;to neuron&quot; neuron)
+    (find-dendrites ctx neuron)))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn synapse-between
+  [ctx patch-uuid from to]
+  (let [conn (:conn ctx)
+        patch-id (find-patch-id ctx patch-uuid)
+        from-id (find-neuron-id ctx patch-id from)
+        to-id (find-neuron-id ctx patch-id to)]
+    ;(println &quot;checking synapse from neuron &quot; from-id &quot;to&quot; to-id)
+    (d/q '[:find ?synapse
+           :in $ ?to ?from
+           :where
+             [?to :neuron/distal-dendrites ?dendrite]
+             [?dendrite :dendrite/synapses ?synapse]
+             [?synapse :synapse/pre-synaptic-neuron ?from]]
+         (d/db conn)
+         to-id from-id)))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn connect-distal
+  [ctx patch-uuid from to]
+  (when (zero? (count (synapse-between ctx patch-uuid from to)))
+   (let [conn (:conn ctx)
+        randomer (:randomer ctx)
+        patch-id (find-patch-id ctx patch-uuid)
+        from-id (find-neuron-id ctx patch-id from)
+        to-id (find-neuron-id ctx patch-id to)
+        synapse-id (d/tempid :db.part/user)
+        permanence-threshold 0.2
+        permanent? (&gt; (randomer 3) 0)
+        permanence (* permanence-threshold (if permanent? 1.1 0.9))
+        synapse-tx {:db/id synapse-id
+                    :synapse/pre-synaptic-neuron from-id
+                    :synapse/permanence permanence
+                    :synapse/permanence-threshold permanence-threshold}
+        dendrites (find-dendrites ctx to-id)
+        dendrites (if (empty? dendrites)
+                    (add-dendrite! ctx to-id)
+                    dendrites)
+        dendrite (ffirst dendrites)]
+    ;(println &quot;Connecting &quot; from-id &quot;-&gt;&quot; to-id &quot;Adding synapse&quot; synapse-id &quot;to dendrite&quot; dendrite)
+    @(d/transact conn [{:db/id dendrite :dendrite/synapses synapse-id}
+                       synapse-tx]))))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn find-neurons
+  [ctx patch-uuid]
+  (let [conn (:conn ctx)
+        patch-id (find-patch-id ctx patch-uuid)]
+    (d/q '[:find ?neuron-index
+           :in $ ?patch-id
+           :where [?patch-id :patch/neurons ?neuron-id]
+           [?neuron-id :neuron/index ?neuron-index]]
+         (d/db conn)
+         patch-id)))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn input-sdr
+  [ctx patch-uuid]
+  (let [conn (:conn ctx)]
+    (d/q '[:find ?index ?active
+           :in $ ?patch-uuid
+           :where
+           [?patch :patch/uuid ?patch-uuid]
+           [?patch :patch/inputs ?dendrite]
+           [?dendrite :dendrite/synapses ?synapse]
+           [?synapse :synapse/pre-synaptic-neuron ?input]
+           [?input :neuron/active? ?active]
+           [?input :neuron/index ?index]]
+         (d/db conn)
+         patch-uuid)))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn find-neuron-ids
+  [ctx patch-uuid]
+  (let [conn (:conn ctx)
+        patch-id (find-patch-id ctx patch-uuid)]
+    (d/q '[:find ?neuron-id
+           :in $ ?patch-id
+           :where [?patch-id :patch/neurons ?neuron-id]]
+         (d/db conn)
+         patch-id)))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#clortex.domain.patch.pure-patch" name="clortex.domain.patch.pure-patch"><h1 class="project-name">clortex.domain.patch.pure-patch</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(ns clortex.domain.patch.pure-patch
+  (:require [clortex.protocols :refer :all]
+            [clortex.domain.neuron.pure-neuron :as n]))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defrecord PurePatch [uuid neurons columns inputs outputs synapses timestamp]
+  PNeuronPatch
+  (neurons [this] (:neurons this))
+  (neuron-with-index [this index]
+   (filter #(= index (.neuron-index %)) (neurons this)))
+  (neuron-with-id [this id]
+   (filter #(= id (.neuron-id %)) (neurons this)))
+  (set-neurons [this neurons] (assoc this :neurons neurons))
+  (columns [this] (:columns this))
+  (timestamp [this] (:timestamp this))
+  (set-input-sdr [this sdr] this)
+  (connect-inputs [this] this)
+  (feedforward-synapses [this] []))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(comment
+  (neurons [p] &quot;returns a collection of the patch's neurons&quot;)
+  (neuron-with-index [p index] &quot;returns a neuron with given index (or nil)&quot;)
+  (neuron-with-id [p id] &quot;returns a neuron with given uuid (or nil)&quot;)
+  (set-neurons [p neurons] &quot;returns patch with neuron added&quot;)
+  (columns [p] &quot;collection of mini-columns&quot;)
+  (timestamp [p])
+  (set-input-sdr [p sdr] &quot;returns a patch with inputs matched to sdr&quot;)
+  (connect-inputs [p] &quot;returns a patch with inputs connected to proximal dendrites&quot;)
+  (feedforward-synapses [p] &quot;returns a collection of neurons affected by inputs&quot;))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(def empty-patch
+  (-&gt;PurePatch nil [] [] [] [] {} -1))</pre></td></tr><tr><td class="docs"><p>returns a patch (empty or merged with inps)</p>
+</td><td class="codes"><pre class="brush: clojure">(defn patch
+  [&amp; inps]
+  (merge empty-patch (if inps (apply hash-map inps) {})))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#clortex.domain.sensors.core" name="clortex.domain.sensors.core"><h1 class="project-name">clortex.domain.sensors.core</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>[Pre-alpha] OPF-Style Sensors</h2>
+
+<p>Currently reads an OPF-style CSV file and converts it into Clojure data structures.</p>
+
+<p><strong>TODO</strong>: ?</p>
+</td><td class="codes"><pre class="brush: clojure">(ns clortex.domain.sensors.core
+  #_(:refer-clojure :exclude [second extend])
+  (:require [clojure.data.csv :as csv]
+            [clojure.java.io :as io]
+            [clojure.pprint :refer [pprint]]
+            [clortex.domain.sensors.date :refer [parse-opf-date]]
+            [clortex.domain.encoders.core :as enc]
+            [clortex.domain.encoders.rdse :as rdse]))</pre></td></tr><tr><td class="docs"><p>converts a CSV item (a string) into a Clojure value</p>
+</td><td class="codes"><pre class="brush: clojure">(defn parse-opf-item
+    [v t]
+    (condp = t
+	  &quot;datetime&quot; (parse-opf-date v)
+	  &quot;float&quot; (double (read-string v))
+	  v))</pre></td></tr><tr><td class="docs"><p>converts a CSV item (a string) into a Clojure value. catches and throws exceptions</p>
+</td><td class="codes"><pre class="brush: clojure">(defn safe-parse-opf-item
+    [v t]
+    (try (parse-opf-item v t)
+	(catch Exception e (do (println (str &quot;caught exception for value &quot; v)) (throw e)))))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn parse-opf-row
+	[line &amp; {:keys [fields types flags]}]
+	(vec (for [i (range (count line))]
+	  (let [^String v (line i) ^String t (types i) ^String field (fields i) ^String flag (flags i)
+	    parsed (parse-opf-item v t)
+	    opf-meta {:raw v :type t :field field :flag flag}]
+	    (with-meta
+		  [parsed]
+		  {:opf-meta opf-meta})))))</pre></td></tr><tr><td class="docs"><p>parse OPF data from CSV test rows</p>
+</td><td class="codes"><pre class="brush: clojure">(defn parse-opf-data
+  [raw-csv &amp; {:keys [fields types flags]}]
+  (mapv #(parse-opf-row % :fields fields :types types :flags flags) (drop 3 raw-csv)))</pre></td></tr><tr><td class="docs"><p>converts a CSV item (a string) into a Clojure value</p>
+</td><td class="codes"><pre class="brush: clojure">(defn make-encoder
+    [field encoder-type]
+    (condp = encoder-type
+	  &quot;datetime&quot; (enc/date-encoder)
+	  &quot;float&quot; (rdse/random-sdr-encoder-1)
+	  (enc/hash-encoder)))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn make-encoders
+  [fields types]
+  (loop [inputs [fields types] result []]
+    (if (empty? (first inputs))
+      result
+      (recur [(rest (first inputs)) (rest (second inputs))]
+             (conj result (make-encoder (ffirst inputs) (first (second inputs))))))))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn load-opf-data [data &amp; n]
+  (let [raw-csv (if n (vec (take (first n) data))
+                  (vec data))
+        fields (raw-csv 0)
+        types (raw-csv 1)
+        flags (raw-csv 2)
+        encoders (make-encoders fields types)
+        opf-map {:fields fields :types types :flags flags :encoders encoders}
+        parsed-data (parse-opf-data raw-csv :fields fields :types types :flags flags)
+        ]
+    (println &quot;loaded&quot; (count raw-csv) &quot;lines&quot;)
+    {:raw-csv raw-csv :fields fields :types types :flags flags
+     :parsed-data parsed-data
+     :encoders encoders
+     }))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn load-opf-file [config]
+  (let [f (:file config)
+        n (:read-n-records config)
+        fileio 	(with-open [in-file (io/reader f)]
+	                  (vec (doall (csv/read-csv in-file))))
+        n (if (and n (not= n :all)) n (count fileio))]
+    (println &quot;loaded&quot; (count fileio) &quot;lines&quot;)
+       (load-opf-data fileio n)))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn write-edn-file [data f]
+  (with-open [out-file (io/writer f)]
+    (.write out-file (pr-str data))))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn write-edn-file [data f]
+  (with-open [out-file (io/writer f)]
+    (pprint data out-file)))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(comment
+	(def hotgym (load-opf-file &quot;resources/hotgym.csv&quot;)))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#clortex.domain.sensors.date" name="clortex.domain.sensors.date"><h1 class="project-name">clortex.domain.sensors.date</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(ns clortex.domain.sensors.date
+	(require [clj-time.core :as tc]
+		[clj-time.format :as tf]))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(def opf-timestamp-re #&quot;(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):([0-9.]+)&quot;)
+(defn strip-leading-zeros [s] (clojure.string/replace-first s #&quot;^0+([1-9.])&quot; &quot;$1&quot;))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn old-parse-opf-date
+	[s]
+	(let [m (re-matches opf-timestamp-re s)]
+	  (if m (let [rev (reverse (map strip-leading-zeros (rest m)))
+                  secs (java.lang.Double/parseDouble (first rev))
+                  items (map #(. Integer parseInt %) (rest rev))
+                  ]
+        (apply tc/date-time (reverse (conj items secs)))))))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(def opf-format (tf/formatter &quot;yyyy-MM-dd HH:mm:ss.SS&quot;))</pre></td></tr><tr><td class="docs"><p>(tf/parse opf-format "16:13:49:06 on 2013-04-06")</p>
+</td><td class="codes"><pre class="brush: clojure">(defn parse-opf-date [s] (tf/parse opf-format s))		</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#clortex.encoders" name="clortex.encoders"><h1 class="project-name">clortex.encoders</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(ns clortex.encoders)</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#" name=""><h1 class="project-name"></h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#clortex.protocols" name="clortex.protocols"><h1 class="project-name">clortex.protocols</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(ns clortex.protocols)</pre></td></tr><tr><td class="docs"><p>Protocol for basic patch (Layer/Region) operations</p>
+</td><td class="codes"><pre class="brush: clojure">(defprotocol PNeuronPatch
+  (neurons [p] &quot;returns a collection of the patch's neurons&quot;)
+  (neuron-with-index [p index] &quot;returns a neuron with given index (or nil)&quot;)
+  (neuron-with-id [p id] &quot;returns a neuron with given uuid (or nil)&quot;)
+  (set-neurons [p neurons] &quot;returns patch with neuron added&quot;)
+  (columns [p] &quot;collection of mini-columns&quot;)
+  (timestamp [p])
+  (set-input-sdr [p sdr] &quot;returns a patch with inputs matched to sdr&quot;)
+  (connect-inputs [p] &quot;returns a patch with inputs connected to proximal dendrites&quot;)
+  (feedforward-synapses [p] &quot;returns a collection of neurons affected by inputs&quot;))</pre></td></tr><tr><td class="docs"><p>Protocol for Cortical Learning Algorithm Neurons</p>
+</td><td class="codes"><pre class="brush: clojure">(defprotocol PNeuron
+  (neuron-index [n] &quot;index of this neuron within its patch&quot;)
+  (neuron-id [n] &quot;uuid of this neuron&quot;)
+  (distal-dendrites [n] &quot;collection of distal dendrites for this neuron&quot;)
+  (proximal-dendrite [n]))</pre></td></tr><tr><td class="docs"><p>Protocol for CLA dendrites</p>
+</td><td class="codes"><pre class="brush: clojure">(defprotocol PDendriteSegment
+  (synapses [d])
+  (add-synapse [d s])
+  (capacity [d])
+  (full? [d]))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defprotocol PPersistable
+  &quot;Protocol for persistable object&quot;)</pre></td></tr><tr><td class="docs"><p>Encodes values into bit representations</p>
+</td><td class="codes"><pre class="brush: clojure">(defprotocol CLAEncoder
+  (bits [this] &quot;returns width in bits of this encoder&quot;)
+  (on-bits [this] &quot;returns number of on-bits of this encoder&quot;)
+  (field-name [this] &quot;returns the field (using . to indicate hierarchy)&quot;)
+  (encoders [this] &quot;returns the bit encoder functions&quot;)
+  (encode-all [this value] &quot;returns a verbose data structure for an encoding of value&quot;)
+  (encode [this value] &quot;returns a set of on-bits encoding value&quot;))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(extend-type Object
+  CLAEncoder
+  (bits [this] (:bits this))
+  (on-bits [this] (:on-bits this))
+  (field-name [this] (:field-name this))
+  (encoders [this] (:encoders this))
+  (encode-all [this value] (mapv #(vector % ((.encoders this %) value)) (range (.bits this))))
+  (encode [this value] (set (vec (map first (filter second (.encode-all this value)))))))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#clortex.core" name="clortex.core"><h1 class="project-name">clortex.core</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(ns clortex.core)</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#clortex.utils.datomic" name="clortex.utils.datomic"><h1 class="project-name">clortex.utils.datomic</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(ns clortex.utils.datomic
+  (:require [datomic.api :as d]
+            [adi.core :as adi]))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(def clortex-schema
+  {:patch   {:type    [{:type :keyword}]
+             :name    [{:type :string}]
+             :uuid    [{:type :uuid}]
+             :timestep [{:type :long :default 0}]
+             :columns [{:type :ref
+                        :ref  {:ns   :column
+                               :rval :patch}
+                        :cardinality :many}]
+             :neurons [{:type :ref
+                        :ref  {:ns   :neuron
+                               :rval :patch}
+                        :cardinality :many}]
+             :inputs   [{:type :ref
+                         :ref  {:ns   :dendrite
+                                :rval :patch}
+                         :cardinality :one}]}
+   :column  {:type    [{:type :keyword}]
+             :index   [{:type :long}]
+             :neurons [{:type :ref
+                        :ref  {:ns   :neuron
+                               :rval :column}
+                        :cardinality :many}]}
+   :neuron  {:index                 [{:type :long}]
+             :feedforward-potential [{:type :long
+                                      :default 0}]
+             :prediction-potential  [{:type :long
+                                      :default 0}]
+             :active?               [{:type :boolean
+                                      :default false}]
+             :proximal-dendrite     [{:type :ref
+                                      :ref  {:ns :dendrite
+                                             :rval :neuron}
+                                      :cardinality :one}]
+             :distal-dendrites      [{:type :ref
+                                      :ref  {:ns :dendrite
+                                             :rval :neuron}
+                                      :cardinality :many}]}
+   :dendrite {:type     [{:type :enum
+                          :default :distal
+                          :enum {:ns :dendrite.type
+                                 :values #{:distal :proximal :input :output}}}]
+              :capacity [{:type :long
+                          :default 32}]
+              :threshold [{:type :long
+                           :default 16}]
+              :active?  [{:type :boolean
+                          :default false}]
+              :synapses [{:type :ref
+                          :ref   {:ns   :synapse
+                                  :rval :dendrite}
+                          :cardinality :many}]}
+   :synapse {:type       [{:type :enum
+                           :default :excitatory
+                           :enum {:ns :synapse.type
+                                  :values #{:excitatory :inhibitory :io}}}]
+             :permanence [{:type :long
+                           :default 0}]
+             :permanence-threshold [{:type :long :default 0}]
+             :source     [{:type :ref
+                           :ref   {:ns   :neuron
+                                   :rval :fanout}
+                           :cardinality :one}]}
+   })</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#clortex.utils.hash" name="clortex.utils.hash"><h1 class="project-name">clortex.utils.hash</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
 </td><td class="codes"><pre class="brush: clojure">(ns clortex.utils.hash
   (:import (java.security MessageDigest)))</pre></td></tr><tr><td class="docs">
 </td><td class="codes"><pre class="brush: clojure">(defn mod-2
@@ -3348,5 +3796,221 @@ are arrays or matrices of binary digits (bits). The functions which convert valu
 (defn random-fn-with-seed [n]
 	(let [r (java.util.Random. n)]
 	  (fn [m] (.nextInt r m))))</pre></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defn abs-diff [x y] (. Math abs (- x y)))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr></table><div class="footer">Generated by <a href="https://github.com/fogus/marginalia">Marginalia</a>.&nbsp;&nbsp;Syntax highlighting provided by Alex Gorbatchev's <a href="http://alexgorbatchev.com/SyntaxHighlighter/">SyntaxHighlighter</a></div><script type="text/javascript">SyntaxHighlighter.defaults['gutter'] = false;
+</td><td class="codes"><pre class="brush: clojure">(defn abs-diff [x y] (. Math abs (- x y)))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#clortex.utils.uuid" name="clortex.utils.uuid"><h1 class="project-name">clortex.utils.uuid</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(ns clortex.utils.uuid)</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn squuid []
+  (let [uuid (java.util.UUID/randomUUID)
+        time (System/currentTimeMillis)
+        secs (quot time 1000)
+        lsb (.getLeastSignificantBits uuid)
+        msb (.getMostSignificantBits uuid)
+        timed-msb (bit-or (bit-shift-left secs 32)
+                          (bit-and 0x00000000ffffffff msb))]
+    (java.util.UUID. timed-msb lsb)))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#clortex.viz.core" name="clortex.viz.core"><h1 class="project-name">clortex.viz.core</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(ns clortex.viz.core
+  (:require [quil.core :refer :all]
+            [datomic.api :as d]
+            [clortex.domain.patch.persistent-patch :as patch]
+            [clortex.utils.math :refer :all]))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(def uri &quot;datomic:free://localhost:4334/patches&quot;)
+(def conn (d/connect uri))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn neurons
+  []
+  (let [ctx {:conn conn}
+        patch (ffirst (patch/find-patch-uuids ctx))
+        neuron-data (patch/find-neuron-ids ctx patch)]
+    (mapv #(d/entity (d/db conn) (first %)) neuron-data)))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn coords
+  [i n-cells]
+  (let [rows (int (Math/sqrt n-cells))
+        scale (/ (height) rows 1.2)
+        x (int (+ 20 (* scale (int (rem i rows)))))
+        y (int (+ 20 (* scale (int (/ i rows)))))]
+        [(* 2.0 x) y]))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn part-line
+  [x y x1 y1 fraction]
+  (line x y
+        (+ x (* fraction (- x1 x)))
+        (+ y (* fraction (- y1 y)))))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn draw-synapse
+  [from-i n-cells synapse post-neuron]
+  (let [permanence (:synapse/permanence synapse)
+        permanence-threshold (:synapse/permanence-threshold synapse)
+        i (:neuron/index post-neuron)
+        connected? (&gt;= permanence permanence-threshold)
+        [x y] (coords i n-cells)
+        [x2 y2] (coords from-i n-cells)]
+    (do
+      (stroke-weight 1.0)
+      (stroke (if connected? 120 64))
+      (part-line x2 y2 x y permanence)
+      (part-line x y x2 y2 (/ permanence 10.0)))
+    (if connected?
+      (do
+        (stroke 90 (* permanence 255) 255)
+        (stroke-weight 1.0)
+        (line x2 y2 x y)
+        (when (:neuron/active? post-neuron)
+          (stroke 90 200 125)
+          (line x2 y2 x y))
+        (stroke-weight 2.0)
+        (stroke 120)
+        (part-line x2 y2 x y permanence)))))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn draw-distals
+  [i n-cells distals]
+  (doall (for [distal distals
+        synapse (:dendrite/synapses distal)]
+    (let [from-neuron (:synapse/pre-synaptic-neuron synapse)
+          to-neuron (:synapse/post-synaptic-neuron synapse)
+          from-i (:neuron/index from-neuron)
+          permanence (:synapse/permanence synapse)
+          permanence-threshold (:synapse/permanence-threshold synapse)
+          connected? (&gt;= permanence permanence-threshold)
+          active? (:neuron/active? from-neuron)
+          predictive? (:neuron/active? to-neuron)
+          [x y] (coords i n-cells)
+          [x2 y2] (coords from-i n-cells)]
+      ;(println &quot;i&quot; i &quot;at (&quot; x &quot;,&quot; y &quot;) to&quot; from-i &quot;at (&quot; x2 &quot;,&quot; y2 &quot;)&quot;)
+      (if active?
+        (do
+          (stroke-weight 1.0)
+          (stroke (if connected? 120 64))
+          (part-line x2 y2 x y permanence)
+          (part-line x y x2 y2 (/ permanence 10.0))))
+      (if predictive?
+        (do
+          (stroke 127 255 127)
+          (stroke-weight 1.0)
+          (stroke (if connected? 120 64))
+          (part-line x2 y2 x y permanence)
+          (part-line x y x2 y2 (/ permanence 10.0))))
+      (if (and active? connected?)
+        (do
+          (stroke 90 (* permanence 255) (if connected? 255 64))
+          (stroke-weight 1.0)
+          (line x2 y2 x y)
+          (stroke-weight 2.0)
+          (stroke (if connected? 120 64))
+          (part-line x2 y2 x y permanence)))))))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn draw-axons
+  [i n-cells conn]
+  (let [db (d/db conn)
+        targets (d/q '[:find ?synapse ?post
+                       :in $ ?i
+                       :where
+                       [?pre :neuron/index ?i]
+                       [?post :neuron/distal-dendrites ?dendrite]
+                       [?dendrite :dendrite/synapses ?synapse]
+                       [?synapse :synapse/pre-synaptic-neuron ?pre]]
+                     db
+                     i)]
+    ;(println &quot;cell &quot; i &quot; enervates&quot; (count targets) &quot;cells&quot;)
+    (doall (for [[synapse-id post-neuron-id] targets]
+             #_(println &quot;target of i&quot; i &quot;is&quot; target)
+             (let [synapse (d/entity db synapse-id)
+                   post-neuron (d/entity db post-neuron-id)]
+               (draw-synapse i n-cells synapse post-neuron))))))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn change-activations
+  [cells]
+  (let [current-pattern (mapv :neuron/active? cells)
+        on-bits (count (filter true? current-pattern))
+        target (/ (count cells) 40)
+        active? #(&gt;= target (random (count cells)))
+        txs (vec (for [neuron cells]
+             {:db/id (:db/id neuron) :neuron/active? (active?)}))]
+    (d/transact conn txs)
+    (neurons)
+    ;(println current-pattern)))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn setup []
+  (set-state! :randomer (random-fn-with-seed 123456))
+  (smooth)                          ;; Turn on anti-aliasing
+  (frame-rate 30)                   ;; Set framerate to 1 FPS
+  (background 33))                  ;; Set the background colour to</pre></td></tr><tr><td class="docs"><p>Set the background colour to
+a nice shade of grey.</p>
+</td><td class="codes"></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn choose-from-active
+  [ctx cells]
+  (let [randomer (:randomer ctx)
+        n-cells (count cells)
+        active-cells (vec (filter :neuron/active? cells))
+        n-active (count active-cells)
+        chosen-active (if (pos? n-active) (randomer n-active) (randomer n-cells))
+        chosen-cells (if (pos? n-active) active-cells cells)
+        chosen-neuron (get chosen-cells chosen-active)]
+        (:neuron/index chosen-neuron)))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn draw []
+  (let [randomer (state :randomer)
+        ctx {:conn conn :randomer randomer}
+        patch (ffirst (patch/find-patch-uuids ctx))
+        cells (neurons)
+        n-cells (count cells)
+        rows (int (Math/sqrt n-cells))
+        scale (/ (height) rows 1.2)
+        diam (inc (int (* 0.2 scale)))
+        changer (randomer 5)
+        previous-sdr (vec (filter :neuron/active? cells))
+        previously-active (choose-from-active ctx cells)
+        cells (if (zero? changer) (change-activations cells) cells)
+        new-sdr (vec (filter :neuron/active? cells))
+        newly-active (if (zero? changer) (choose-from-active ctx cells) (randomer n-cells))
+        active-cells (vec (filter :neuron/active? cells))
+        n-active (count active-cells)
+        ;_ (println &quot;cells:&quot; (count cells) &quot;active:&quot; active-cells)
+        chosen-active (if (pos? n-active) (randomer n-active) (randomer n-cells))
+        chosen-cells (if (pos? n-active) active-cells cells)
+        chosen-neuron (get chosen-cells chosen-active)
+        connect-from (:neuron/index chosen-neuron)
+        connect-to (randomer n-cells)]
+    (background (if (zero? changer) 0 44))
+    (if (and
+         (zero? (randomer 1))
+         (not= newly-active previously-active))
+      (do
+        ;(println &quot;connecting&quot; connect-from &quot;to&quot; connect-to)
+        (patch/connect-distal ctx patch previously-active newly-active)))
+    #_(doseq [cell cells]
+      (let [i (:neuron/index cell)
+            distals (:neuron/distal-dendrites cell)
+            fill-color (if (:neuron/active? cell) 255 66)
+            [x y] (coords i n-cells)]
+        ;(println &quot;i&quot; i &quot;at (&quot; x &quot;,&quot; y &quot;)&quot;)
+        (stroke (randomer 64) (randomer 64) (randomer 64))             ;; Set the stroke colour to a random grey
+        (stroke-weight 1)       ;; Set the stroke thickness randomly
+        (fill (randomer (+ 100 (count distals))))               ;; Set the fill colour to a random grey
+        (draw-distals i n-cells distals)
+        ;(no-loop)))
+    (doseq [cell previous-sdr]
+      (let [i (:neuron/index cell)
+            ]
+        (draw-axons i n-cells conn)))
+    (doseq [cell new-sdr]
+      (let [i (:neuron/index cell)
+            ]
+        (draw-axons i n-cells conn)))
+    (doseq [cell cells]
+      (let [i (:neuron/index cell)
+            fill-color (if (:neuron/active? cell) 255 66)
+            [x y] (coords i n-cells)]
+        ;(println &quot;i&quot; i &quot;at (&quot; x &quot;,&quot; y &quot;)&quot;)
+        (stroke 127)             ;; Set the stroke colour to a random grey
+        (stroke-weight 0.3)       ;; Set the stroke thickness randomly
+        (fill fill-color 66 66)               ;; Set the fill colour to a random grey
+        (rect x y diam diam)))
+    (doseq [cell previous-sdr]
+      (let [i (:neuron/index cell)
+            fill-color 195
+            [x y] (coords i n-cells)]
+        ;(println &quot;i&quot; i &quot;at (&quot; x &quot;,&quot; y &quot;)&quot;)
+        (stroke 127)             ;; Set the stroke colour to a random grey
+        (stroke-weight 0.3)       ;; Set the stroke thickness randomly
+        (fill fill-color 180 180)               ;; Set the fill colour to a random grey
+        (rect x y diam diam)))
+    #_(println (count cells) &quot;\tcells&quot;
+             (count (filter :neuron/active? cells)) &quot;\tactive&quot;)))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defsketch example                  ;; Define a new sketch named example
+  :title &quot;Clortex Visualisation&quot;    ;; Set the title of the sketch
+  :setup setup                      ;; Specify the setup fn
+  :draw draw                        ;; Specify the draw fn
+  :size [800 400])                  ;; You struggle to beat the golden ratio</pre></td></tr><tr><td class="docs"><p>You struggle to beat the golden ratio</p>
+</td><td class="codes"></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr></table><div class="footer">Generated by <a href="https://github.com/fogus/marginalia">Marginalia</a>.&nbsp;&nbsp;Syntax highlighting provided by Alex Gorbatchev's <a href="http://alexgorbatchev.com/SyntaxHighlighter/">SyntaxHighlighter</a></div><script type="text/javascript">SyntaxHighlighter.defaults['gutter'] = false;
        SyntaxHighlighter.all()</script></body></html>
