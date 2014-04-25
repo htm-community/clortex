@@ -82,6 +82,15 @@
            :where [_ :patch/uuid ?patch-uuid]]
          (d/db conn))))
 
+(defn find-patch
+  [ctx uuid]
+  (let [conn (:conn ctx)]
+    (d/q '[:find ?patch
+           :in $ ?patch-uuid
+           :where [?patch :patch/uuid ?patch-uuid]]
+         (d/db conn)
+         uuid)))
+
 (defn create-patch
   [ctx patch-uuid]
   (let [conn (:conn ctx)]
@@ -234,6 +243,10 @@
 #_(bench (d/q '[:find ?synapse :in $ ?to ?from :where [?to :neuron/distal-dendrites ?dendrite][?dendrite :dendrite/synapses ?synapse][?synapse :synapse/pre-synaptic-neuron ?from]] (d/db *conn*) (:db/id to) (:db/id from)))
 #_(bench (d/q '[:find ?synapse :in $ ?to ?from :where [?to :neuron/distal-dendrites ?dendrite][?synapse :synapse/pre-synaptic-neuron ?from][?dendrite :dendrite/synapses ?synapse]] (d/db *conn*) (:db/id to) (:db/id from)))
 
+(defn neuron-entities [db patch]
+  (let [neurons (map :v (d/datoms db :eavt patch :patch/neurons))]
+    (mapv #(d/entity db %) neurons)))
+
 (defn syn? [conn to from]
   (let [db (d/db conn)
         to-id (:db/id to)
@@ -251,6 +264,19 @@
         synapses (map :e (d/datoms db :avet pre-key from-id))
         dendrite-key :dendrite/synapses
         dendrites (map :e (mapcat #(d/datoms db :avet dendrite-key %) synapses))
+        to-neurons (map :e (mapcat #(d/datoms db :avet :neuron/distal-dendrites %) dendrites))
+        ]
+    [from to-neurons synapses]))
+
+(defn enervated-by-connected [db from]
+  (let [from-id (:db/id from)
+        pre-key :synapse/pre-synaptic-neuron
+        synapses (map :e (d/datoms db :avet pre-key from-id))
+        connected (map :e (filter #(> (:v %) 0.2)
+                                  (mapcat #(d/datoms db :eavt % :synapse/permanence)
+                                          synapses)))
+        dendrite-key :dendrite/synapses
+        dendrites (map :e (mapcat #(d/datoms db :avet dendrite-key %) connected))
         to-neurons (map :e (mapcat #(d/datoms db :avet :neuron/distal-dendrites %) dendrites))
         ]
     [from to-neurons synapses]))

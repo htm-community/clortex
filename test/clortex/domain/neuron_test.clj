@@ -108,7 +108,7 @@
 
 (fact "Connecting many neurons to one another, we can find the synapses"
       (let [ctx {:conn (create-free-db) :randomer (random-fn-with-seed 123456)}
-            n 4096
+            n 32768
             randomer (random-fn-with-seed 123456)]
         (dbp/create-patch ctx patch-1)
         (dbp/add-neurons-to! ctx patch-1 (* n 2))
