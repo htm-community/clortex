@@ -38,6 +38,16 @@ Numenta have a dual license for their CLA-HTM technology. If you're interested i
 * [Source Docs](http://fergalbyrne.github.io/uberdoc.html)
 * [GitHub project](https://github.com/fergalbyrne/clortex)
 
+## How Can I Help?
+
+Clortex is just part of a growing effort to realise the potential of Machine Intelligence
+based on the principles of the brain.
+
+* Visit the [Numenta.org](http://numenta.org) site for videos, white papers, details of the NuPIC mailing list, wikis, etc.
+* Have a look at (and optionally pre-purchase) my Leanpub.com book: [Real Machine Intelligence with Clortex and NuPIC](http://leanpub.com/realsmartmachines).
+* Join the [Clortex Google Group](https://groups.google.com/forum/#!forum/clortex) for discussion and updates.
+* We'll be launching an Indiegogo campaign during May 2014 to fund completion of Clortex, please let us know if you're interested in supporting us when we launch.
+
 ## License
 
 Copyright &copy; 2014 Fergal Byrne, Brenter IT
