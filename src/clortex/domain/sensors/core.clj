@@ -71,7 +71,7 @@ Currently reads an OPF-style CSV file and converts it into Clojure data structur
         opf-map {:fields fields :types types :flags flags :encoders encoders}
         parsed-data (parse-opf-data raw-csv :fields fields :types types :flags flags)
         ]
-    (println "loaded" (count raw-csv) "lines")
+    (println "load-opf-data: loaded" (count raw-csv) "lines")
     {:raw-csv raw-csv :fields fields :types types :flags flags
      :parsed-data parsed-data
      :encoders encoders
@@ -83,7 +83,7 @@ Currently reads an OPF-style CSV file and converts it into Clojure data structur
         fileio 	(with-open [in-file (io/reader f)]
 	                  (vec (doall (csv/read-csv in-file))))
         n (if (and n (not= n :all)) n (count fileio))]
-    (println "loaded" (count fileio) "lines")
+    (println "load-opf-file: loaded" (count fileio) "lines")
        (load-opf-data fileio n)))
 
 (defn write-edn-file [data f]

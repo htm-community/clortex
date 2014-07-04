@@ -1,3 +1,3 @@
-(ns clortex.core
+(ns clortex.scratch
   )
 

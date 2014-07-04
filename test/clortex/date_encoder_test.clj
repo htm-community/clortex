@@ -1,4 +1,4 @@
-(ns clortex.rdse-test
+(ns clortex.date-encoder-test
   (:use midje.sweet)
   (:require [clortex.domain.encoders.core :refer :all]
             [clortex.domain.encoders.rdse :refer :all]
