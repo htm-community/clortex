@@ -1,7 +1,8 @@
 (ns clortex.date-encoder-test
   (:use midje.sweet)
-  (:require [clortex.domain.encoders.core :refer :all]
-            [clortex.domain.encoders.rdse :refer :all]
+  (:require [clortex.domain.encoders.date-time :as d]
+            [clortex.domain.encoders.scalar :as s]
+            [clortex.domain.encoders.rdse :as r]
             [clortex.utils.math :refer :all]
             [clojure.set :refer [difference]]))
 
@@ -19,7 +20,7 @@ values further apart.
 Here's a simple example:
 "
 (facts
-(def enc (scalar-encoder :bits 12 :on 4 :minimum 1 :maximum 12))
+(def enc (s/scalar-encoder :bits 12 :on 4 :minimum 1 :maximum 12))
 (def to-bitstring (:encode-to-bitstring enc))
 
 (vec (map to-bitstring (range 1 13)))
@@ -65,7 +66,7 @@ The number of possible `on`-bits out of `bits` bits is given by the `binomial` c
 "This encoder is only using 1.8% of the SDRs available. Perhaps this is an extreme example because of
 the very small number of bits. Let's check the numbers for a more typical encoder:"
 (fact
-(def enc (scalar-encoder :bits 512 :on 21 :minimum 1 :maximum 512))
+(def enc (s/scalar-encoder :bits 512 :on 21 :minimum 1 :maximum 512))
 (def to-bitstring (:encode-to-bitstring enc))
 (str (binomial 512 21)) => "10133758886507113849867996785041062400"
 (count (set (map to-bitstring (range -100 1000)))) => 492
@@ -99,7 +100,7 @@ values are encoded. **Please let me know if there is anything unclear in this co
 basic `scalar-encoder`."
 
 (fact
-(def encoder (random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4))
+(def encoder (r/random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4))
 (def buckets (:buckets encoder))
 (def to-bitstring (:encode-to-bitstring! encoder))
 
@@ -144,7 +145,7 @@ pair of encoded buckets differs only in one bit, so this is pretty good).
 Let's see how much capacity we can get with a more typical 128 bit encoding (standard 21 bits on).
 "
 (fact
-(def encoder (random-sdr-encoder-1 :diameter 1.0 :bits 128 :on 21))
+(def encoder (r/random-sdr-encoder-1 :diameter 1.0 :bits 128 :on 21))
 (def buckets (:buckets encoder))
 (def to-bitstring (:encode-to-bitstring! encoder))
 (str (binomial 512 21)) => "10133758886507113849867996785041062400"
@@ -165,7 +166,7 @@ We'll put 10000 values into the encoder.
 OK, everything's looking good. We could try using a smaller encoding and see if it still
 works.
 "
-(def encoder (random-sdr-encoder-1 :diameter 1.0 :bits 64 :on 21))
+(def encoder (r/random-sdr-encoder-1 :diameter 1.0 :bits 64 :on 21))
 (def buckets (:buckets encoder))
 (def to-bitstring (:encode-to-bitstring! encoder))
 (str (binomial 64 21)) => "41107996877935680"
@@ -186,12 +187,12 @@ works.
 "Observe the following"
 
 (fact
-(def to-bitstring (:encode-to-bitstring! (random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4)))
+(def to-bitstring (:encode-to-bitstring! (r/random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4)))
 (to-bitstring 0) => "111100000000"
 (to-bitstring 1) => "111000001000"
 (to-bitstring 2) => "101010001000" ;; first encoding of 2
 ;; reset
-(def to-bitstring (:encode-to-bitstring! (random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4)))
+(def to-bitstring (:encode-to-bitstring! (r/random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4)))
 (to-bitstring 0) =>  "111100000000"
 (to-bitstring 1) =>  "111000001000"
 (to-bitstring -1) => "110110000000"
@@ -214,14 +215,14 @@ is presented:"
            ))))
     (f x))
 
-(def to-bitstring (:encode-to-bitstring! (random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4)))
+(def to-bitstring (:encode-to-bitstring! (r/random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4)))
 (defn to-bitstring-pre [x] (precalculate x to-bitstring))
 
 (to-bitstring-pre 0) => "010010001100" ;; causes (-10,10) to be encoded in advance
 (to-bitstring-pre 1) => "100010001100"
 (to-bitstring-pre 2) => "101010001000" ;; first encoding of 2
 ;; reset
-(def to-bitstring (:encode-to-bitstring! (random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4)))
+(def to-bitstring (:encode-to-bitstring! (r/random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4)))
 (defn to-bitstring-pre [x] (precalculate x to-bitstring))
 (to-bitstring-pre 0) =>  "010010001100"
 (to-bitstring-pre 1) =>  "100010001100"

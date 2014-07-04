@@ -1,6 +1,11 @@
 (ns clortex.domain.encoders.encoder-test
   (:use midje.sweet)
-  (:use clortex.domain.encoders.core))
+  (:require [clortex.domain.encoders.date-time :as d]
+            [clortex.domain.encoders.scalar :as s]
+            [clortex.domain.encoders.rdse :as r]
+            [clortex.domain.encoders.hash :as h]
+            [clortex.utils.math :refer :all]
+            [clojure.set :refer [difference]]))
 
 [[:chapter {:title "Encoders"}]]
 
@@ -16,7 +21,7 @@ The simplest encoder converts a scalar value into a bit-array as seen below. We'
 with 4 bits on out of 12, so we can see how it works ([e.{{sse-def}}](#sse-def))."
 
 [[{:title "a very simple scalar encoder" :tag "sse-def" :numbered true}]]
-(def enc (scalar-encoder :bits 12 :on 4)) ; uses default params min 0.0, max 100.0
+(def enc (s/scalar-encoder :bits 12 :on 4)) ; uses default params min 0.0, max 100.0
 
 "`scalar-encoder` returns a map of functions which can be used in various parts of the encoding
 of data. We'll define those functions by pulling them out of the map ([e.{{sse-use}}](#sse-use)):"
@@ -26,7 +31,7 @@ of data. We'll define those functions by pulling them out of the map ([e.{{sse-u
 (def sencode-all (:encode-all enc))
 
 
-(def encoder-record (->ScalarEncoder "field" 12 4 0.0 100.0 sencoders sencode))
+(def encoder-record (s/->ScalarEncoder "field" 12 4 0.0 100.0 sencoders sencode))
 
 (def sencode (.encode encoder-record))
 
@@ -42,7 +47,7 @@ of data. We'll define those functions by pulling them out of the map ([e.{{sse-u
 
 "`scalar-encoder` defaults to NuPIC's scalar encoder parameters:"
 [[{:tag "sse-default" :title "default 21/127 bit encoder"  :numbered true}]]
-(def enc (scalar-encoder)) ; uses default params 127 bits, 21 on, min 0.0, max 100.0
+(def enc (s/scalar-encoder)) ; uses default params 127 bits, 21 on, min 0.0, max 100.0
 (def sencode (:encode enc))
 
 (fact
@@ -70,7 +75,7 @@ we use to fill the bit array until the required number of bits is set."
 
 [[{:tag "simple-hash-encoder" :title "a 12-bit encoder"}]]
 (fact
-(def enc (hash-encoder :bits 12 :on 4))
+(def enc (h/hash-encoder :bits 12 :on 4))
 (def cencode (:encode enc))
 (def cencode-all (:encode-all enc))
 
@@ -85,8 +90,8 @@ we use to fill the bit array until the required number of bits is set."
 
 [[{:title "within-test" :hide true}]]
 (fact
-(within+- 10 8 1.5) => false
-(within+- 10 8 3) => true
+(s/within+- 10 8 1.5) => false
+(s/within+- 10 8 3) => true
 )
 
 [[:section {:title "TODO"}]]

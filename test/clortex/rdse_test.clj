@@ -1,7 +1,8 @@
 (ns clortex.rdse-test
   (:use midje.sweet)
   (:require [clortex.domain.encoders.core :refer :all]
-            [clortex.domain.encoders.rdse :refer :all]
+            [clortex.domain.encoders.scalar :as s]
+            [clortex.domain.encoders.rdse :as r]
             [clortex.utils.math :refer :all]
             [clojure.set :refer [difference]]))
 
@@ -19,7 +20,7 @@ values further apart.
 Here's a simple example:
 "
 (facts
-(def enc (scalar-encoder :bits 12 :on 4 :minimum 1 :maximum 12))
+(def enc (s/scalar-encoder :bits 12 :on 4 :minimum 1 :maximum 12))
 (def to-bitstring (:encode-to-bitstring enc))
 
 (vec (map to-bitstring (range 1 13)))
@@ -65,7 +66,7 @@ The number of possible `on`-bits out of `bits` bits is given by the `binomial` c
 "This encoder is only using 1.8% of the SDRs available. Perhaps this is an extreme example because of
 the very small number of bits. Let's check the numbers for a more typical encoder:"
 (fact
-(def enc (scalar-encoder :bits 512 :on 21 :minimum 1 :maximum 512))
+(def enc (s/scalar-encoder :bits 512 :on 21 :minimum 1 :maximum 512))
 (def to-bitstring (:encode-to-bitstring enc))
 (str (binomial 512 21)) => "10133758886507113849867996785041062400"
 (count (set (map to-bitstring (range -100 1000)))) => 492
@@ -99,41 +100,42 @@ values are encoded. **Please let me know if there is anything unclear in this co
 basic `scalar-encoder`."
 
 (fact
-(def encoder (random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4))
+(def encoder (r/random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4))
 (def buckets (:buckets encoder))
 (def to-bitstring (:encode-to-bitstring! encoder))
 
 (to-bitstring 1) => "111100000000"
 
 (vec (map to-bitstring (range -5 22)))
-=> ["000000111001"
-       "010000111000"
-       "010000011100"
-       "011000011000"
-       "011010001000"
-       "011100001000"
+=> ["000010111000"
+       "010010101000"
+       "010010001001"
+       "011010000001"
+       "011001000001"
+       "011100000001"
        "111100000000"
-       "111000000100"
-       "011000000110"
-       "011000100100"
-       "010001100100"
-       "000001110100"
-       "000101110000"
+       "111000001000"
+       "011000001010"
+       "011000101000"
+       "010000101100"
+       "000100101100"
+       "000101101000"
+       "000101001010"
        "000101010010"
-       "000101000011"
-       "010001000011"
-       "000011000011"
-       "001001000011"
-       "000001000111"
-       "100001000110"
-       "000101000110"
-       "000101010100"
-       "010001010100"
-       "010000011100"
-       "110000010100"
-       "100000010110"
-       "100000010011"]
-(count (set (map to-bitstring (range -500 500)))) => 432
+       "010001010010"
+       "001001010010"
+       "000001110010"
+       "000000110110"
+       "100000110100"
+       "000000111100"
+       "010000111000"
+       "001000111000"
+       "001000011001"
+       "101000010001"
+       "100000010011"
+       "100000010101"]
+
+(count (set (map to-bitstring (range -500 500)))) => 436
 )
 "
 As we can see, this encoder is capable of storing 432 out of 495 passible encodings (note that each
@@ -144,12 +146,12 @@ pair of encoded buckets differs only in one bit, so this is pretty good).
 Let's see how much capacity we can get with a more typical 128 bit encoding (standard 21 bits on).
 "
 (fact
-(def encoder (random-sdr-encoder-1 :diameter 1.0 :bits 128 :on 21))
+(def encoder (r/random-sdr-encoder-1 :diameter 1.0 :bits 128 :on 21))
 (def buckets (:buckets encoder))
 (def to-bitstring (:encode-to-bitstring! encoder))
 (str (binomial 512 21)) => "10133758886507113849867996785041062400"
 (to-bitstring 0) => "11111111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
-(to-bitstring 1) => "11111111111111111111000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000"
+(to-bitstring 1) => "11111111111111111111000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000"
 )
 "
 We'll put 10000 values into the encoder.
@@ -165,7 +167,7 @@ We'll put 10000 values into the encoder.
 OK, everything's looking good. We could try using a smaller encoding and see if it still
 works.
 "
-(def encoder (random-sdr-encoder-1 :diameter 1.0 :bits 64 :on 21))
+(def encoder (r/random-sdr-encoder-1 :diameter 1.0 :bits 64 :on 21))
 (def buckets (:buckets encoder))
 (def to-bitstring (:encode-to-bitstring! encoder))
 (str (binomial 64 21)) => "41107996877935680"
@@ -186,16 +188,16 @@ works.
 "Observe the following"
 
 (fact
-(def to-bitstring (:encode-to-bitstring! (random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4)))
+(def to-bitstring (:encode-to-bitstring! (r/random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4)))
 (to-bitstring 0) => "111100000000"
-(to-bitstring 1) => "111000001000"
-(to-bitstring 2) => "101010001000" ;; first encoding of 2
+(to-bitstring 1) => "111000000001"
+(to-bitstring 2) => "101001000001" ;; first encoding of 2
 ;; reset
-(def to-bitstring (:encode-to-bitstring! (random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4)))
+(def to-bitstring (:encode-to-bitstring! (r/random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4)))
 (to-bitstring 0) =>  "111100000000"
-(to-bitstring 1) =>  "111000001000"
-(to-bitstring -1) => "110110000000"
-(to-bitstring 2) =>  "101000011000" ;; a different encoding of 2
+(to-bitstring 1) =>  "111000000001"
+(to-bitstring -1) => "110101000000"
+(to-bitstring 2) =>  "101010000001" ;; a different encoding of 2
 
 )
 "The encoding of `2` thus depends on the sequence of buckets already set up when `2` is presented.
@@ -214,19 +216,19 @@ is presented:"
            ))))
     (f x))
 
-(def to-bitstring (:encode-to-bitstring! (random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4)))
+(def to-bitstring (:encode-to-bitstring! (r/random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4)))
 (defn to-bitstring-pre [x] (precalculate x to-bitstring))
 
-(to-bitstring-pre 0) => "010010001100" ;; causes (-10,10) to be encoded in advance
-(to-bitstring-pre 1) => "100010001100"
-(to-bitstring-pre 2) => "101010001000" ;; first encoding of 2
+(to-bitstring-pre 0) => "001000110100" ;; causes (-10,10) to be encoded in advance
+(to-bitstring-pre 1) => "100000110100"
+(to-bitstring-pre 2) => "100001110000" ;; first encoding of 2
 ;; reset
-(def to-bitstring (:encode-to-bitstring! (random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4)))
+(def to-bitstring (:encode-to-bitstring! (r/random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4)))
 (defn to-bitstring-pre [x] (precalculate x to-bitstring))
-(to-bitstring-pre 0) =>  "010010001100"
-(to-bitstring-pre 1) =>  "100010001100"
-(to-bitstring-pre -1) => "010110001000"
-(to-bitstring-pre 2) =>  "101010001000" ;; the same encoding of 2
+(to-bitstring-pre 0) =>  "001000110100"
+(to-bitstring-pre 1) =>  "100000110100"
+(to-bitstring-pre -1) => "001010110000"
+(to-bitstring-pre 2) =>  "100001110000" ;; the same encoding of 2
 
 )
 [[:section {:title "Conclusions and Further Improvements"}]]

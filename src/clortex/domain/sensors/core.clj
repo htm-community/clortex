@@ -12,6 +12,7 @@ Currently reads an OPF-style CSV file and converts it into Clojure data structur
             [clojure.pprint :refer [pprint]]
             [clortex.domain.sensors.date :refer [parse-opf-date]]
             [clortex.domain.encoders.core :as enc]
+            [clortex.domain.encoders.hash :as hash-enc]
             [clortex.domain.encoders.rdse :as rdse]))
 
 (defn parse-opf-item
@@ -51,7 +52,7 @@ Currently reads an OPF-style CSV file and converts it into Clojure data structur
     (condp = encoder-type
 	  "datetime" (enc/date-encoder)
 	  "float" (rdse/random-sdr-encoder-1)
-	  (enc/hash-encoder)))
+	  (hash-enc/hash-encoder)))
 
 (defn make-encoders
   [fields types]

@@ -106,7 +106,7 @@
         (count (dbp/synapse-between ctx patch-1 0 1))) => 1
       )
 
-(fact "Connecting many neurons to one another, we can find the synapses"
+#_(fact "Connecting many neurons to one another, we can find the synapses"
       (let [ctx {:conn (create-free-db) :randomer (random-fn-with-seed 123456)}
             n 32768
             randomer (random-fn-with-seed 123456)]
