@@ -32,6 +32,10 @@ Numenta have a dual license for their CLA-HTM technology. If you're interested i
 
 [![ScreenShot](http://fergalbyrne.github.io/video-frame-720.png)](https://www.youtube.com/watch?v=s6fkr2oMkzQ)
 
+## Talk at EuroClojure 2014, Kraków, Poland
+
+[![ScreenShot](http://fergalbyrne.github.io/Clortex-Snapshot-720.png)](http://youtu.be/ObL6cbUn1aU)
+
 ## More Information
 
 * [Documentation](http://fergalbyrne.github.io)
