@@ -12,6 +12,8 @@ Currently reads an OPF-style CSV file and converts it into Clojure data structur
             [clojure.pprint :refer [pprint]]
             [clortex.domain.sensors.date :refer [parse-opf-date]]
             [clortex.domain.encoders.core :as enc]
+            [clortex.domain.encoders.compound :as c]
+            [clortex.domain.encoders.date-time :as denc]
             [clortex.domain.encoders.hash :as hash-enc]
             [clortex.domain.encoders.rdse :as rdse]))
 
@@ -50,8 +52,8 @@ Currently reads an OPF-style CSV file and converts it into Clojure data structur
 	"converts a CSV item (a string) into a Clojure value"
     [field encoder-type]
     (condp = encoder-type
-	  "datetime" (enc/date-encoder)
-	  "float" (rdse/random-sdr-encoder-1)
+	  "datetime" (denc/opf-date-encoder)
+	  "float" (rdse/random-sdr-encoder :diameter 0.1 :bits 127 :on 21 :center 0.0)
 	  (hash-enc/hash-encoder)))
 
 (defn make-encoders
@@ -61,6 +63,12 @@ Currently reads an OPF-style CSV file and converts it into Clojure data structur
       result
       (recur [(rest (first inputs)) (rest (second inputs))]
              (conj result (make-encoder (ffirst inputs) (first (second inputs))))))))
+
+(defn data-encode [data n]
+  (let [parsed (:parsed-data data)
+        encs (:encoders data)
+        row (mapv first (nth parsed n))]
+    (c/compound-enc row encs)))
 
 (defn load-opf-data [data & n]
   (let [raw-csv (if n (vec (take (first n) data))
@@ -72,7 +80,7 @@ Currently reads an OPF-style CSV file and converts it into Clojure data structur
         opf-map {:fields fields :types types :flags flags :encoders encoders}
         parsed-data (parse-opf-data raw-csv :fields fields :types types :flags flags)
         ]
-    (println "load-opf-data: loaded" (count raw-csv) "lines")
+    (println "load-opf-data: parsed" (count raw-csv) "lines")
     {:raw-csv raw-csv :fields fields :types types :flags flags
      :parsed-data parsed-data
      :encoders encoders

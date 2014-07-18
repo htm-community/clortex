@@ -49,3 +49,12 @@
   (encoders [this] (:encoders this))
   (encode-all [this value] (mapv #(vector % ((.encoders this %) value)) (range (.bits this))))
   (encode [this value] (set (vec (map first (filter second (.encode-all this value)))))))
+
+#_(extend-type IPersistentVector
+  CLAEncoder
+  (bits [this] (map (comp + bits) this))
+  (on-bits [this] (map (comp + bits) this))
+  (field-name [this] (:field-name this))
+  (encoders [this] (:encoders this))
+  (encode-all [this value] (mapv #(vector % ((.encoders this %) value)) (range (.bits this))))
+  (encode [this value] (set (vec (map first (filter second (.encode-all this value)))))))

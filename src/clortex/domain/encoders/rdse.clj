@@ -110,4 +110,36 @@
                 (sdr->bitstring (encode! x) bits))]
         {:buckets buckets
          :encode encode!
-         :encode-to-bitstring! encode-to-bitstring!}))
+         :encode-to-bitstring! encode-to-bitstring!
+         :bits bits
+         :on on}))
+
+(defn precalculate [x f & {:keys [center step] :or {center 0.0 step 10.0}}]
+    (let [bands (inc (int (/ x step)))]
+       (dorun (for [band (map inc (range bands))]
+           (do (f (- center (* step band)))
+               (f (+ center (* step band)))
+;(println (str "precalculating [" (- 0 (* step band)) "," (* step band) "]"))
+           ))))
+    (f x))
+
+(defn random-sdr-encoder
+    [& {:keys [^double diameter ^int bits ^int on ^double center]
+        :or {diameter 1.0 bits 127 on 21 center 0.0}}]
+    (let [randomer
+            (random-fn-with-seed 123456)
+          buckets
+            (atom {:diameter diameter :bits bits :on on :randomer randomer :bins []})
+          encode!
+            (fn [^double x]
+                (if-not (find-bucket x @buckets) (add-bucket! x buckets))
+                (sort (:sdr (find-bucket x @buckets))))
+          encode (fn [^double x] (precalculate x encode! :center center :step (* 10 diameter)))
+          encode-to-bitstring!
+            (fn [^double x]
+                (sdr->bitstring (encode! x) bits))]
+        {:buckets buckets
+         :encode encode
+         :encode-to-bitstring! encode-to-bitstring!
+         :bits bits
+         :on on}))

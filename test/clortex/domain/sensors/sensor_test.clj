@@ -1,6 +1,8 @@
 (ns clortex.domain.sensors.sensor-test
   (:use midje.sweet)
-  (:use clortex.domain.sensors.core))
+  (:use clortex.domain.sensors.core)
+  (:require [clortex.domain.encoders.compound :as c]
+            [clojure.set :refer [difference intersection]]))
 
 [[:chapter {:title "Sensors"}]]
 
@@ -11,7 +13,7 @@
 [[:section {:title "Numenta OPF Sensor (CSV data)"}]]
 
 "The first sensor in `clortex` reads CSV data which is compatible with Numenta's OPF
-(Online Prediction Framework) software."
+(Online Prediction Framework) software. "
 
 [[:code "gym,address,timestamp,consumption
 string,string,datetime,float
@@ -53,6 +55,36 @@ concepts are important in powering the CLA's sequence learning.
                                                             {:field :weekday?}]}
                                    ]})
       (def hotgym (load-opf-file hotgym-config))
-      (count (:parsed-data hotgym)) => 87840)
+      (count (:parsed-data hotgym)) => 87840
+
+      (mapv (comp str first) (nth (:parsed-data hotgym) 10)) =>
+      ["Balgowlah Platinum" "Shop 67 197-215 Condamine Street Balgowlah 2093" "2010-07-02T02:30:00.000Z" "1.2"]
+
+      (def encs (:encoders hotgym))
+
+
+      (def enc-10 (data-encode hotgym 10))
+      (def enc-11 (data-encode hotgym 11))
+
+      (def enc-30 (data-encode hotgym 30))
+enc-10 => #{8 12 13 14 15
+            42 46 56 64 71 80 85 88
+            96 99 101 102 104 118 123 124 130 136 141 145 163
+            175 176 189 191 201 204 209 210 221 229 230 236
+            237 239 242 246 287 288 289 290 291 292 293 294
+            295 296 297 298 299 300 301 302 303 304 305 306
+            307 429 430 431 432 433 434 435 436 437 438 439
+            440 441 442 443 444 445 446 447 448 449 1348 1349
+            1350 1357 1359 1360 1367 1375 1383 1393 1394 1395
+            1401 1414 1425 1440 1443 1450 1453 1462 1466}
+
+(difference enc-10 enc-11) => #{429 430 431 432 433 434 435 436 437 438}
+
+(difference enc-10 enc-30) =>  #{429 430 431 432 433 434 435 436 437 438
+                                 439 440 441 442 443 444 445 446 447 448 449
+                                 1348 1349 1350 1359 1360 1375 1383 1393 1394
+                                 1395 1401 1414 1425 1440 1443 1462 1466}
+
+      )
 
 #_(write-edn-file hotgym "resources/hotgym.edn")

@@ -36,4 +36,6 @@ The functions which convert values into SDRs are `clortex` **encoders**.
         encode #(hash-bits % bits on)]
     {:encoders encoders
      :encode-all encode-all
-     :encode encode}))
+     :encode encode
+     :bits bits
+     :on on}))

@@ -138,7 +138,7 @@ basic `scalar-encoder`."
 (count (set (map to-bitstring (range -500 500)))) => 436
 )
 "
-As we can see, this encoder is capable of storing 432 out of 495 passible encodings (note that each
+As we can see, this encoder is capable of storing 436 out of 495 passible encodings (note that each
 pair of encoded buckets differs only in one bit, so this is pretty good).
 "
 [[:subsection {:title "A larger encoding: 21-of-128 bits"}]]
@@ -206,15 +206,7 @@ is presented:"
 
 (fact
 
-(defn precalculate [x f]
-    (let [step 10.0
-          bands (inc (int (/ x step)))]
-       (dorun (for [band (map inc (range bands))]
-           (do (f (- 0 (* step band)))
-               (f (* step band))
-;(println (str "precalculating [" (- 0 (* step band)) "," (* step band) "]"))
-           ))))
-    (f x))
+
 
 (def to-bitstring (:encode-to-bitstring! (r/random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4)))
 (defn to-bitstring-pre [x] (precalculate x to-bitstring))
@@ -246,9 +238,6 @@ will speed it up a good bit (such as removing all the searching code in `new-sdr
 of nearby SDRs).
 
 Anyone interested in implementing this in C++ and Python, please do so and let us know how you get on.
-
-Finally, there is a bug here. The first bit always seems to be a 1. Not sure where that's happening, but
-if you can help with that I'd be grateful.
 "
 #_(fact
 "
@@ -333,6 +322,10 @@ Evaluation count : 129060 in 60 samples of 2151 calls.
 Found 1 outliers in 60 samples (1.6667 %)
 	low-severe	 1 (1.6667 %)
  Variance from outliers : 1.6389 % Variance is slightly inflated by outliers
+
+(str (binomial 512 16)) => 841141456821158064519401490400
+(text-scientific (binomial 512 16)) => 8.41x10^+29
+
 
 "
 
