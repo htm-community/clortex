@@ -14,7 +14,7 @@
                  :init (println "Init")
                  :repl-options {:nrepl-middleware [lighttable.nrepl.handler/lighttable-ops]}
                  }
-  :dependencies [[org.clojure/clojure "1.5.1"]
+  :dependencies [[org.clojure/clojure "1.6.0"]
                  [incanter/incanter-core "1.5.4"]
                  [incanter/incanter-io "1.5.4"]
                  [org.clojure/data.csv "0.1.2"]
@@ -27,7 +27,7 @@
                  [com.stuartsierra/flow "0.1.0"]
                  [com.datomic/datomic-free "0.9.4714"]
                  [expectations "2.0.6"]
-                 [quil "1.7.0"]
+                 [quil "2.2.0"]
                  [adi "0.1.5"]
                  [lein-light-nrepl "0.0.17"]]
   :plugins [[lein-marginalia "0.7.1"]]

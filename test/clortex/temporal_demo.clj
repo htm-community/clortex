@@ -3,6 +3,7 @@
   (:require [quil.core :as q]
             [clortex.viz.temporal :as v]))
 
+
 (q/defsketch example
   :title "Temporal Pooling Visualisation"
   :setup v/setup

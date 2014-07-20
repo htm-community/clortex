@@ -8,14 +8,17 @@
              :uuid    [{:type :uuid}]
              :timestep [{:type :long :default 0}]
              :columns [{:type :ref
+                        :index true
                         :ref  {:ns   :column
                                :rval :patch}
                         :cardinality :many}]
              :neurons [{:type :ref
+                        :index true
                         :ref  {:ns   :neuron
                                :rval :patch}
                         :cardinality :many}]
              :inputs   [{:type :ref
+                         :index true
                          :ref  {:ns   :dendrite
                                 :rval :patch}
                          :cardinality :one}]}
@@ -37,6 +40,7 @@
                                              :rval :neuron}
                                       :cardinality :one}]
              :distal-dendrites      [{:type :ref
+                                      :index true
                                       :ref  {:ns :dendrite
                                              :rval :neuron}
                                       :cardinality :many}]}
@@ -51,6 +55,7 @@
               :active?  [{:type :boolean
                           :default false}]
               :synapses [{:type :ref
+                          :index true
                           :ref   {:ns   :synapse
                                   :rval :dendrite}
                           :cardinality :many}]}
@@ -58,12 +63,13 @@
                            :default :excitatory
                            :enum {:ns :synapse.type
                                   :values #{:excitatory :inhibitory :io}}}]
-             :permanence [{:type :long
+             :permanence [{:type :double
                            :default 0}]
-             :permanence-threshold [{:type :long :default 0}]
-             :source     [{:type :ref
-                           :ref   {:ns   :neuron
-                                   :rval :fanout}
-                           :cardinality :one}]}
+             :permanence-threshold [{:type :double :default 0.2}]
+             :pre-synaptic-neuron  [{:type :ref
+                                     :index true
+                                     :ref   {:ns   :neuron
+                                             :rval :fanout}
+                                     :cardinality :one}]}
    })
 

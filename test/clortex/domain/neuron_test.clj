@@ -34,6 +34,14 @@
       (d/transact conn schema)
       conn)))
 
+(defn create-free-db
+  "ADI version"
+  []
+  (let [uri "datomic:free://localhost:4334/patches"]
+    (d/delete-database uri)
+    (d/create-database uri)
+    (adi/datastore uri clortex-schema true true)))
+
 (defn create-adi-in-memory-db []
   (let [uri "datomic:mem://patch-adi-db"]
     (adi/datastore uri clortex-schema true true)))
@@ -107,8 +115,10 @@
       )
 
 #_(fact "Connecting many neurons to one another, we can find the synapses"
-      (let [ctx {:conn (create-free-db) :randomer (random-fn-with-seed 123456)}
+      (let [ds (create-free-db)
+            ctx {:ds ds :conn (:conn ds) :randomer (random-fn-with-seed 123456)}
             n 32768
+            n 8192
             randomer (random-fn-with-seed 123456)]
         (dbp/create-patch ctx patch-1)
         (dbp/add-neurons-to! ctx patch-1 (* n 2))
@@ -118,12 +128,17 @@
         (count (dbp/synapse-between ctx patch-1 0 1))) => 1
       )
 
-#_(fact "Adding inputs to a patch, we can write and read the SDR"
+(fact "Adding inputs to a patch, we can write and read the SDR"
       (let [ds (create-adi-in-memory-db)
             ctx {:ds ds :conn (:conn ds) :randomer (random-fn-with-seed 123456)}]
         (dbp/create-adi-patch ctx patch-1)
         (dbp/add-inputs-to! ctx patch-1 12)
-        (dbp/input-sdr ctx patch-1) => [0 0 0 0 0 0 0 0 0 0 0 0]
+        (def sdr #{1 3 5 7 11})
+        (dbp/set-input-bits ctx patch-1 sdr)
+        (dbp/input-sdr ctx patch-1) => sdr
+        (def sdr2 #{1 3 6 9 10})
+        (dbp/set-input-bits ctx patch-1 sdr2)
+        (dbp/input-sdr ctx patch-1) => sdr2
       ))
 
 

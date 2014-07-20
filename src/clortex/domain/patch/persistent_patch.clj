@@ -149,7 +149,9 @@
         tx-data (reduce #(conj %1 (%2 0) (%2 1)) [] tx-tuples)]
     tx-data))
 
-(defn add-inputs-to
+(defn input-index [i] (- -1 i))
+
+(defn set-inputs-to
   [ctx patch-uuid n]
   (let [conn (:conn ctx)
         ds (:ds ctx)
@@ -166,23 +168,26 @@
                      )
         dendrite-id (d/tempid :db.part/user)
         tx-dendrite (if (zero? inputs)
-                      [{:db/id dendrite-id}
+                      [{:db/id dendrite-id
+                        :dendrite/type :dendrite.type/input}
                        {:db/id patch-id :patch/inputs dendrite-id}]
                       [])
         tx-tuples (for [i (range n)
                         :let [input-id (d/tempid :db.part/user)
                               synapse-id (d/tempid :db.part/user)
-                              input-index (+ i inputs)]]
+                              index (input-index (+ i inputs))]]
                     [{:db/id input-id
-                      :neuron/index input-index
+                      :neuron/index index
                       :neuron/active? false}
                      {:db/id synapse-id
                       :synapse/pre-synaptic-neuron input-id
-                      :synapse/permanence 1
-                      :synapse/permanence-threshold 0}
+                      :synapse/permanence 1.0
+                      :synapse/permanence-threshold 0.0}
+                     {:db/id patch-id :patch/neurons input-id}
                      {:db/id dendrite-id :dendrite/synapses synapse-id}])
-        tx-data (reduce #(conj %1 (%2 0) (%2 1)) tx-dendrite tx-tuples)]
-    (println tx-data)
+        tx-data (reduce #(conj %1 (%2 0) (%2 1)) tx-dendrite tx-tuples)
+        tx-data (vec (apply concat tx-dendrite tx-tuples))]
+    ;(println "Set Inputs to\n" tx-data)
     tx-data))
 
 (defn add-neurons-to!
@@ -191,7 +196,7 @@
 
 (defn add-inputs-to!
   [ctx patch-uuid n]
-  @(d/transact (:conn (:ds ctx)) (add-inputs-to ctx patch-uuid n)))
+  @(d/transact (:conn (:ds ctx)) (set-inputs-to ctx patch-uuid n)))
 
 (defn find-dendrites
   [ctx neuron-id]
@@ -385,10 +390,10 @@
          (d/db conn)
          patch-id)))
 
-(defn input-sdr
+(defn input-values
   [ctx patch-uuid]
   (let [conn (:conn ctx)]
-    (d/q '[:find ?index ?active
+    (d/q '[:find ?input ?index ?active
            :in $ ?patch-uuid
            :where
            [?patch :patch/uuid ?patch-uuid]
@@ -399,6 +404,35 @@
            [?input :neuron/index ?index]]
          (d/db conn)
          patch-uuid)))
+
+(defn input-sdr
+  [ctx patch-uuid]
+  (let [input-vals (input-values ctx patch-uuid)]
+    (set (map (comp input-index second) (filter #(nth % 2) input-vals)))))
+
+(defn set-input-bits
+  [ctx patch-uuid sdr]
+  (let [conn (:conn ctx)
+        current-inputs (d/q '[:find ?input ?index ?active
+                              :in $ ?patch-uuid
+                              :where
+                              [?patch :patch/uuid ?patch-uuid]
+                              [?patch :patch/inputs ?dendrite]
+                              [?dendrite :dendrite/synapses ?synapse]
+                              [?synapse :synapse/pre-synaptic-neuron ?input]
+                              [?input :neuron/active? ?active]
+                              [?input :neuron/index ?index]]
+                            (d/db conn)
+                            patch-uuid)
+        sdr-incoming (set (map input-index sdr))
+        current-on (filter #(nth % 2) current-inputs)
+        current-off (filter #(not (nth % 2)) current-inputs)
+        switch-on (filter #(contains? sdr-incoming (second %)) current-off)
+        switch-off (filter #(not (contains? sdr-incoming (second %))) current-on)
+        tx-on (mapv (fn [[id _ _]] {:db/id id :neuron/active? true}) switch-on)
+        tx-off (mapv (fn [[id _ _]] {:db/id id :neuron/active? false}) switch-off)
+        ]
+    @(d/transact (:conn ctx) (concat tx-on tx-off))))
 
 (defn find-neuron-ids
   [ctx patch-uuid]
