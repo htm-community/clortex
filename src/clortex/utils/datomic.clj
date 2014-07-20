@@ -19,9 +19,9 @@
                         :cardinality :many}]
              :inputs   [{:type :ref
                          :index true
-                         :ref  {:ns   :dendrite
+                         :ref  {:ns   :neuron
                                 :rval :patch}
-                         :cardinality :one}]}
+                         :cardinality :many}]}
    :column  {:type    [{:type :keyword}]
              :index   [{:type :long}]
              :neurons [{:type :ref
@@ -71,5 +71,7 @@
                                      :ref   {:ns   :neuron
                                              :rval :fanout}
                                      :cardinality :one}]}
+   :sensor-data {:timestep [{:type :long :default 0 :index true}]
+                 :sdr [:type :long :cardinality :many]}
    })
 
