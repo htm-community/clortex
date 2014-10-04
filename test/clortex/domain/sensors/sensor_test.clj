@@ -2,7 +2,9 @@
   (:use midje.sweet)
   (:use clortex.domain.sensors.core)
   (:require [clortex.domain.encoders.compound :as c]
-            [clojure.set :refer [difference intersection]]))
+            [clojure.set :refer [difference intersection]]
+            [datomic.api :as d]
+            [clortex.domain.sensors.datomic :as s->db]))
 
 [[:chapter {:title "Sensors"}]]
 
@@ -85,6 +87,16 @@ enc-10 => #{8 12 13 14 15
                                  1348 1349 1350 1359 1360 1375 1383 1393 1394
                                  1395 1401 1414 1425 1440 1443 1462 1466}
 
+      ;(:bits hotgym) => 1024
+
+      (def uri "datomic:free://localhost:4334/patches")
+      (def conn (d/connect uri))
+      (def uuid (d/squuid))
+      (def sdr-tx-10 (s->db/sdr->tx uuid 10 enc-10))
+      @(d/transact conn sdr-tx-10)
+      (def sdr-10 (s->db/input-sdr (d/db conn) uuid 10))
+      sdr-10 => enc-10
+      (def sdr-tx-30 (s->db/sdr->tx uuid 30 enc-30))
       )
 
 #_(write-edn-file hotgym "resources/hotgym.edn")
