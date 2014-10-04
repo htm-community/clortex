@@ -71,7 +71,9 @@
                                      :ref   {:ns   :neuron
                                              :rval :fanout}
                                      :cardinality :one}]}
-   :sensor-data {:timestep [{:type :long :default 0 :index true}]
-                 :sdr [:type :long :cardinality :many]}
+   :sensor-data {:uuid [{:type :uuid}]
+                 :timestep [{:type :long :default 0}]
+                 :bits [{:type :long
+                         :cardinality :many}]}
    })
 
