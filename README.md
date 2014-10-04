@@ -16,7 +16,7 @@ Let's use our brains and change the world!
 
 See the [docs](http://fergalbyrne.github.io) for more details or [my blog](http://inbits.com) for background.
 
-Clortex is a reimagining and reimplementation of Numenta Platfrom for Intelligent
+Clortex is a reimagining and reimplementation of Numenta Platform for Intelligent
 Computing (NuPIC), the Open Source project released by Numenta, the company founded by
 Jeff to make his theories a practical and commercial reality. NuPIC is a mature,
 excellent and useful software platform, with a vibrant community, so please join us at
@@ -26,7 +26,7 @@ excellent and useful software platform, with a vibrant community, so please join
 
 Clortex is Open Source software, released under the GPL Version 3 (see the end of this README). You are free to use, copy, modify, and redistribute this software according to the terms of that license.
 
-Numenta have a dual license for their CLA-HTM technology. If you're interested in a commercial license for NuPIC, viist [Numenta.com](http://numenta.com) and they'll be happy to talk.
+Numenta have a dual license for their CLA-HTM technology. If you're interested in a commercial license for NuPIC, visit [Numenta.com](http://numenta.com) and they'll be happy to talk.
 
 ## Latest Demos (work in progress)
 
@@ -40,7 +40,7 @@ Numenta have a dual license for their CLA-HTM technology. If you're interested i
 
 * [Documentation](http://fergalbyrne.github.io)
 * [Source Docs](http://fergalbyrne.github.io/uberdoc.html)
-* [GitHub project](https://github.com/fergalbyrne/clortex)
+* [GitHub project](https://github.com/nupic-community/clortex)
 
 ## How Can I Help?
 
@@ -50,10 +50,10 @@ based on the principles of the brain.
 * Visit the [Numenta.org](http://numenta.org) site for videos, white papers, details of the NuPIC mailing list, wikis, etc.
 * Have a look at (and optionally pre-purchase) my Leanpub.com book: [Real Machine Intelligence with Clortex and NuPIC](http://leanpub.com/realsmartmachines).
 * Join the [Clortex Google Group](https://groups.google.com/forum/#!forum/clortex) for discussion and updates.
-* We'll be launching an Indiegogo campaign during May 2014 to fund completion of Clortex, please let us know if you're interested in supporting us when we launch.
+* We'll be launching an Indiegogo campaign during Fall 2014 to fund completion of Clortex, please let us know if you're interested in supporting us when we launch.
 
 ## License
 
-Copyright &copy; 2014 Fergal Byrne, Brenter IT
+Copyright &copy; 2014 Fergal Byrne, Brenter IT and the NuPIC Community
 
 Distributed under the GNU Public Licence, Version 3 [http://www.gnu.org/licenses/gpl.html](http://www.gnu.org/licenses/gpl.html), same as NuPIC.
