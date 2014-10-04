@@ -209,14 +209,14 @@ is presented:"
 
 
 (def to-bitstring (:encode-to-bitstring! (r/random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4)))
-(defn to-bitstring-pre [x] (precalculate x to-bitstring))
+(defn to-bitstring-pre [x] (r/precalculate x to-bitstring))
 
 (to-bitstring-pre 0) => "001000110100" ;; causes (-10,10) to be encoded in advance
 (to-bitstring-pre 1) => "100000110100"
 (to-bitstring-pre 2) => "100001110000" ;; first encoding of 2
 ;; reset
 (def to-bitstring (:encode-to-bitstring! (r/random-sdr-encoder-1 :diameter 1.0 :bits 12 :on 4)))
-(defn to-bitstring-pre [x] (precalculate x to-bitstring))
+(defn to-bitstring-pre [x] (r/precalculate x to-bitstring))
 (to-bitstring-pre 0) =>  "001000110100"
 (to-bitstring-pre 1) =>  "100000110100"
 (to-bitstring-pre -1) => "001010110000"
