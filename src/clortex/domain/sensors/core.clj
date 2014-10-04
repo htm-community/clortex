@@ -84,6 +84,8 @@ Currently reads an OPF-style CSV file and converts it into Clojure data structur
     {:raw-csv raw-csv :fields fields :types types :flags flags
      :parsed-data parsed-data
      :encoders encoders
+     :bits (reduce + (:bits encoders))
+     :on (reduce + (:on encoders))
      }))
 
 (defn load-opf-file [config]
