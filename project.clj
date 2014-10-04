@@ -14,7 +14,7 @@
                  :init (println "Init")
                  :repl-options {:nrepl-middleware [lighttable.nrepl.handler/lighttable-ops]}
                  }
-  :dependencies [[org.clojure/clojure "1.6.0"]
+  :dependencies [[org.clojure/clojure "1.5.1"]
                  [incanter/incanter-core "1.5.4"]
                  [incanter/incanter-io "1.5.4"]
                  [org.clojure/data.csv "0.1.2"]
