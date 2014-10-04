@@ -238,6 +238,22 @@
   (let [neurons (map :v (d/datoms db :eavt patch :patch/neurons))]
     (mapv #(d/entity db %) neurons)))
 
+(defn syn-using-query? [conn to from]
+  (let [db (d/db conn)
+        synapses (d/q '[:find ?synapse
+                        :in $ ?to ?from
+                        :where
+                        [?to-id :neuron/index to]
+                        [?from-id :neuron/index from]
+                        [?to-id :neuron/distal-dendrites ?dendrite]
+                        [?synapse :synapse/pre-synaptic-neuron ?from-id]
+                        [?dendrite :dendrite/synapses ?synapse]]
+                      db
+                      to
+                      from)
+        ]
+    (first synapses)))
+
 (defn syn? [conn to from]
   (let [db (d/db conn)
         to-id (:db/id to)
