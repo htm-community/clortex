@@ -54,6 +54,7 @@
 
 (fact "create an adi-based db, add a patch"
       (let [uri "datomic:mem://adi-test"
+            ;_ (println "Loading ADI Schema")
             ds (adi/datastore uri clortex-schema true true)
             _add  (adi/insert! ds [{:patch {:uuid patch-1}}])
             check (->> (adi/select ds {:patch/uuid patch-1})
@@ -118,7 +119,7 @@
       (let [ds (create-free-db)
             ctx {:ds ds :conn (:conn ds) :randomer (random-fn-with-seed 123456)}
             n 32768
-            n 8192
+            ;n 8192
             randomer (random-fn-with-seed 123456)]
         (dbp/create-patch ctx patch-1)
         (dbp/add-neurons-to! ctx patch-1 (* n 2))
@@ -126,6 +127,7 @@
         (time (doseq [i (range 100)]
           (dbp/connect-distal ctx patch-1 (randomer n) (+ n (randomer n)) false)))
         (count (dbp/synapse-between ctx patch-1 0 1))) => 1
+        ;(dbp/add-inputs-to! ctx patch-1 )
       )
 
 (fact "Adding inputs to a patch, we can write and read the SDR"
@@ -142,4 +144,49 @@
       ))
 
 
+#_(comment
+    "
+user=> (bench (syn? conn 0 1))
+WARNING: JVM argument TieredStopAtLevel=1 is active, and may lead to unexpected results as JIT C2 compiler may not be active. See http://www.slideshare.net/CharlesNutter/javaone-2012-jvm-jit-for-dummies.
+WARNING: Final GC required 5.415848803839964 % of runtime
+Evaluation count : 78600 in 60 samples of 1310 calls.
+             Execution time mean : 796.580338 µs
+    Execution time std-deviation : 106.084681 µs
+   Execution time lower quantile : 723.190637 µs ( 2.5%)
+   Execution time upper quantile : 1.106124 ms (97.5%)
+                   Overhead used : 9.878120 ns
 
+Found 8 outliers in 60 samples (13.3333 %)
+	low-severe	 2 (3.3333 %)
+	low-mild	 6 (10.0000 %)
+ Variance from outliers : 80.6874 % Variance is severely inflated by outliers
+
+user=> (bench (syn-using-query? conn 0 1))
+WARNING: JVM argument TieredStopAtLevel=1 is active, and may lead to unexpected results as JIT C2 compiler may not be active. See http://www.slideshare.net/CharlesNutter/javaone-2012-jvm-jit-for-dummies.
+Evaluation count : 12420 in 60 samples of 207 calls.
+             Execution time mean : 5.033397 ms
+    Execution time std-deviation : 338.335985 µs
+   Execution time lower quantile : 4.684154 ms ( 2.5%)
+   Execution time upper quantile : 5.871142 ms (97.5%)
+                   Overhead used : 9.878120 ns
+
+Found 4 outliers in 60 samples (6.6667 %)
+	low-severe	 4 (6.6667 %)
+ Variance from outliers : 50.1281 % Variance is severely inflated by outliers
+
+user=> (bench (syn-using-query? conn 0 1))
+WARNING: JVM argument TieredStopAtLevel=1 is active, and may lead to unexpected results as JIT C2 compiler may not be active. See http://www.slideshare.net/CharlesNutter/javaone-2012-jvm-jit-for-dummies.
+Evaluation count : 2280 in 60 samples of 38 calls.
+             Execution time mean : 27.199456 ms
+    Execution time std-deviation : 596.419497 µs
+   Execution time lower quantile : 26.584016 ms ( 2.5%)
+   Execution time upper quantile : 28.893191 ms (97.5%)
+                   Overhead used : 9.878120 ns
+
+Found 6 outliers in 60 samples (10.0000 %)
+	low-severe	 4 (6.6667 %)
+	low-mild	 2 (3.3333 %)
+ Variance from outliers : 9.4584 % Variance is slightly inflated by outliers
+
+    "
+    )
