@@ -407,6 +407,16 @@ header div.heading {
                                <span class="mi">1348</span> <span class="mi">1349</span> <span class="mi">1350</span> <span class="mi">1359</span> <span class="mi">1360</span> <span class="mi">1375</span> <span class="mi">1383</span> <span class="mi">1393</span> <span class="mi">1394</span>
                                <span class="mi">1395</span> <span class="mi">1401</span> <span class="mi">1414</span> <span class="mi">1425</span> <span class="mi">1440</span> <span class="mi">1443</span> <span class="mi">1462</span> <span class="mi">1466</span><span class="p">}</span>
 
+    <span class="c1">;(:bits hotgym) =&gt; 1024</span>
+
+    <span class="p">(</span><span class="k">def </span><span class="nv">uri</span> <span class="s">&quot;datomic:free://localhost:4334/patches&quot;</span><span class="p">)</span>
+    <span class="p">(</span><span class="k">def </span><span class="nv">conn</span> <span class="p">(</span><span class="nf">d/connect</span> <span class="nv">uri</span><span class="p">))</span>
+    <span class="p">(</span><span class="k">def </span><span class="nv">uuid</span> <span class="p">(</span><span class="nf">d/squuid</span><span class="p">))</span>
+    <span class="p">(</span><span class="k">def </span><span class="nv">sdr-tx-10</span> <span class="p">(</span><span class="nf">s-&gt;db/sdr-&gt;tx</span> <span class="nv">uuid</span> <span class="mi">10</span> <span class="nv">enc-10</span><span class="p">))</span>
+    <span class="o">@</span><span class="p">(</span><span class="nf">d/transact</span> <span class="nv">conn</span> <span class="nv">sdr-tx-10</span><span class="p">)</span>
+    <span class="p">(</span><span class="k">def </span><span class="nv">sdr-10</span> <span class="p">(</span><span class="nf">s-&gt;db/input-sdr</span> <span class="p">(</span><span class="nf">d/db</span> <span class="nv">conn</span><span class="p">)</span> <span class="nv">uuid</span> <span class="mi">10</span><span class="p">))</span>
+    <span class="nv">sdr-10</span> <span class="nv">=&gt;</span> <span class="nv">enc-10</span>
+    <span class="p">(</span><span class="k">def </span><span class="nv">sdr-tx-30</span> <span class="p">(</span><span class="nf">s-&gt;db/sdr-&gt;tx</span> <span class="nv">uuid</span> <span class="mi">30</span> <span class="nv">enc-30</span><span class="p">))</span>
     
 </pre></div>
 </div><div><div class="highlight"><pre><span class="o">#</span><span class="nv">_</span><span class="p">(</span><span class="nf">write-edn-file</span> <span class="nv">hotgym</span> <span class="s">&quot;resources/hotgym.edn&quot;</span><span class="p">)</span>

@@ -390,6 +390,7 @@ header div.heading {
 </pre></div>
 </div><div><div class="highlight"><pre><span class="s">&quot;create an adi-based db, add a patch&quot;</span>
     <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">uri</span> <span class="s">&quot;datomic:mem://adi-test&quot;</span>
+          <span class="c1">;_ (println &quot;Loading ADI Schema&quot;)</span>
           <span class="nv">ds</span> <span class="p">(</span><span class="nf">adi/datastore</span> <span class="nv">uri</span> <span class="nv">clortex-schema</span> <span class="nv">true</span> <span class="nv">true</span><span class="p">)</span>
           <span class="nv">_add</span>  <span class="p">(</span><span class="nf">adi/insert!</span> <span class="nv">ds</span> <span class="p">[{</span><span class="ss">:patch</span> <span class="p">{</span><span class="ss">:uuid</span> <span class="nv">patch-1</span><span class="p">}}])</span>
           <span class="nv">check</span> <span class="p">(</span><span class="nf">-&gt;&gt;</span> <span class="p">(</span><span class="nf">adi/select</span> <span class="nv">ds</span> <span class="p">{</span><span class="ss">:patch/uuid</span> <span class="nv">patch-1</span><span class="p">})</span>
@@ -458,6 +459,7 @@ header div.heading {
         <span class="p">(</span><span class="nb">time </span><span class="p">(</span><span class="nb">doseq </span><span class="p">[</span><span class="nv">i</span> <span class="p">(</span><span class="nb">range </span><span class="mi">100</span><span class="p">)]</span>
           <span class="p">(</span><span class="nf">dbp/connect-distal</span> <span class="nv">ctx</span> <span class="nv">patch-1</span> <span class="p">(</span><span class="nf">randomer</span> <span class="nv">n</span><span class="p">)</span> <span class="p">(</span><span class="nb">+ </span><span class="nv">n</span> <span class="p">(</span><span class="nf">randomer</span> <span class="nv">n</span><span class="p">))</span> <span class="nv">false</span><span class="p">)))</span>
         <span class="p">(</span><span class="nb">count </span><span class="p">(</span><span class="nf">dbp/synapse-between</span> <span class="nv">ctx</span> <span class="nv">patch-1</span> <span class="mi">0</span> <span class="mi">1</span><span class="p">)))</span> <span class="nv">=&gt;</span> <span class="mi">1</span>
+        <span class="c1">;(dbp/add-inputs-to! ctx patch-1 )</span>
       <span class="p">)</span>
 </pre></div>
 </div><div><div class="highlight"><pre><span class="s">&quot;Adding inputs to a patch, we can write and read the SDR&quot;</span>
