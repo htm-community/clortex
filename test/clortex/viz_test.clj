@@ -3,7 +3,7 @@
   (:require [quil.core :as q]
             [clortex.viz.core :as v]))
 
-(q/defsketch example
+#_(q/defsketch example
   :title "Clortex Visualisation"
   :setup v/setup
   :draw v/draw

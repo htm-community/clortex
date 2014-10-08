@@ -7,29 +7,29 @@
   :url "https://github.com/fergalbyrne/clortex"
   :license {:name "GPLv3"
             :url "http://www.gnu.org/licenses/gpl.html"}
-  :profiles {:dev {:dependencies [[midje "1.5.1"]
+  :profiles {:dev {:dependencies [[midje "1.6.0"]
                                   [criterium "0.4.3"]]}}
   :jvm-opts ^:replace ["-Xmx4g" "-XX:+TieredCompilation" #_"-XX:-TieredStopAtLevel=1" #_"-XX:+PrintCompilation"]
   :repl-options {
                  :init (println "Init")
                  :repl-options {:nrepl-middleware [lighttable.nrepl.handler/lighttable-ops]}
                  }
-  :dependencies [[org.clojure/clojure "1.5.1"]
-                 [incanter/incanter-core "1.5.4"]
-                 [incanter/incanter-io "1.5.4"]
+  :dependencies [[org.clojure/clojure "1.6.0"]
+                 [incanter/incanter-core "1.5.5"]
+                 [incanter/incanter-io "1.5.5"]
                  [org.clojure/data.csv "0.1.2"]
                  [org.clojure/data.json "0.2.1"]
-                 [enlive "1.1.5"]
-                 [clojure-opennlp "0.3.2"]
-                 [clojurewerkz/buffy "1.0.0-beta1"]
+                 #_[enlive "1.1.5"]
+                 #_[clojure-opennlp "0.3.2"]
+                 #_[clojurewerkz/buffy "1.0.0-beta1"]
                  [clj-time "0.6.0"]
-                 [com.stuartsierra/component "0.2.1"]
-                 [com.stuartsierra/flow "0.1.0"]
+                 #_[com.stuartsierra/component "0.2.1"]
+                 #_[com.stuartsierra/flow "0.1.0"]
                  [com.datomic/datomic-free "0.9.4714"]
                  [expectations "2.0.6"]
-                 [quil "2.2.0"]
+                 [quil "2.2.2"]
                  [adi "0.1.5"]
-                 [lein-light-nrepl "0.0.17"]]
+                 [lein-light-nrepl "0.0.18"]]
   :plugins [[lein-marginalia "0.7.1"]]
   :documentation {:files {"doc/index"
                           {:input "test/clortex/core_test.clj"
