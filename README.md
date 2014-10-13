@@ -1,4 +1,5 @@
 # Clortex (pre-alpha)
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/nupic-community/clortex?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Let's Use Our Brains and Change the World
 
