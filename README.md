@@ -1,5 +1,8 @@
 # Clortex (pre-alpha)
 
+**Important Notice** Due to some incredible work by Felix Andrews, Clortex is now being repositioned as a system-level HTM design, with core HTM algorithms implemented in our sister project, Felix' [Comportex](https://github.com/nupic-community/comportex). We're still working on how
+to combine our efforts, but it looks like we'll have release-worthy code very soon now..
+
 ## Let's Use Our Brains and Change the World
 
 For 80 years, we've dreamt of intelligent machines enriching our lives. For most of that time, we've ignored the one example of intelligence we could be studying - the brain. Now, Jeff Hawkins, developer of the Palm Pilot and co-founder of Handspring, is leading a community of researchers, developers and entrepreneurs whose goal is to build intelligent computer systems based on the principles of our own brains.

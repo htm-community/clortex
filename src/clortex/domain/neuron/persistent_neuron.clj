@@ -1,7 +1,8 @@
 (ns clortex.domain.neuron.persistent-neuron
   (require [clortex.protocols :refer :all]))
 
-(extend-type datomic.query.EntityMap PNeuron
+(extend-type datomic.query.EntityMap
+  PNeuron
   (neuron-index [this] (:neuron/index this))
   (neuron-id [this] (:neuron/uuid this))
   (distal-dendrites [this] (:neuron/distal-dendrites this))

@@ -4,7 +4,8 @@
            [datomic.api :as d]
            [adi.core :as adi]))
 
-(extend-type datomic.query.EntityMap PNeuronPatch
+(extend-type datomic.query.EntityMap
+  PNeuronPatch
   (neurons [this] (:patch/neurons this))
   (neuron-with-index [this index]
    (filter #(= index (neuron-index %)) (neurons this)))
@@ -36,11 +37,18 @@
 (def empty-patch
   (->DatomicPatch nil nil nil))
 
+(def q-find-patch '[:find ?patch-id
+                    :in $ ?p-uuid
+                    :where [?patch-id :patch/uuid ?p-uuid]])
+
+(defn tx-create-patch
+  [patch-uuid]
+  [{:db/id (d/tempid :db.part/user)
+    :patch/uuid patch-uuid}])
+
 (defn find-patch-id
   [ctx patch-uuid]
-  (ffirst (d/q '[:find ?patch-id
-                 :in $ ?p-uuid
-                        :where [?patch-id :patch/uuid ?p-uuid]]
+  (ffirst (d/q q-find-patch
                (d/db (:conn ctx))
                patch-uuid)))
 
@@ -57,8 +65,7 @@
 (defn create-patch
   [ctx patch-uuid]
   (let [conn (:conn ctx)]
-    @(d/transact conn [{:db/id (d/tempid :db.part/user)
-                        :patch/uuid patch-uuid}])))
+    @(d/transact conn (tx-create-patch patch-uuid))))
 
 
 (defn create-adi-patch

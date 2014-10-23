@@ -14,18 +14,18 @@
                  :init (println "Init")
                  :repl-options {:nrepl-middleware [lighttable.nrepl.handler/lighttable-ops]}
                  }
-  :dependencies [[org.clojure/clojure "1.6.0"]
-                 [incanter/incanter-core "1.5.5"]
+  :dependencies [[incanter/incanter-core "1.5.5"]
                  [incanter/incanter-io "1.5.5"]
                  [org.clojure/data.csv "0.1.2"]
                  [org.clojure/data.json "0.2.1"]
+                 [clj-time "0.6.0"]
                  #_[enlive "1.1.5"]
                  #_[clojure-opennlp "0.3.2"]
                  #_[clojurewerkz/buffy "1.0.0-beta1"]
-                 [clj-time "0.6.0"]
+                 [com.datomic/datomic-free "0.9.4714"]
                  #_[com.stuartsierra/component "0.2.1"]
                  #_[com.stuartsierra/flow "0.1.0"]
-                 [com.datomic/datomic-free "0.9.4714"]
+                 [org.clojure/clojure "1.6.0"]
                  [expectations "2.0.6"]
                  [quil "2.2.2"]
                  [adi "0.1.5"]
