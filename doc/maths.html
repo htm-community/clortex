@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+This article describes some of the mathematics underlying the theory and implementations of Jeff Hawkins' Hierarchical Temporal Memory (HTM), which seeks to explain how the neocortex processes information and forms models of the world. [mathjax]
+<h2>The HTM Model Neuron</h2>
+<h3>Feedforward Processing on Proximal Dendrites</h3>
+The HTM model neuron has a single proximal dendrite, which is used to process and recognise feedforward or afferent inputs to the neuron. We model the entire feedforward input to a cortical layer as a bit vector \({\mathbf x}_{\textrm{ff}}\in\lbrace{0,1}\rbrace^{n_{\textrm{ff}}}\), where \(n_{\textrm{ff}}\) is the <em>width</em> of the input.
+
+The dendrite is composed of \(n_s\) <em>synapses</em> which each act as a binary <em>gate</em> for a single bit in the input vector.  Each synapse has a <em>permanence</em> \(p_i\in{[0,1]}\) which represents the size and efficiency of the dendritic spine and synaptic junction. The synapse will transmit a 1-bit (or on-bit) if the permanence exceeds a threshold \(\theta_i\) (often a global constant \(\theta_i = \theta = 0.2\)). When this is true, we say the synapse is <em>connected</em>.
+
+Each neuron samples \(n_s\) bits from the \(n_{\textrm{ff}}\) feedforward inputs, and so there are \({n_{\textrm{ff}}}\choose{n_{s}}\) possible choices of input for a single neuron. A single proximal dendrite represents a <em>projection</em> \(\pi_j:\lbrace{0,1}\rbrace^{n_{\textrm{ff}}}\rightarrow\lbrace{0,1}\rbrace^{n_s}\), so a population of neurons corresponds to a set of subspaces of the sensory space. Each dendrite has an input vector \({\mathbf x}_j=\pi_j({\mathbf x}_{\textrm{ff}})\) which is the projection of the entire input into this neuron's subspace.
+
+A synapse is connected if its permanence \(p_i\) exceeds its threshold \(\theta_i\). If we subtract \({\mathbf p}-{\mathbf \theta}\), take the elementwise sign of the result, and map to \(\lbrace{0,1}\rbrace\), we derive the <em>binary connection vector </em>\({\mathbf c}_j\) for the dendrite. Thus:
+
+$$c_i=f(sgn(p_i-\theta_i))\) where \(f(-1) = 0, f(1) = 1$$
+
+The dot product \(d_j({\mathbf x})={\mathbf c}_j\cdot{\mathbf x}_j\) now represents the <em>feedforward overlap</em> of the neuron, ie the number of connected synapses which have an incoming activation potential. Later, we'll see how this number is used in the neuron's processing.
+
+The elementwise product \({\mathbf n}_j={\mathbf c}_j\otimes{\mathbf x}_j\) is the vector in the neuron's subspace which represents the input vector \({\mathbf x}_{\textrm{ff}}\) as "seen" by this neuron. The length \(d_j\) of this vector corresponds to the extent to which the neuron recognises the input, and the direction (in the neuron's subspace) is that vector which has on-bits shared by both the connection vector and the input.
+
+If we project this vector back into the input space, the result \(\mathbf{\hat{x}}_j =\pi^{-1}({\mathbf n}_j)\) is this neuron's approximation of the part of the input vector which this neuron matches. If we add a set of such vectors, we will form an increasingly close approximation to the original input vector as we choose more and more neurons to collectively represent it.
+<h2>Sparse Distributed Representations (SDRs)</h2>
+We now show how a layer of neurons transforms an input vector into a sparse representation. From the above description, every neuron is producing an estimate \(\mathbf{\hat{x}}_j \) of the input \({\mathbf x}_{\textrm{ff}}\), with length \(d_j\ll n_{\textrm{ff}}\) reflecting how well the neuron represents or recognises the input. We form a sparse representation of the input by choosing a set \(Y_{\textrm{SDR}}\) of the top \(n_{\textrm{SDR}}=sN\) neurons, where \(N\) is the number of neurons in the layer, and \(s\) is the chosen <em>sparsity</em> we wish to impose (typically \(s=0.02=2%\)).
+
+The algorithm for choosing the top \(n_{\textrm{SDR}}\) neurons may vary. In neocortex, this is achieved using a mechanism involving cascading <em>inhibition:</em> a cell firing quickly (because it depolarises quickly due to its input) activates nearby inhibitory cells, which shut down neighbouring excitatory cells, and also nearby inhibitory cells, which spread the inhibition outwards. This type of <em>local inhibition</em> can also be used in software simulations, but it is expensive and is only used where the design involves <em>spatial topology</em> (ie where the semantics of the data is to be reflected in the position of the neurons). A more efficient <em>global inhibition</em> algorithm - simply choosing the top \(n_{\textrm{SDR}}\) neurons by their depolarisation values - is often used in practise.
+
+If we form a bit vector \({\mathbf y}_{\textrm{SDR}}\in\lbrace{0,1}\rbrace^N\textrm{ where } y_j = 1 \Leftrightarrow j \in Y_{\textrm{SDR}}\), we have a function which maps an input \({\mathbf x}_{\textrm{ff}}\in\lbrace{0,1}\rbrace^{n_{\textrm{ff}}}\) to a sparse output \({\mathbf y}_{\textrm{SDR}}\in\lbrace{0,1}\rbrace^N\), where the length of each output vector is \(\lVert{\mathbf y}_{\textrm{SDR}}\rVert=sN \ll N\).
+
+The sum
+
+$$\mathbf{\hat{x}} = \sum\limits_{j \in Y_{\textrm{SDR}}}{{\mathbf{\hat{x}}}_j} = \sum\limits_{j \in Y_{\textrm{SDR}}}{\pi_j^{-1}({\mathbf n}_j)} = \sum\limits_{j \in Y_{\textrm{SDR}}}{\pi_j^{-1}({\mathbf c}_j\otimes{\mathbf x}_j)}= \sum\limits_{j \in Y_{\textrm{SDR}}}{\pi_j^{-1}({\mathbf c}_j \otimes \pi_j({\mathbf x}_{\textrm{ff}}))}$$
+
+is the reverse mapping or estimate of the input vector by the set \(Y_{\textrm{SDR}}\) of neurons in the SDR.
+<h2>Matrix Form</h2>
+The above can be represented straightforwardly in matrix form. The projection $\pi_j$ \(\pi_j\)
+</body>
+</html>
