@@ -1,4 +1,5 @@
 # Clortex (pre-alpha)
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/nupic-community/clortex?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 **Important Notice** Due to some incredible work by Felix Andrews, Clortex is now being repositioned as a system-level HTM design, with core HTM algorithms implemented in our sister project, Felix' [Comportex](https://github.com/nupic-community/comportex). We're still working on how
 to combine our efforts, but it looks like we'll have release-worthy code very soon now..
